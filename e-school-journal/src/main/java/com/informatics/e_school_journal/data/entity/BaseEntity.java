@@ -11,5 +11,6 @@ import lombok.Getter;
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @org.springframework.data.annotation.Id
     private long id;
 }
