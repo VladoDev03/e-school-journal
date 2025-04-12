@@ -13,5 +13,5 @@ public class Grade extends BaseEntity{
     @ManyToOne
     private School school;
     @OneToMany(mappedBy = "grade")
-    private Set<GradeHasSubjectWithTeacher> gradeHasSubjectWithTeacherSet;
+    private Set<Teaching> teachings;
 }

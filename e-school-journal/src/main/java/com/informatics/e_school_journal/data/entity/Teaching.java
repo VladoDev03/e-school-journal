@@ -7,7 +7,7 @@ import jakarta.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
-public class GradeHasSubjectWithTeacher extends BaseEntity{
+public class Teaching extends BaseEntity{
     @ManyToOne
     private Grade grade;
 
@@ -17,6 +17,6 @@ public class GradeHasSubjectWithTeacher extends BaseEntity{
     @ManyToOne
     private Teacher teacher;
 
-    @OneToMany(mappedBy = "gradeHasSubjectWithTeacher")
-    private Set<StudentStudiesSubjectInGradeWithTeacher> studentStudiesSubjectInGradeWithTeacherSet;
+    @OneToMany(mappedBy = "teaching")
+    private Set<Studying> studying;
 }

@@ -13,7 +13,7 @@ public class Student extends BaseEntity{
     private User user;
 
     @OneToMany(mappedBy = "student")
-    private Set<StudentStudiesSubjectInGradeWithTeacher> studentStudiesSubjectInGradeWithTeacherSet;
+    private Set<Studying> studyingSet;
 
     @ManyToMany(mappedBy = "children")
     private Set<Parent> parents;

@@ -12,7 +12,7 @@ public class Absence extends BaseEntity{
     private LocalDate date;
     private boolean isExcused;
     @ManyToOne
-    private StudentStudiesSubjectInGradeWithTeacher studentStudiesSubjectInGradeWIthTeacher;
+    private Studying studying;
 
 
 }

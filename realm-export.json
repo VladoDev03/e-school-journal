@@ -721,7 +721,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "jao7YVRzAemRhApTfSbWnOUttETB13Y0",
       "redirectUris": [
         "",
         "http://localhost:8081/login/oauth2/code/e-school-journal"

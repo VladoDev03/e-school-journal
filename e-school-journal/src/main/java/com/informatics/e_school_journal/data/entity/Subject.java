@@ -9,5 +9,5 @@ import java.util.Set;
 public class Subject extends BaseEntity{
     private String name;
     @OneToMany(mappedBy = "subject")
-    private Set<GradeHasSubjectWithTeacher> gradeHasSubjectWithTeacherSet;
+    private Set<Teaching> teachings;
 }

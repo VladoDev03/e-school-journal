@@ -9,5 +9,5 @@ public class Mark extends BaseEntity{
     private double mark;
     private MarkType markType;
     @ManyToOne
-    private StudentStudiesSubjectInGradeWithTeacher studentStudiesSubjectInGradeWithTeacher;
+    private Studying studying;
 }

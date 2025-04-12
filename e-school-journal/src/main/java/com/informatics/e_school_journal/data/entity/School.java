@@ -14,5 +14,5 @@ public class School extends BaseEntity{
     private Director director;
 
     @OneToMany(mappedBy = "school")
-    private Set<Grade> gradeSet;
+    private Set<Grade> grades;
 }
