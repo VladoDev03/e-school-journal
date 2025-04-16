@@ -13,6 +13,4 @@ public class Absence extends BaseEntity{
     private boolean isExcused;
     @ManyToOne
     private Studying studying;
-
-
 }
