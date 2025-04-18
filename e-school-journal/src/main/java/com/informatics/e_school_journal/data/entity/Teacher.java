@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Teacher extends BaseEntity{
+public class Teacher extends BaseEntity {
     @OneToOne
     private User user;
 

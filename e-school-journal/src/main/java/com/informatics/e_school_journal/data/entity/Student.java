@@ -8,7 +8,7 @@ import jakarta.persistence.OneToOne;
 import java.util.Set;
 
 @Entity
-public class Student extends BaseEntity{
+public class Student extends BaseEntity {
     @OneToOne
     private User user;
 

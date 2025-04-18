@@ -16,6 +16,7 @@ public class TestController {
     @GetMapping("/hi")
     public UserInfoDto  sayHi(JwtAuthenticationToken auth) {
         return new UserInfoDto(
+                auth.getToken().getSubject(),
                 auth.getToken().getClaimAsString(StandardClaimNames.PREFERRED_USERNAME),
                 auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
     }

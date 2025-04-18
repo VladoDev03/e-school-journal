@@ -7,7 +7,7 @@ import jakarta.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
-public class Studying extends BaseEntity{
+public class Studying extends BaseEntity {
     @ManyToOne
     private Student student;
 

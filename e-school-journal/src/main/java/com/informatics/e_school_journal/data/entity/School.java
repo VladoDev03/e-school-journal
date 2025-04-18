@@ -7,7 +7,7 @@ import jakarta.persistence.OneToOne;
 import java.util.Set;
 
 @Entity
-public class School extends BaseEntity{
+public class School extends BaseEntity {
     private String name;
     private String address;
     @OneToOne(mappedBy = "school")

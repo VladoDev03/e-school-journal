@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class UserInfoDto {
+    private String id;
     private String name;
     private List<String> roles;
 }

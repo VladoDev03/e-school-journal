@@ -7,7 +7,7 @@ import jakarta.persistence.OneToOne;
 import java.util.Set;
 
 @Entity
-public class Parent extends BaseEntity{
+public class Parent extends BaseEntity {
     @OneToOne
     private User user;
 
