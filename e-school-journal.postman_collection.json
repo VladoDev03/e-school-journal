@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "731bd064-7bdb-4285-ac0c-b01c2ef7a532",
+		"name": "e-school-journal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16363932"
+	},
+	"item": [
+		{
+			"name": "test",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "jao7YVRzAemRhApTfSbWnOUttETB13Y0",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "tokenName",
+							"value": "test_token",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "http://localhost:8080/realms/e-school-journal/protocol/openid-connect/token",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "e-school-journal",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "http://localhost:8080/realms/e-school-journal/protocol/openid-connect/auth",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost:8081/login/oauth2/code/e-school-journal",
+							"type": "string"
+						},
+						{
+							"key": "state",
+							"value": "state_state",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/api/test/hi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"test",
+						"hi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SExYTVJKbmp6UmpVOVVRZlV4MVZ3LVZNODNVSzl5cHVPcXFBSm44WWQ0In0.eyJleHAiOjE3NDU0ODQwOTgsImlhdCI6MTc0NTQ4Mzc5OCwiYXV0aF90aW1lIjoxNzQ1NDgyMTIyLCJqdGkiOiIyNzNiZmUyNy0xMWYyLTQ4YjktODY4Yi00ZmZjMWQ2MjM0MzYiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2Utc2Nob29sLWpvdXJuYWwiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiYjM2MDdkYmYtNDFiNi00M2NhLWEwOGMtODk4ODZmM2MwNDNiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZS1zY2hvb2wtam91cm5hbCIsInNpZCI6ImJkMjBjY2UzLTU1MGItNGJmMy1iMTVmLWRjYzUxZWUxMjU4OSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ0ZWFjaGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1lLXNjaG9vbC1qb3VybmFsIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwibWFuYWdlLXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJ0ZXN0IHRlc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0IiwiZ2l2ZW5fbmFtZSI6InRlc3QiLCJmYW1pbHlfbmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAdGVzdC50ZXN0In0.YecrvLbWxqJmq5duf6VO-7ie_OC6yMEUbFyTFBb-sKcL1sFc-OkAjCrhRCidqakeZX7GSEn1NCdFQLv10x_aETI4NrRdHrSbo7uLbEe7fA5FaneMECTYyd83UBAWYZfA6oAYwNUsDNX9N-86ZdkDIeBBhw1egEF4HxDTnewjE1aC5wUjwNB5bIv-gLvrM5gW2PsKhqxptyDGKOgkaul4Bqz6vz0hJ4l4Rkocx9CexMWvconx2gpdaCPecIqitcktkIBGlrpsbZbN0dZi2Wr25J8_AaQn9LcupAHn0UsquElPfz2qd003xAnPJYpwd66DvfWv7UlxMfnZnu-_R1pVLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"credentials\": [\r\n                {\r\n                    \"temporary\": false,\r\n                    \"type\": \"password\",\r\n                    \"value\": \"123\"\r\n                }\r\n            ],\r\n            \"username\": \"test000\",\r\n            \"firstName\": \"test\",\r\n            \"email\": \"test123450@test.test\",\r\n            \"emailVerified\": false,\r\n            \"enabled\": true\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/realms/e-school-journal/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"realms",
+						"e-school-journal",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SExYTVJKbmp6UmpVOVVRZlV4MVZ3LVZNODNVSzl5cHVPcXFBSm44WWQ0In0.eyJleHAiOjE3NDU0OTIyNjcsImlhdCI6MTc0NTQ5MDQ2NywiYXV0aF90aW1lIjoxNzQ1NDkwNDY3LCJqdGkiOiJhNzg0NzE3ZC00YWNjLTQ5NWYtOTA3NC0xZTA4NTI0NzZiYzAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2Utc2Nob29sLWpvdXJuYWwiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiYjM2MDdkYmYtNDFiNi00M2NhLWEwOGMtODk4ODZmM2MwNDNiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZS1zY2hvb2wtam91cm5hbCIsInNpZCI6IjE2OTU1OWVhLTg0MjktNDY5MS1hNmViLTA3OTI1NzZiM2UzZCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ0ZWFjaGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1lLXNjaG9vbC1qb3VybmFsIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwibWFuYWdlLXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJ0ZXN0IHRlc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0IiwiZ2l2ZW5fbmFtZSI6InRlc3QiLCJmYW1pbHlfbmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAdGVzdC50ZXN0In0.LAzAzqXJZp-QIckoKL8qfp6Knips-fh-_CcwlX6zQQyFGA5oqR7tn_cqdC-kWcBzHisc2j5782rXbMnczvyab-U9XQBumcO6o1KyxaeRDuQ3uCKn-KQPiw3wqmWdpqJ_Auwk8xu9N2eGaLnRP_jYcXRvdD9wkSbpKhvrLXrVacyAX8gMbQofgDUMTAcKVM4sXnl9yyQI-N501zbxl9MxfyRQze9F9Ygv0dw7tlHNMEcaa_P7xLpdOkUoKLdLNy4WfleFGCeKHypnCiJi8k5btK9K3YIYVFUUiHhVuuqh4DuzR6Ujl8i1espBqb5EVYxVYMtfS9kLaccxD_fPvutHbQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/admin/realms/e-school-journal/roles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"realms",
+						"e-school-journal",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SExYTVJKbmp6UmpVOVVRZlV4MVZ3LVZNODNVSzl5cHVPcXFBSm44WWQ0In0.eyJleHAiOjE3NDU0ODQyNjcsImlhdCI6MTc0NTQ4Mzk2NywiYXV0aF90aW1lIjoxNzQ1NDgyMTIyLCJqdGkiOiI5YjZkYjI1OS0xZjU0LTQ5ZjMtODZmNC1iZTUwNTBlNjI1MGYiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2Utc2Nob29sLWpvdXJuYWwiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiYjM2MDdkYmYtNDFiNi00M2NhLWEwOGMtODk4ODZmM2MwNDNiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZS1zY2hvb2wtam91cm5hbCIsInNpZCI6ImJkMjBjY2UzLTU1MGItNGJmMy1iMTVmLWRjYzUxZWUxMjU4OSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ0ZWFjaGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1lLXNjaG9vbC1qb3VybmFsIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwibWFuYWdlLXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJ0ZXN0IHRlc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0IiwiZ2l2ZW5fbmFtZSI6InRlc3QiLCJmYW1pbHlfbmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAdGVzdC50ZXN0In0.BnEGYXOHtYnZ-1N7JCx9s5nqwYi2DTF_mFsiAyIjoZVrWWBRXnrrMQPOYRwoYETsihzYNqqDJDbXn2_LbXC4IfaG5BkKFQm2HnWG93KXZD_MPQm-093izfe6LFBk1WaK6oPtcRcPwr0jjP8o5tUTjMiWLLdYOpfDCBRFx6cY_Oh6DhZyD907NQ2EpsP4KdPg9ipGdKRdVCOVREv1SH-ahoEhuvVyO2qiWb0B4l4vguy_akmlvkkA5xa9o_M4qH7fq3JPthLvgO07J6BS4YyrDhOCrom3YKiHKf5l-nb5TrWqUu07VE-C--SWxiUfiFhdZKGli3JGvy8ib5KI_0Vpsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"da51d90a-87d3-400d-99c2-5f26d1fe6a69\", // role id\r\n    \"name\": \"teacher\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/realms/e-school-journal/users/238a1476-ec48-436f-b391-a9359cd7aec7/role-mappings/realm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"realms",
+						"e-school-journal",
+						"users",
+						"238a1476-ec48-436f-b391-a9359cd7aec7",
+						"role-mappings",
+						"realm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SExYTVJKbmp6UmpVOVVRZlV4MVZ3LVZNODNVSzl5cHVPcXFBSm44WWQ0In0.eyJleHAiOjE3NDU0OTIyNjcsImlhdCI6MTc0NTQ5MDQ2NywiYXV0aF90aW1lIjoxNzQ1NDkwNDY3LCJqdGkiOiJhNzg0NzE3ZC00YWNjLTQ5NWYtOTA3NC0xZTA4NTI0NzZiYzAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2Utc2Nob29sLWpvdXJuYWwiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiYjM2MDdkYmYtNDFiNi00M2NhLWEwOGMtODk4ODZmM2MwNDNiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZS1zY2hvb2wtam91cm5hbCIsInNpZCI6IjE2OTU1OWVhLTg0MjktNDY5MS1hNmViLTA3OTI1NzZiM2UzZCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ0ZWFjaGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1lLXNjaG9vbC1qb3VybmFsIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwibWFuYWdlLXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJ0ZXN0IHRlc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0IiwiZ2l2ZW5fbmFtZSI6InRlc3QiLCJmYW1pbHlfbmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAdGVzdC50ZXN0In0.LAzAzqXJZp-QIckoKL8qfp6Knips-fh-_CcwlX6zQQyFGA5oqR7tn_cqdC-kWcBzHisc2j5782rXbMnczvyab-U9XQBumcO6o1KyxaeRDuQ3uCKn-KQPiw3wqmWdpqJ_Auwk8xu9N2eGaLnRP_jYcXRvdD9wkSbpKhvrLXrVacyAX8gMbQofgDUMTAcKVM4sXnl9yyQI-N501zbxl9MxfyRQze9F9Ygv0dw7tlHNMEcaa_P7xLpdOkUoKLdLNy4WfleFGCeKHypnCiJi8k5btK9K3YIYVFUUiHhVuuqh4DuzR6Ujl8i1espBqb5EVYxVYMtfS9kLaccxD_fPvutHbQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/admin/realms/e-school-journal/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"realms",
+						"e-school-journal",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "e-school-journal-react",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/realms/e-school-journal/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realms",
+						"e-school-journal",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by email",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0SExYTVJKbmp6UmpVOVVRZlV4MVZ3LVZNODNVSzl5cHVPcXFBSm44WWQ0In0.eyJleHAiOjE3NDU0OTIyNjcsImlhdCI6MTc0NTQ5MDQ2NywiYXV0aF90aW1lIjoxNzQ1NDkwNDY3LCJqdGkiOiJhNzg0NzE3ZC00YWNjLTQ5NWYtOTA3NC0xZTA4NTI0NzZiYzAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL2Utc2Nob29sLWpvdXJuYWwiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiYjM2MDdkYmYtNDFiNi00M2NhLWEwOGMtODk4ODZmM2MwNDNiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZS1zY2hvb2wtam91cm5hbCIsInNpZCI6IjE2OTU1OWVhLTg0MjktNDY5MS1hNmViLTA3OTI1NzZiM2UzZCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJ0ZWFjaGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1lLXNjaG9vbC1qb3VybmFsIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsicmVhbG0tbWFuYWdlbWVudCI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwibWFuYWdlLXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJ0ZXN0IHRlc3QiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0ZXN0IiwiZ2l2ZW5fbmFtZSI6InRlc3QiLCJmYW1pbHlfbmFtZSI6InRlc3QiLCJlbWFpbCI6InRlc3RAdGVzdC50ZXN0In0.LAzAzqXJZp-QIckoKL8qfp6Knips-fh-_CcwlX6zQQyFGA5oqR7tn_cqdC-kWcBzHisc2j5782rXbMnczvyab-U9XQBumcO6o1KyxaeRDuQ3uCKn-KQPiw3wqmWdpqJ_Auwk8xu9N2eGaLnRP_jYcXRvdD9wkSbpKhvrLXrVacyAX8gMbQofgDUMTAcKVM4sXnl9yyQI-N501zbxl9MxfyRQze9F9Ygv0dw7tlHNMEcaa_P7xLpdOkUoKLdLNy4WfleFGCeKHypnCiJi8k5btK9K3YIYVFUUiHhVuuqh4DuzR6Ujl8i1espBqb5EVYxVYMtfS9kLaccxD_fPvutHbQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/admin/realms/e-school-journal/users?email=test@test.test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"realms",
+						"e-school-journal",
+						"users"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "test@test.test"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
