@@ -1,3 +1,5 @@
+CREATE DATABASE e_school_journal;
+
 use e_school_journal;
 
 CREATE TABLE user (
@@ -47,7 +49,7 @@ CREATE TABLE teacher (
     FOREIGN KEY (user_iduser) REFERENCES user(id)
 );
 
-CREATE TABLE grade_has_subject (
+CREATE TABLE teaching (
     id INT PRIMARY KEY AUTO_INCREMENT,
     grade_grade_id INT,
     subject_idsubject INT,
@@ -77,11 +79,11 @@ CREATE TABLE students_has_parent (
     FOREIGN KEY (parent_idparent) REFERENCES parent(id)
 );
 
-CREATE TABLE student_studies_subject (
-    student_studies_subject_id INT PRIMARY KEY AUTO_INCREMENT,
-    grade_has_subject_id INT,
+CREATE TABLE studying (
+    studying_id INT PRIMARY KEY AUTO_INCREMENT,
+    teaching_id INT,
     students_idstudents INT,
-    FOREIGN KEY (grade_has_subject_id) REFERENCES grade_has_subject(id),
+    FOREIGN KEY (teaching_id) REFERENCES teaching(id),
     FOREIGN KEY (students_idstudents) REFERENCES student(id)
 );
 
@@ -89,14 +91,14 @@ CREATE TABLE mark (
     id INT PRIMARY KEY AUTO_INCREMENT,
     mark DOUBLE,
     mark_type ENUM('Pending', 'Approved', 'Rejected'),
-    student_studies_subject_id INT,
-    FOREIGN KEY (student_studies_subject_id) REFERENCES student_studies_subject(student_studies_subject_id)
+    studying_id INT,
+    FOREIGN KEY (studying_id) REFERENCES studying(studying_id)
 );
 
 CREATE TABLE absence (
     id INT PRIMARY KEY AUTO_INCREMENT,
     date DATE,
     absence_type ENUM('Excused', 'Unexcused'),
-    student_studies_subject_id INT,
-    FOREIGN KEY (student_studies_subject_id) REFERENCES student_studies_subject(student_studies_subject_id)
+    studying_id INT,
+    FOREIGN KEY (studying_id) REFERENCES studying(studying_id)
 );

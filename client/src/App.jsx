@@ -1,33 +1,34 @@
-import React from "react";
-import { ReactKeycloakProvider } from "@react-keycloak/web";
-import keycloak from "./Keycloak";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Nav from "./components/Nav";
-import WelcomePage from "./pages/Homepage";
-import SecuredPage from "./pages/SecuredPage";
-import PrivateRoute from "./helpers/PrivateRoute";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/KeycloakContext';
+import NavBar from './components/NavBar';
+import HomePage from './pages/HomePage';
+import AdminPage from './pages/AdminPage';
+import Unauthorized from './pages/UnauthorizedPage';
+import ProtectedRoute from './routes/ProtectedRoute';
+import NotFoundPage from './pages/NotFoundPage';
+import NewUserForm from './components/NewUserForm';
 
 function App() {
- return (
-   <div>
-     <ReactKeycloakProvider authClient={keycloak}>
-       <Nav />
-       <BrowserRouter>
-         <Routes>
-           <Route exact path="/" element={<WelcomePage />} />
-           <Route
-             path="/secured"
-             element={
-               <PrivateRoute>
-                 <SecuredPage />
-               </PrivateRoute>
-             }
-           />
-         </Routes>
-       </BrowserRouter>
-     </ReactKeycloakProvider>
-   </div>
- );
+  return (
+    <AuthProvider>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={
+          <ProtectedRoute roles={['admin']}>
+            <AdminPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/register-user" element={
+          <ProtectedRoute roles={['admin']}>
+            <NewUserForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </AuthProvider>
+  );
 }
 
 export default App;
