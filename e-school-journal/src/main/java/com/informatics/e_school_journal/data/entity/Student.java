@@ -3,15 +3,17 @@ package com.informatics.e_school_journal.data.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import lombok.*;
 
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 public class Student extends BaseEntity {
-    @OneToOne
-    private User user;
-
     @OneToMany(mappedBy = "student")
     private Set<Studying> studyingSet;
 

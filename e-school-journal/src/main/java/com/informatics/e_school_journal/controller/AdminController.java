@@ -25,6 +25,9 @@ public class AdminController {
 
     @PostMapping
     public Mono<Admin> createAdmin(@RequestBody Admin admin) {
+        System.out.println("==============");
+        System.out.println(admin.toString());
+        System.out.println("==============");
         return adminService.createAdmin(admin);
     }
 

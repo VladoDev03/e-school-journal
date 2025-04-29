@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createUser, getRoles, addRolesToUser, getUserByEmail } from "../services/authService";
+import { createAdmin } from "../services/adminService";
 
 const NewUserForm = () => {
     const [roles, setRoles] = useState([]);
@@ -62,6 +63,13 @@ const NewUserForm = () => {
             await createUser(userData);
             const resultUser = await getUserByEmail(userData.email);
             await addRolesToUser(resultUser[0].id, selectedRoles);
+
+            console.log(resultUser[0].id);
+
+            if (selectedRoles.some(r => r.name === 'admin')) {
+                createAdmin({ keycloakId: resultUser[0].id });
+            }
+
             alert("User created successfully!");
         } catch (error) {
             console.error("Error creating user:", error);
