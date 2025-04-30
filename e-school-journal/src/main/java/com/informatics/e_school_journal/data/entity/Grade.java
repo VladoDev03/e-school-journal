@@ -1,17 +1,23 @@
 package com.informatics.e_school_journal.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Grade extends BaseEntity{
     private int grade;
     private String stream;
-    @ManyToOne
-    private School school;
-    @OneToMany(mappedBy = "grade")
-    private Set<Teaching> teachings;
+//    @ManyToOne
+//    @Column
+//    private School school;
+    private long schoolId;
+//    @OneToMany(mappedBy = "grade")
+//    private Set<Teaching> teachings;
 }
