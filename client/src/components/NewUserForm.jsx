@@ -64,8 +64,6 @@ const NewUserForm = () => {
             const resultUser = await getUserByEmail(userData.email);
             await addRolesToUser(resultUser[0].id, selectedRoles);
 
-            console.log(resultUser[0].id);
-
             if (selectedRoles.some(r => r.name === 'admin')) {
                 createAdmin({ keycloakId: resultUser[0].id });
             }

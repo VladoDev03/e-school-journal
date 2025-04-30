@@ -3,10 +3,14 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.data.entity.Admin;
 import com.informatics.e_school_journal.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@EnableReactiveMethodSecurity
+@PreAuthorize("hasAuthority('admin')")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/admins")
@@ -25,9 +29,6 @@ public class AdminController {
 
     @PostMapping
     public Mono<Admin> createAdmin(@RequestBody Admin admin) {
-        System.out.println("==============");
-        System.out.println(admin.toString());
-        System.out.println("==============");
         return adminService.createAdmin(admin);
     }
 

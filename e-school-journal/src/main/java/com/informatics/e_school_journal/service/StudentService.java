@@ -8,6 +8,6 @@ public interface StudentService {
     Flux<Student> getStudents();
     Mono<Student> getStudentById(long id);
     Mono<Student> createStudent(Student student);
-    Mono<Student> updateStudent(Student student);
+    Mono<Student> updateStudent(long id, Student student);
     Mono<Void> deleteStudent(long id);
 }

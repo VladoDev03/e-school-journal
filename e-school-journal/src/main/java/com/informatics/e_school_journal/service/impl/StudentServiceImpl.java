@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Mono<Student> updateStudent(Student student) {
+    public Mono<Student> updateStudent(long id, Student student) {
         return this.studentRepository.save(student);
     }
 

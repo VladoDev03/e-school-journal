@@ -1,9 +1,11 @@
 package com.informatics.e_school_journal.data.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.Set;
 
@@ -14,9 +16,15 @@ import java.util.Set;
 @ToString
 @Entity
 public class Student extends BaseEntity {
-    @OneToMany(mappedBy = "student")
-    private Set<Studying> studyingSet;
+    @Column(name = "keycloak_id")
+    private String keycloakId;
 
-    @ManyToMany(mappedBy = "children")
-    private Set<Parent> parents;
+//    private long studyingId;
+//    private long parentId;
+
+//    @OneToMany(mappedBy = "student")
+//    private Set<Studying> studyingSet;
+
+//    @ManyToMany(mappedBy = "children")
+//    private Set<Parent> parents;
 }
