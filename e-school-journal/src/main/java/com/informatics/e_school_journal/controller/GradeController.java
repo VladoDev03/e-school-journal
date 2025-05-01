@@ -1,6 +1,9 @@
 package com.informatics.e_school_journal.controller;
 
 import com.informatics.e_school_journal.data.entity.Grade;
+import com.informatics.e_school_journal.dto.GradeDto.CreateGradeDto;
+import com.informatics.e_school_journal.dto.GradeDto.GradeDto;
+import com.informatics.e_school_journal.dto.GradeDto.UpdateGradeDto;
 import com.informatics.e_school_journal.service.GradeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,31 +21,31 @@ public class GradeController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public Mono<Grade> createGrade(@RequestBody Grade grade) {
-        return gradeService.createGrade(grade);
+    public Mono<GradeDto> createGrade(@RequestBody CreateGradeDto createGradeDto) {
+        return this.gradeService.createGrade(createGradeDto);
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public Mono<Grade> getGradeById(@PathVariable long id) {
-        return gradeService.getGradeById(id);
+    public Mono<GradeDto> getGradeById(@PathVariable long id) {
+        return this.gradeService.getGradeById(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
-    public Flux<Grade> getGrades() {
-        return gradeService.getGrades();
+    public Flux<GradeDto> getGrades() {
+        return this.gradeService.getGrades();
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public Mono<Grade> updateGrade(@PathVariable long id, @RequestBody Grade grade) {
-        return gradeService.updateGrade(id, grade);
+    public Mono<GradeDto> updateGrade(@PathVariable long id, @RequestBody UpdateGradeDto updateGradeDto) {
+        return this.gradeService.updateGrade(id, updateGradeDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public Mono<Void> deleteGrade(@PathVariable long id) {
-        return gradeService.deleteGrade(id);
+        return this.gradeService.deleteGrade(id);
     }
 }

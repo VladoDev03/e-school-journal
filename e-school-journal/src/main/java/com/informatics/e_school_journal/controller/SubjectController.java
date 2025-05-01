@@ -1,6 +1,9 @@
 package com.informatics.e_school_journal.controller;
 
 import com.informatics.e_school_journal.data.entity.Subject;
+import com.informatics.e_school_journal.dto.SubjectDto.CreateSubjectDto;
+import com.informatics.e_school_journal.dto.SubjectDto.SubjectDto;
+import com.informatics.e_school_journal.dto.SubjectDto.UpdateSubjectDto;
 import com.informatics.e_school_journal.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,32 +19,32 @@ public class SubjectController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public Mono<Subject> createSubject(@RequestBody Subject subject) {
-        return subjectService.createSubject(subject);
+    public Mono<SubjectDto> createSubject(@RequestBody CreateSubjectDto createSubjectDto) {
+        return this.subjectService.createSubject(createSubjectDto);
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public Mono<Subject> getSubjectById(@PathVariable long id){
-        return subjectService.getSubjectById(id);
+    public Mono<SubjectDto> getSubjectById(@PathVariable long id){
+        return this.subjectService.getSubjectById(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
-    public Flux<Subject> getSubjects(){
-        return subjectService.getSubjects();
+    public Flux<SubjectDto> getSubjects(){
+        return this.subjectService.getSubjects();
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public Mono<Subject> updateSubject(@PathVariable long id, @RequestBody Subject subject) {
-        return subjectService.updateSubject(id, subject);
+    public Mono<SubjectDto> updateSubject(@PathVariable long id, @RequestBody UpdateSubjectDto updateSubjectDto) {
+        return this.subjectService.updateSubject(id, updateSubjectDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public Mono<Void> deleteSubject(@PathVariable long id) {
-        return subjectService.deleteSubject(id);
+        return this.subjectService.deleteSubject(id);
     }
 
 }

@@ -1,8 +1,11 @@
 package com.informatics.e_school_journal.service.impl;
 
+import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Grade;
-import com.informatics.e_school_journal.data.entity.Subject;
 import com.informatics.e_school_journal.data.repo.GradeRepository;
+import com.informatics.e_school_journal.dto.GradeDto.CreateGradeDto;
+import com.informatics.e_school_journal.dto.GradeDto.GradeDto;
+import com.informatics.e_school_journal.dto.GradeDto.UpdateGradeDto;
 import com.informatics.e_school_journal.service.GradeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,37 +16,44 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class GradeServiceImpl implements GradeService {
     private final GradeRepository gradeRepository;
+    private final ModelMapperConfig mapperConfig;
 
     @Override
-    public Mono<Grade> createGrade(Grade grade) {
-        return gradeRepository.save(grade);
+    public Mono<GradeDto> createGrade(CreateGradeDto createGradeDto) {
+        Grade grade = mapperConfig.getModelMapper().map(createGradeDto, Grade.class);
+        return this.gradeRepository.save(grade)
+                .map(savedGrade -> mapperConfig.getModelMapper().map(savedGrade, GradeDto.class));
     }
 
     @Override
-    public Mono<Grade> getGradeById(long id) {
-        return gradeRepository.findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("Grade not found!")));
+    public Mono<GradeDto> getGradeById(long id) {
+        return this.gradeRepository.findById(id)
+                .map(grade -> this.mapperConfig
+                        .getModelMapper()
+                        .map(grade, GradeDto.class));
     }
 
     @Override
-    public Flux<Grade> getGrades() {
-        return gradeRepository.findAll();
+    public Flux<GradeDto> getGrades() {
+        return this.gradeRepository.findAll()
+                .map(grade -> this.mapperConfig
+                        .getModelMapper()
+                        .map(grade, GradeDto.class));
     }
 
     @Override
-    public Mono<Grade> updateGrade(long id, Grade grade) {
-        return gradeRepository.findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("Grade not found!")))
+    public Mono<GradeDto> updateGrade(long id, UpdateGradeDto updateGradeDto) {
+        return this.gradeRepository.findById(id)
                 .flatMap(existingGrade -> {
-                    existingGrade.setGrade(grade.getGrade());
-                    existingGrade.setStream(grade.getStream());
-
-                    return gradeRepository.save(existingGrade);
-                });
+                    mapperConfig.getModelMapper().map(updateGradeDto, existingGrade);
+                    return this.gradeRepository.save(existingGrade);
+                })
+                .switchIfEmpty(Mono.error(new Exception("Grade not found with id: " + id)))
+                .map(updatedGrade -> mapperConfig.getModelMapper().map(updatedGrade, GradeDto.class));
     }
 
     @Override
     public Mono<Void> deleteGrade(long id) {
-        return gradeRepository.deleteById(id);
+        return this.gradeRepository.deleteById(id);
     }
 }
