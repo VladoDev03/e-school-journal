@@ -40,6 +40,9 @@ public class SecurityConfig {
         http
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/api/test/**").hasAuthority("admin")
+                        .pathMatchers("/api/school/**").hasAuthority("admin")
+                        .pathMatchers("/api/director/**").hasAuthority("admin")
+                        .pathMatchers("/api/admin/**").hasAuthority("admin")
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
