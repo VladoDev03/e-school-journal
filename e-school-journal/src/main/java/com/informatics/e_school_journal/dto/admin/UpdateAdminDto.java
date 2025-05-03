@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AdminDto {
-    private long id;
+public class UpdateAdminDto {
     private String keycloakId;
 }

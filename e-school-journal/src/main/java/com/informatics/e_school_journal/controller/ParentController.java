@@ -1,6 +1,8 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.data.entity.Parent;
+import com.informatics.e_school_journal.dto.parent.CreateParentDto;
+import com.informatics.e_school_journal.dto.parent.ParentDto;
+import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
 import com.informatics.e_school_journal.service.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,26 +18,26 @@ public class ParentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
-    public Flux<Parent> getParents() {
+    public Flux<ParentDto> getParents() {
         return parentService.getParents();
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public Mono<Parent> getParentById(@PathVariable long id) {
+    public Mono<ParentDto> getParentById(@PathVariable long id) {
         return parentService.getParentById(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public Mono<Parent> createParent(@RequestBody Parent parent) {
-        return parentService.createParent(parent);
+    public Mono<ParentDto> createParent(@RequestBody CreateParentDto createParentDto) {
+        return parentService.createParent(createParentDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping
-    public Mono<Parent> updateParent(@RequestBody Parent parent) {
-        return parentService.updateParent(parent);
+    @PutMapping("/{id}")
+    public Mono<ParentDto> updateParent(@PathVariable long id, @RequestBody UpdateParentDto updateParentDto) {
+        return parentService.updateParent(id, updateParentDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")

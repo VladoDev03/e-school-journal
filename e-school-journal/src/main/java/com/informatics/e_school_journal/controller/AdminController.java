@@ -1,6 +1,8 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.data.entity.Admin;
+import com.informatics.e_school_journal.dto.admin.AdminDto;
+import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
+import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import com.informatics.e_school_journal.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,23 +20,23 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping
-    public Flux<Admin> getAdmins() {
+    public Flux<AdminDto> getAdmins() {
         return adminService.getAdmins();
     }
 
     @GetMapping("/{id}")
-    public Mono<Admin> getAdminById(@PathVariable Long id) {
+    public Mono<AdminDto> getAdminById(@PathVariable long id) {
         return adminService.getAdminById(id);
     }
 
     @PostMapping
-    public Mono<Admin> createAdmin(@RequestBody Admin admin) {
-        return adminService.createAdmin(admin);
+    public Mono<AdminDto> createAdmin(@RequestBody CreateAdminDto createAdminDto) {
+        return adminService.createAdmin(createAdminDto);
     }
 
-    @PutMapping
-    public Mono<Admin> updateAdmin(@RequestBody Admin admin) {
-        return adminService.updateAdmin(admin);
+    @PutMapping("/{id}")
+    public Mono<AdminDto> updateAdmin(@PathVariable long id, @RequestBody UpdateAdminDto updateAdminDto) {
+        return adminService.updateAdmin(id, updateAdminDto);
     }
 
     @DeleteMapping("/{id}")

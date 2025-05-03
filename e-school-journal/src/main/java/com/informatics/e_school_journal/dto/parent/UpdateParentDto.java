@@ -1,4 +1,4 @@
-package com.informatics.e_school_journal.dto.admin;
+package com.informatics.e_school_journal.dto.parent;
 
 import lombok.*;
 
@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AdminDto {
-    private long id;
+public class UpdateParentDto {
     private String keycloakId;
 }
