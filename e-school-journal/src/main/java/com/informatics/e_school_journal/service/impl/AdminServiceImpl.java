@@ -3,9 +3,9 @@ package com.informatics.e_school_journal.service.impl;
 import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Admin;
 import com.informatics.e_school_journal.data.repo.AdminRepository;
-import com.informatics.e_school_journal.dto.AdminDtos.CreateAdminDto;
-import com.informatics.e_school_journal.dto.AdminDtos.AdminDto;
-import com.informatics.e_school_journal.dto.AdminDtos.UpdateAdminDto;
+import com.informatics.e_school_journal.dto.admin.AdminDto;
+import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
+import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import com.informatics.e_school_journal.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,29 @@ import reactor.core.publisher.Mono;
 public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final ModelMapperConfig mapperConfig;
+
+    @Override
+    public Flux<AdminDto> getAdmins() {
+        return this.adminRepository.findAll()
+                .map(admin -> this.mapperConfig
+                        .getModelMapper()
+                        .map(admin, AdminDto.class));
+    }
+
+    @Override
+    public Mono<AdminDto> getAdminById(long id) {
+        return this.adminRepository.findById(id)
+                .map(admin -> this.mapperConfig
+                        .getModelMapper()
+                        .map(admin, AdminDto.class));
+    }
+
     @Override
     public Mono<AdminDto> createAdmin(CreateAdminDto createAdminDto) {
         Admin admin = mapperConfig.getModelMapper().map(createAdminDto, Admin.class);
-        return adminRepository.save(admin)
-                .map(savedAdmin -> mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class));
 
+        return this.adminRepository.save(admin)
+                .map(savedAdmin -> this.mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class));
     }
 
     @Override
@@ -34,7 +51,6 @@ public class AdminServiceImpl implements AdminService {
                 })
                 .switchIfEmpty(Mono.error(new Exception("Admin not found with id: " + id)))
                 .map(updatedAdmin -> mapperConfig.getModelMapper().map(updatedAdmin, AdminDto.class));
-
     }
 
     @Override
@@ -57,6 +73,6 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Mono<Void> deleteAdmin(long id) {
-        return adminRepository.deleteById(id);
+        return this.adminRepository.deleteById(id);
     }
 }

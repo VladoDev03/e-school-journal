@@ -1,0 +1,324 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: yourname
+      changes:
+        - createTable:
+            tableName: admin
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: keycloak_id
+                  type: VARCHAR(45)
+
+  - changeSet:
+      id: 2
+      author: yourname
+      changes:
+        - createTable:
+            tableName: school
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(45)
+              - column:
+                  name: address
+                  type: VARCHAR(45)
+
+  - changeSet:
+      id: 3
+      author: yourname
+      changes:
+        - createTable:
+            tableName: director
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: school_id
+                  type: INT
+              - column:
+                  name: keycloak_id
+                  type: VARCHAR(45)
+        - addForeignKeyConstraint:
+            constraintName: fk_director_school
+            baseTableName: director
+            baseColumnNames: school_id
+            referencedTableName: school
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 4
+      author: yourname
+      changes:
+        - createTable:
+            tableName: grade
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: grade
+                  type: INT
+              - column:
+                  name: stream
+                  type: VARCHAR(1)
+              - column:
+                  name: school_id
+                  type: INT
+        - addForeignKeyConstraint:
+            constraintName: fk_grade_school
+            baseTableName: grade
+            baseColumnNames: school_id
+            referencedTableName: school
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 5
+      author: yourname
+      changes:
+        - createTable:
+            tableName: subject
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(45)
+
+  - changeSet:
+      id: 6
+      author: yourname
+      changes:
+        - createTable:
+            tableName: teacher
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(45)
+              - column:
+                  name: keycloak_id
+                  type: VARCHAR(45)
+
+  - changeSet:
+      id: 7
+      author: yourname
+      changes:
+        - createTable:
+            tableName: teaching
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: grade_id
+                  type: INT
+              - column:
+                  name: subject_id
+                  type: INT
+              - column:
+                  name: teacher_id
+                  type: INT
+        - addForeignKeyConstraint:
+            constraintName: fk_teaching_grade
+            baseTableName: teaching
+            baseColumnNames: grade_id
+            referencedTableName: grade
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_teaching_subject
+            baseTableName: teaching
+            baseColumnNames: subject_id
+            referencedTableName: subject
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_teaching_teacher
+            baseTableName: teaching
+            baseColumnNames: teacher_id
+            referencedTableName: teacher
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 8
+      author: yourname
+      changes:
+        - createTable:
+            tableName: student
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: keycloak_id
+                  type: VARCHAR(45)
+
+  - changeSet:
+      id: 9
+      author: yourname
+      changes:
+        - createTable:
+            tableName: parent
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: keycloak_id
+                  type: VARCHAR(45)
+
+  - changeSet:
+      id: 10
+      author: yourname
+      changes:
+        - createTable:
+            tableName: students_has_parent
+            columns:
+              - column:
+                  name: student_id
+                  type: INT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: parent_id
+                  type: INT
+                  constraints:
+                    primaryKey: true
+        - addForeignKeyConstraint:
+            constraintName: fk_s_p_student
+            baseTableName: students_has_parent
+            baseColumnNames: student_id
+            referencedTableName: student
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_s_p_parent
+            baseTableName: students_has_parent
+            baseColumnNames: parent_id
+            referencedTableName: parent
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 11
+      author: yourname
+      changes:
+        - createTable:
+            tableName: studying
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: teaching_id
+                  type: INT
+              - column:
+                  name: student_id
+                  type: INT
+        - addForeignKeyConstraint:
+            constraintName: fk_studying_teaching
+            baseTableName: studying
+            baseColumnNames: teaching_id
+            referencedTableName: teaching
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_studying_student
+            baseTableName: studying
+            baseColumnNames: student_id
+            referencedTableName: student
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 12
+      author: yourname
+      changes:
+        - createTable:
+            tableName: mark
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: mark
+                  type: DOUBLE
+              - column:
+                  name: mark_type
+                  type: ENUM('Pending', 'Approved', 'Rejected')
+              - column:
+                  name: studying_id
+                  type: INT
+        - addForeignKeyConstraint:
+            constraintName: fk_mark_studying
+            baseTableName: mark
+            baseColumnNames: studying_id
+            referencedTableName: studying
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 13
+      author: yourname
+      changes:
+        - createTable:
+            tableName: absence
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: date
+                  type: DATE
+              - column:
+                  name: absence_type
+                  type: ENUM('Excused', 'Unexcused')
+              - column:
+                  name: studying_id
+                  type: INT
+        - addForeignKeyConstraint:
+            constraintName: fk_absence_studying
+            baseTableName: absence
+            baseColumnNames: studying_id
+            referencedTableName: studying
+            referencedColumnNames: id

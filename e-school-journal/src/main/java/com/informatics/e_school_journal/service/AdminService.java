@@ -1,18 +1,15 @@
 package com.informatics.e_school_journal.service;
 
-import com.informatics.e_school_journal.dto.AdminDtos.CreateAdminDto;
-import com.informatics.e_school_journal.dto.AdminDtos.AdminDto;
-import com.informatics.e_school_journal.dto.AdminDtos.UpdateAdminDto;
+import com.informatics.e_school_journal.dto.admin.AdminDto;
+import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
+import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface AdminService {
-    Mono<AdminDto> createAdmin(CreateAdminDto createAdminDto);
-
-    Mono<AdminDto> updateAdmin(long id, UpdateAdminDto updateAdminDto);
-
+    Flux<AdminDto> getAdmins();
     Mono<AdminDto> getAdminById(long id);
-
-    Flux<AdminDto> getAllAdmins();
+    Mono<AdminDto> createAdmin(CreateAdminDto createAdminDto);
+    Mono<AdminDto> updateAdmin(long id, UpdateAdminDto updateAdminDto);
     Mono<Void> deleteAdmin(long id);
 }

@@ -1,9 +1,9 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.AdminDtos.CreateAdminDto;
-import com.informatics.e_school_journal.dto.AdminDtos.AdminDto;
-import com.informatics.e_school_journal.dto.AdminDtos.UpdateAdminDto;
-import com.informatics.e_school_journal.service.impl.AdminServiceImpl;
+import com.informatics.e_school_journal.dto.admin.AdminDto;
+import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
+import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
+import com.informatics.e_school_journal.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -12,42 +12,35 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @EnableReactiveMethodSecurity
+@PreAuthorize("hasAuthority('admin')")
 @RestController
-@RequestMapping("/api/admin")
 @RequiredArgsConstructor
+@RequestMapping("/api/admins")
 public class AdminController {
-    private final AdminServiceImpl adminService;
+    private final AdminService adminService;
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping
     public Flux<AdminDto> getAdmins() {
-        return this.adminService.getAllAdmins();
+        return adminService.getAdmins();
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/{id}")
     public Mono<AdminDto> getAdminById(@PathVariable long id) {
-        return this.adminService.getAdminById(id);
+        return adminService.getAdminById(id);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping
     public Mono<AdminDto> createAdmin(@RequestBody CreateAdminDto createAdminDto) {
-        return this.adminService.createAdmin(createAdminDto);
+        return adminService.createAdmin(createAdminDto);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
     public Mono<AdminDto> updateAdmin(@PathVariable long id, @RequestBody UpdateAdminDto updateAdminDto) {
-        return this.adminService.updateAdmin(id, updateAdminDto);
+        return adminService.updateAdmin(id, updateAdminDto);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public Mono<Void> deleteAdmin(@PathVariable long id) {
-        return this.adminService.deleteAdmin(id);
+        return adminService.deleteAdmin(id);
     }
-
-
 }
-
