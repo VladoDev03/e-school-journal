@@ -49,8 +49,26 @@ public class AdminServiceImpl implements AdminService {
                     mapperConfig.getModelMapper().map(updateAdminDto, existingAdmin);
                     return this.adminRepository.save(existingAdmin);
                 })
-                .switchIfEmpty(Mono.error(new Exception("Admin with id " + id + " was not found")))
+                .switchIfEmpty(Mono.error(new Exception("Admin not found with id: " + id)))
                 .map(updatedAdmin -> mapperConfig.getModelMapper().map(updatedAdmin, AdminDto.class));
+    }
+
+    @Override
+    public Mono<AdminDto> getAdminById(long id) {
+        return this.adminRepository.findById(id)
+                .map(admin ->
+                        this.mapperConfig
+                                .getModelMapper()
+                                .map(admin, AdminDto.class)
+                );
+    }
+
+    @Override
+    public Flux<AdminDto> getAllAdmins() {
+        return this.adminRepository.findAll()
+                .map(admin -> this.mapperConfig
+                        .getModelMapper()
+                        .map(admin, AdminDto.class));
     }
 
     @Override
