@@ -54,24 +54,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Mono<AdminDto> getAdminById(long id) {
-        return this.adminRepository.findById(id)
-                .map(admin ->
-                        this.mapperConfig
-                                .getModelMapper()
-                                .map(admin, AdminDto.class)
-                );
-    }
-
-    @Override
-    public Flux<AdminDto> getAllAdmins() {
-        return this.adminRepository.findAll()
-                .map(admin -> this.mapperConfig
-                        .getModelMapper()
-                        .map(admin, AdminDto.class));
-    }
-
-    @Override
     public Mono<Void> deleteAdmin(long id) {
         return this.adminRepository.deleteById(id);
     }
