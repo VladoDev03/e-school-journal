@@ -12,10 +12,5 @@ public class ModelMapperConfig {
         return new ModelMapper();
     }
 
-//    public <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
-//        return source
-//                .stream()
-//                .map(element -> getModelMapper().map(element, targetClass))
-//                .collect(Collectors.toList());
-//    }
 }
+
