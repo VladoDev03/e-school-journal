@@ -8,10 +8,12 @@ import com.informatics.e_school_journal.dto.schoolDtos.UpdateSchoolDto;
 import com.informatics.e_school_journal.service.impl.SchoolServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@EnableReactiveMethodSecurity
 @RestController
 @RequestMapping("/api/school")
 @RequiredArgsConstructor
@@ -19,32 +21,32 @@ import reactor.core.publisher.Mono;
 public class SchoolController {
     private final SchoolServiceImpl schoolService;
 
-//    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping
     public Flux<SchoolDto> getSchools() {
         return this.schoolService.getAllSchools();
     }
 
-//    @PreAuthorize("hasAnyAuthority('admin') or hasAnyAuthority('director') or hasAnyAuthority('teacher') or hasAnyAuthority('student') or hasAnyAuthority('parent')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('director') or hasAuthority('teacher') or hasAuthority('student') or hasAuthority('parent')")
     @GetMapping("/{id}")
     public Mono<SchoolDto> getSchoolById(@PathVariable long id) {
         return this.schoolService.getSchoolById(id);
     }
 
-//    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping
     public Mono<SchoolDto> createSchool(@RequestBody CreateSchoolDto createSchoolDto) {
         System.out.println(createSchoolDto);
         return this.schoolService.createSchool(createSchoolDto);
     }
 
-//    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
     public Mono<SchoolDto> updateSchool(@PathVariable long id, @RequestBody UpdateSchoolDto updateSchoolDto) {
         return this.schoolService.updateSchool(id, updateSchoolDto);
     }
 
-//    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public Mono<Void> deleteSchool(@PathVariable long id) {
         return this.schoolService.deleteSchool(id);

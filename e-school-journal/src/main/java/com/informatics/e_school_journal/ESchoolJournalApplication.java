@@ -13,10 +13,6 @@ public class ESchoolJournalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ESchoolJournalApplication.class, args);
-//
-//		School school = new School("hfdsja", "hasdhf", null, null);
-//		SchoolRepository schoolRepository = null;
-//		schoolRepository.save(school);
 	}
 
 }
