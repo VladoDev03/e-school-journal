@@ -7,10 +7,12 @@ import com.informatics.e_school_journal.dto.TeacherDto.UpdateTeacherDto;
 import com.informatics.e_school_journal.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@EnableReactiveMethodSecurity
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/teacher")

@@ -1,7 +1,6 @@
 package com.informatics.e_school_journal.service;
 
 import com.informatics.e_school_journal.data.entity.Grade;
-import com.informatics.e_school_journal.data.entity.Subject;
 import com.informatics.e_school_journal.dto.GradeDto.CreateGradeDto;
 import com.informatics.e_school_journal.dto.GradeDto.GradeDto;
 import com.informatics.e_school_journal.dto.GradeDto.UpdateGradeDto;
