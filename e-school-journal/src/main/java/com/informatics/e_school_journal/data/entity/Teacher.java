@@ -1,14 +1,20 @@
 package com.informatics.e_school_journal.data.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Teacher extends BaseEntity {
-    @OneToOne
-    private User user;
+    @Column(name="keycloak_id")
+    private String keycloakId;
 
-    @OneToMany(mappedBy = "teacher")
-    private Set<Teaching> teachings;
+//    @OneToMany(mappedBy = "teacher")
+//    private Set<Teaching> teachings;
 }
