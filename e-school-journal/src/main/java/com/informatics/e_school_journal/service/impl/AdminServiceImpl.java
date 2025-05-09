@@ -9,8 +9,8 @@ import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import com.informatics.e_school_journal.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,42 +19,46 @@ public class AdminServiceImpl implements AdminService {
     private final ModelMapperConfig mapperConfig;
 
     @Override
-    public Flux<AdminDto> getAdmins() {
+    public List<AdminDto> getAdmins() {
         return this.adminRepository.findAll()
+                .stream()
                 .map(admin -> this.mapperConfig
                         .getModelMapper()
-                        .map(admin, AdminDto.class));
+                        .map(admin, AdminDto.class))
+                .toList();
     }
 
     @Override
-    public Mono<AdminDto> getAdminById(long id) {
-        return this.adminRepository.findById(id)
-                .map(admin -> this.mapperConfig
-                        .getModelMapper()
-                        .map(admin, AdminDto.class));
+    public AdminDto getAdminById(long id) {
+        Admin admin = adminRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
+
+        return mapperConfig.getModelMapper().map(admin, AdminDto.class);
     }
 
     @Override
-    public Mono<AdminDto> createAdmin(CreateAdminDto createAdminDto) {
+    public AdminDto createAdmin(CreateAdminDto createAdminDto) {
         Admin admin = mapperConfig.getModelMapper().map(createAdminDto, Admin.class);
+        Admin savedAdmin = adminRepository.save(admin);
 
-        return this.adminRepository.save(admin)
-                .map(savedAdmin -> this.mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class));
+        return mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class);
     }
 
     @Override
-    public Mono<AdminDto> updateAdmin(long id, UpdateAdminDto updateAdminDto) {
-        return this.adminRepository.findById(id)
-                .flatMap(existingAdmin -> {
-                    mapperConfig.getModelMapper().map(updateAdminDto, existingAdmin);
-                    return this.adminRepository.save(existingAdmin);
-                })
-                .switchIfEmpty(Mono.error(new Exception("Admin not found with id: " + id)))
-                .map(updatedAdmin -> mapperConfig.getModelMapper().map(updatedAdmin, AdminDto.class));
+    public AdminDto updateAdmin(long id, UpdateAdminDto updateAdminDto) {
+        Admin existingAdmin = adminRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
+        mapperConfig.getModelMapper().map(updateAdminDto, existingAdmin);
+        Admin updatedAdmin = adminRepository.save(existingAdmin);
+
+        return mapperConfig.getModelMapper().map(updatedAdmin, AdminDto.class);
     }
 
     @Override
-    public Mono<Void> deleteAdmin(long id) {
-        return this.adminRepository.deleteById(id);
+    public void deleteAdmin(long id) {
+        if (!adminRepository.existsById(id)) {
+            throw new RuntimeException("Admin not found with id: " + id);
+        }
+        adminRepository.deleteById(id);
     }
 }

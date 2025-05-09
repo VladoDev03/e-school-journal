@@ -17,6 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class Subject extends BaseEntity {
     private String name;
-//    @OneToMany(mappedBy = "subject")
-//    private Set<Teaching> teachings;
+    @OneToMany(mappedBy = "subject")
+    private Set<Teaching> teachings;
 }

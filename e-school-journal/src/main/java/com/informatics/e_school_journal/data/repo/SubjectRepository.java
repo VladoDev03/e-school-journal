@@ -1,8 +1,8 @@
 package com.informatics.e_school_journal.data.repo;
 
 import com.informatics.e_school_journal.data.entity.Subject;
-import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SubjectRepository extends R2dbcRepository<Subject, Long> {
+public interface SubjectRepository extends JpaRepository<Subject, Long> {
 }
 

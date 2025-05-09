@@ -1,7 +1,7 @@
 package com.informatics.e_school_journal.data.repo;
 
 import com.informatics.e_school_journal.data.entity.Parent;
-import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ParentRepository extends R2dbcRepository<Parent, Long> {
+public interface ParentRepository extends JpaRepository<Parent, Long> {
 }

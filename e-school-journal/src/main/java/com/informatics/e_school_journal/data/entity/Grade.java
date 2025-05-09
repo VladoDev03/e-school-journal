@@ -14,10 +14,8 @@ import java.util.Set;
 public class Grade extends BaseEntity{
     private int grade;
     private String stream;
-//    @ManyToOne
-//    @Column
-//    private School school;
-    private long schoolId;
-//    @OneToMany(mappedBy = "grade")
-//    private Set<Teaching> teachings;
+    @ManyToOne
+    private School school;
+    @OneToMany(mappedBy = "grade")
+    private Set<Teaching> teachings;
 }

@@ -15,6 +15,6 @@ public class Teacher extends BaseEntity {
     @Column(name="keycloak_id")
     private String keycloakId;
 
-//    @OneToMany(mappedBy = "teacher")
-//    private Set<Teaching> teachings;
+    @OneToMany(mappedBy = "teacher")
+    private Set<Teaching> teachings;
 }
