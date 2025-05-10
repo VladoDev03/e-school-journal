@@ -16,4 +16,8 @@ import java.util.Set;
 public class School extends BaseEntity {
     private String name;
     private String address;
+    @OneToOne(mappedBy = "school")
+    private Director director;
+    @OneToMany(mappedBy = "school")
+    private Set<Grade> grades;
 }

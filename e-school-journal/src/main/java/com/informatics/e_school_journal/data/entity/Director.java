@@ -12,5 +12,6 @@ import lombok.*;
 @Entity
 public class Director extends BaseEntity{
     private String keycloakId;
-    private long schoolId;
+    @OneToOne
+    private School school;
 }
