@@ -16,5 +16,12 @@ import java.util.Set;
 public class UpdateSchoolDto {
     private String name;
     private String address;
+    private Director director;
+    private Set<Grade> grades;
+
+    public UpdateSchoolDto(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
 }

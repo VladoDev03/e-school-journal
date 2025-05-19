@@ -8,8 +8,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DirectorDto {
-    private long id;
+public class UpdateDirectorDto {
     private String keycloakId;
-    private long schoolId;
+    private School school;
+
+    UpdateDirectorDto(String keycloakId) {
+        this.keycloakId = keycloakId;
+    }
+
+    UpdateDirectorDto(School school) {
+        this.school = school;
+    }
 }

@@ -15,5 +15,7 @@ public class SchoolDto {
     private long id;
     private String name;
     private String address;
+    private Director director;
+    private Set<Grade> grades;
 
 }
