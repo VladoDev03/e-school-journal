@@ -1,9 +1,7 @@
-package com.informatics.e_school_journal.dto.schoolDtos;
+package com.informatics.e_school_journal.dto.schoolDto;
 
 import com.informatics.e_school_journal.data.entity.Director;
 import com.informatics.e_school_journal.data.entity.Grade;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.*;
 
 import java.util.Set;

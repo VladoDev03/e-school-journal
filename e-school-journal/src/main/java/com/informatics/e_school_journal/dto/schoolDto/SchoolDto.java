@@ -1,4 +1,4 @@
-package com.informatics.e_school_journal.dto.schoolDtos;
+package com.informatics.e_school_journal.dto.schoolDto;
 
 import com.informatics.e_school_journal.data.entity.Director;
 import com.informatics.e_school_journal.data.entity.Grade;
@@ -15,7 +15,6 @@ public class SchoolDto {
     private long id;
     private String name;
     private String address;
-    private Director director;
     private Set<Grade> grades;
 
 }
