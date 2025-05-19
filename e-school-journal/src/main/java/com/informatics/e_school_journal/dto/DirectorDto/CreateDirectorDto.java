@@ -12,5 +12,6 @@ import lombok.ToString;
 @ToString
 public class CreateDirectorDto {
     private String keycloakId;
-    private School school;
+
+
 }

@@ -10,13 +10,5 @@ import lombok.*;
 @ToString
 public class UpdateDirectorDto {
     private String keycloakId;
-    private School school;
-
-    UpdateDirectorDto(String keycloakId) {
-        this.keycloakId = keycloakId;
-    }
-
-    UpdateDirectorDto(School school) {
-        this.school = school;
-    }
+    private long schoolId;
 }

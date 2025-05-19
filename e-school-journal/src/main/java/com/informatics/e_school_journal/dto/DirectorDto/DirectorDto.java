@@ -11,5 +11,6 @@ import lombok.*;
 public class DirectorDto {
     private long id;
     private String keycloakId;
-    private School school;
+    private long schoolId;
+
 }
