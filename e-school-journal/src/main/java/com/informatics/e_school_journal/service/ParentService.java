@@ -1,15 +1,15 @@
-//package com.informatics.e_school_journal.service;
-//
-//import com.informatics.e_school_journal.dto.parent.CreateParentDto;
-//import com.informatics.e_school_journal.dto.parent.ParentDto;
-//import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
-//import reactor.core.publisher.Flux;
-//import reactor.core.publisher.Mono;
-//
-//public interface ParentService {
-//    Flux<ParentDto> getParents();
-//    Mono<ParentDto> getParentById(long id);
-//    Mono<ParentDto> createParent(CreateParentDto createParentDto);
-//    Mono<ParentDto> updateParent(long id, UpdateParentDto updateParentDto);
-//    Mono<Void> deleteParent(long id);
-//}
+package com.informatics.e_school_journal.service;
+
+import com.informatics.e_school_journal.dto.parent.CreateParentDto;
+import com.informatics.e_school_journal.dto.parent.ParentDto;
+import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
+
+import java.util.List;
+
+public interface ParentService {
+    List<ParentDto> getParents();
+    ParentDto getParentById(long id);
+    ParentDto createParent(CreateParentDto createParentDto);
+    ParentDto updateParent(long id, UpdateParentDto updateParentDto);
+    void deleteParent(long id);
+}
