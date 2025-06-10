@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 )
 @AllArgsConstructor
 public class SecurityConfig {
+
+    private final CorsConfigurationSource corsConfigurationSource;
+
     @Bean
     public JwtDecoder jwtDecoder() {
         String issuerUri = "http://localhost:8080/realms/e-school-journal";
@@ -35,16 +39,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests
-                        (
-                                authz -> authz
-                                        .requestMatchers("/api/admin/**").hasAuthority("admin")
-                                        .anyRequest().authenticated()
-                        )
+        http
+                // Enable CORS with our configuration
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                // Disable CSRF for API (since you're using JWTs)
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/api/admin/**").hasAuthority("admin")
+                        .anyRequest().authenticated()
+                )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwtCustomizer -> jwtCustomizer
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .oauth2Login(Customizer.withDefaults());
+
         return http.build();
     }
 }

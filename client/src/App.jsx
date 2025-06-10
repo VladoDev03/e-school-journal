@@ -7,6 +7,8 @@ import Unauthorized from './pages/UnauthorizedPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import NewUserForm from './components/NewUserForm';
+import ParentManagement from './components/ParentManagement';
+import './parent.css';
 
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
         <Route path="/register-user" element={
           <ProtectedRoute roles={['admin']}>
             <NewUserForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/parent" element={
+          <ProtectedRoute roles={['admin']}>
+            <ParentManagement />
           </ProtectedRoute>
         } />
         <Route path="/unauthorized" element={<Unauthorized />} />
