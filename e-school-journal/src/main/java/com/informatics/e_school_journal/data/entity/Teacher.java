@@ -17,4 +17,12 @@ public class Teacher extends BaseEntity {
 
     @OneToMany(mappedBy = "teacher")
     private Set<Teaching> teachings;
+
+    @ManyToMany
+    @JoinTable(
+            name = "qualification",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private Set<Subject> subjects;
 }
