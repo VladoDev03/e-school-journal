@@ -16,7 +16,7 @@ public class Teacher extends BaseEntity {
     private String keycloakId;
 
     @OneToMany(mappedBy = "teacher")
-    private Set<Teaching> teachings;
+    private Set<Studying> studyings;
 
     @ManyToMany
     @JoinTable(

@@ -9,10 +9,16 @@ import java.util.Set;
 @Entity
 public class Studying extends BaseEntity {
     @ManyToOne
-    private Student student;
+    private Grade grade;
 
     @ManyToOne
-    private Teaching teaching;
+    private Subject subject;
+
+    @ManyToOne
+    private Teacher teacher;
+
+    @OneToMany(mappedBy = "studying")
+    private Set<Schedule> schedules;
 
     @OneToMany(mappedBy = "studying")
     private Set<Mark> marks;

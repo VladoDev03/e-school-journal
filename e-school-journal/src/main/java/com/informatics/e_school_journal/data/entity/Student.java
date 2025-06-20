@@ -1,9 +1,6 @@
 package com.informatics.e_school_journal.data.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
@@ -18,9 +15,15 @@ public class Student extends BaseEntity {
     @Column(name = "keycloak_id")
     private String keycloakId;
 
-    @OneToMany(mappedBy = "student")
-    private Set<Studying> studyingSet;
+    @ManyToOne
+    private Grade grade;
 
     @ManyToMany(mappedBy = "children")
     private Set<Parent> parents;
+
+    @OneToMany(mappedBy = "student")
+    private Set<Mark> marks;
+
+    @OneToMany(mappedBy = "student")
+    private Set<Absence> absences;
 }

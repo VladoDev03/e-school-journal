@@ -9,6 +9,7 @@ import com.informatics.e_school_journal.dto.parent.CreateParentDto;
 import com.informatics.e_school_journal.dto.parent.ParentDto;
 import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
 import com.informatics.e_school_journal.service.ParentService;
+import com.informatics.e_school_journal.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ParentServiceImpl implements ParentService {
     private final ParentRepository parentRepository;
     private final StudentRepository studentRepository;
     private final ModelMapperConfig mapperConfig;
-
+    
     @Override
     public ParentDto createParent(CreateParentDto createParentDto) {
         Parent parent = mapperConfig.getModelMapper().map(createParentDto, Parent.class);

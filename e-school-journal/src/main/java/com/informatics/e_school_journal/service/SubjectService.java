@@ -1,8 +1,8 @@
 package com.informatics.e_school_journal.service;
 
-import com.informatics.e_school_journal.dto.SubjectDto.CreateSubjectDto;
-import com.informatics.e_school_journal.dto.SubjectDto.SubjectDto;
-import com.informatics.e_school_journal.dto.SubjectDto.UpdateSubjectDto;
+import com.informatics.e_school_journal.dto.subject.CreateSubjectDto;
+import com.informatics.e_school_journal.dto.subject.SubjectDto;
+import com.informatics.e_school_journal.dto.subject.UpdateSubjectDto;
 
 import java.util.List;
 

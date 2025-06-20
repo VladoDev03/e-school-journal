@@ -8,6 +8,10 @@ import jakarta.persistence.ManyToOne;
 public class Mark extends BaseEntity {
     private double mark;
     private MarkType markType;
+
     @ManyToOne
     private Studying studying;
+
+    @ManyToOne
+    private Student student;
 }

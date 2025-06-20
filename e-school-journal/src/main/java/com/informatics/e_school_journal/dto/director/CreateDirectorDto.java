@@ -1,6 +1,5 @@
-package com.informatics.e_school_journal.dto.DirectorDto;
+package com.informatics.e_school_journal.dto.director;
 
-import com.informatics.e_school_journal.data.entity.School;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

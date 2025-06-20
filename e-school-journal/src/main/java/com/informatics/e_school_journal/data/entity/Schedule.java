@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.data.entity;
 
+import com.informatics.e_school_journal.data.enums.Term;
 import com.informatics.e_school_journal.data.enums.WeekDay;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,12 +16,18 @@ import java.time.LocalTime;
 @ToString
 @Entity
 public class Schedule extends BaseEntity {
+    private int year;
+    private Term term;
+
     @Column(name = "week_day")
     private WeekDay weekDay;
+
     @Column(name = "start_time")
     private LocalTime startTime;
+
     @Column(name = "end_time")
     private LocalTime endTime;
+
     @ManyToOne
-    private Teaching teaching;
+    private Studying studying;
 }

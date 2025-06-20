@@ -1,8 +1,8 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.SubjectDto.CreateSubjectDto;
-import com.informatics.e_school_journal.dto.SubjectDto.SubjectDto;
-import com.informatics.e_school_journal.dto.SubjectDto.UpdateSubjectDto;
+import com.informatics.e_school_journal.dto.subject.CreateSubjectDto;
+import com.informatics.e_school_journal.dto.subject.SubjectDto;
+import com.informatics.e_school_journal.dto.subject.UpdateSubjectDto;
 import com.informatics.e_school_journal.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

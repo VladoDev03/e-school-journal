@@ -1,8 +1,8 @@
 package com.informatics.e_school_journal.service;
 
-import com.informatics.e_school_journal.dto.TeacherDto.CreateTeacherDto;
-import com.informatics.e_school_journal.dto.TeacherDto.TeacherDto;
-import com.informatics.e_school_journal.dto.TeacherDto.UpdateTeacherDto;
+import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
+import com.informatics.e_school_journal.dto.teacher.TeacherDto;
+import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 
 import java.util.List;
 

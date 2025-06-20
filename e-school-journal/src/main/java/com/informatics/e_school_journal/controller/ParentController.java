@@ -22,7 +22,6 @@ public class ParentController {
     @PostMapping
     public ParentDto createParent(@RequestBody CreateParentDto createParentDto) {
         return this.parentService.createParent(createParentDto);
-
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
@@ -41,7 +40,6 @@ public class ParentController {
     @PutMapping("/{id}")
     public ParentDto updateParent(@PathVariable long id, @RequestBody UpdateParentDto updateParentDto) {
         return this.parentService.updateParent(id, updateParentDto);
-
     }
 
     @PreAuthorize("hasAuthority('admin')")

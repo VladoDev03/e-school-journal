@@ -1,4 +1,4 @@
-package com.informatics.e_school_journal.dto.SubjectDto;
+package com.informatics.e_school_journal.dto.subject;
 
 import lombok.*;
 

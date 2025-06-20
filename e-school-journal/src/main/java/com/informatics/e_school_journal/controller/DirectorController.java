@@ -1,8 +1,8 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.DirectorDto.CreateDirectorDto;
-import com.informatics.e_school_journal.dto.DirectorDto.DirectorDto;
-import com.informatics.e_school_journal.dto.DirectorDto.UpdateDirectorDto;
+import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
+import com.informatics.e_school_journal.dto.director.DirectorDto;
+import com.informatics.e_school_journal.dto.director.UpdateDirectorDto;
 import com.informatics.e_school_journal.service.impl.DirectorServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

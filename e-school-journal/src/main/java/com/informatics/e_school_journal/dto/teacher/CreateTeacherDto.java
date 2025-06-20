@@ -1,4 +1,4 @@
-package com.informatics.e_school_journal.dto.AdminDtos;
+package com.informatics.e_school_journal.dto.teacher;
 
 import lombok.*;
 
@@ -6,6 +6,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @ToString
-public class CreateAdminDto {
+public class CreateTeacherDto {
     private String keycloakId;
 }

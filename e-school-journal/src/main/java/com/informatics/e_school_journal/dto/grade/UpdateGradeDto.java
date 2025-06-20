@@ -1,4 +1,4 @@
-package com.informatics.e_school_journal.dto.GradeDto;
+package com.informatics.e_school_journal.dto.grade;
 
 import lombok.*;
 

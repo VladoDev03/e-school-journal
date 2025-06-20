@@ -1,12 +1,14 @@
-package com.informatics.e_school_journal.dto.GradeDto;
+package com.informatics.e_school_journal.dto.grade;
 
 import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class CreateGradeDto {
+public class GradeDto {
+    private Long id;
     private int grade;
     private String stream;
     private Long schoolId;
