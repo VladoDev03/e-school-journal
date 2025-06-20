@@ -7,9 +7,9 @@ import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
 import java.util.List;
 
 public interface ParentService {
-    List<ParentDto> getParents();
-    ParentDto getParentById(long id);
     ParentDto createParent(CreateParentDto createParentDto);
+    ParentDto getParentById(long id);
+    List<ParentDto> getParents();
     ParentDto updateParent(long id, UpdateParentDto updateParentDto);
     void deleteParent(long id);
 }

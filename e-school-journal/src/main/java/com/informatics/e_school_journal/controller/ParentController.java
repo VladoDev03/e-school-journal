@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/parent")
@@ -19,32 +19,35 @@ public class ParentController {
     private final ParentService parentService;
 
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping
-    public List<ParentDto> getParents() {
-        return parentService.getParents();
+    @PostMapping
+    public ParentDto createParent(@RequestBody CreateParentDto createParentDto) {
+        return this.parentService.createParent(createParentDto);
+
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
     public ParentDto getParentById(@PathVariable long id) {
-        return parentService.getParentById(id);
+        return this.parentService.getParentById(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping
-    public ParentDto createParent(@RequestBody CreateParentDto createParentDto) {
-        return parentService.createParent(createParentDto);
+    @GetMapping
+    public List<ParentDto> getParents() {
+        return this.parentService.getParents();
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
     public ParentDto updateParent(@PathVariable long id, @RequestBody UpdateParentDto updateParentDto) {
-        return parentService.updateParent(id, updateParentDto);
+        return this.parentService.updateParent(id, updateParentDto);
+
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public void deleteParent(@PathVariable long id) {
-        parentService.deleteParent(id);
+        this.parentService.deleteParent(id);
     }
 }
+
