@@ -19,4 +19,7 @@ public class Teaching extends BaseEntity {
 
     @OneToMany(mappedBy = "teaching")
     private Set<Studying> studying;
+
+    @OneToMany(mappedBy = "teaching")
+    private Set<Schedule> schedules;
 }

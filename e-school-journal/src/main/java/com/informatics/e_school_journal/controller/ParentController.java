@@ -7,7 +7,6 @@ import com.informatics.e_school_journal.service.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class ParentController {
     @PostMapping
     public ParentDto createParent(@RequestBody CreateParentDto createParentDto) {
         return this.parentService.createParent(createParentDto);
+
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
@@ -41,6 +41,7 @@ public class ParentController {
     @PutMapping("/{id}")
     public ParentDto updateParent(@PathVariable long id, @RequestBody UpdateParentDto updateParentDto) {
         return this.parentService.updateParent(id, updateParentDto);
+
     }
 
     @PreAuthorize("hasAuthority('admin')")
@@ -49,3 +50,4 @@ public class ParentController {
         this.parentService.deleteParent(id);
     }
 }
+

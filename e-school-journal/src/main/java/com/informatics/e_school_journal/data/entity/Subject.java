@@ -1,8 +1,6 @@
 package com.informatics.e_school_journal.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +17,7 @@ public class Subject extends BaseEntity {
     private String name;
     @OneToMany(mappedBy = "subject")
     private Set<Teaching> teachings;
+
+    @ManyToMany(mappedBy = "subjects")
+    private Set<Teacher> teachers;
 }

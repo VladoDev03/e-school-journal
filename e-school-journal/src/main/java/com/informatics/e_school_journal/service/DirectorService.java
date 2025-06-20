@@ -1,18 +1,15 @@
-//package com.informatics.e_school_journal.service;
-//
-//import com.informatics.e_school_journal.dto.DirectorDtos.CreateDirectorDto;
-//import com.informatics.e_school_journal.dto.DirectorDtos.DirectorDto;
-//import com.informatics.e_school_journal.dto.DirectorDtos.UpdateDirectorDto;
-//import reactor.core.publisher.Flux;
-//import reactor.core.publisher.Mono;
-//
-//public interface DirectorService {
-//    Mono<DirectorDto> createDirector(CreateDirectorDto createDirectorDto);
-//
-//    Mono<DirectorDto> updateDirector(long id, UpdateDirectorDto updateDirectorDto);
-//
-//    Mono<DirectorDto> getDirectorById(long id);
-//
-//    Flux<DirectorDto> getAllDirectors();
-//    Mono<Void> deleteDirector(long id);
-//}
+package com.informatics.e_school_journal.service;
+
+import com.informatics.e_school_journal.dto.DirectorDto.CreateDirectorDto;
+import com.informatics.e_school_journal.dto.DirectorDto.DirectorDto;
+import com.informatics.e_school_journal.dto.DirectorDto.UpdateDirectorDto;
+
+import java.util.List;
+
+public interface DirectorService {
+    List<DirectorDto> getAllDirectors();
+    DirectorDto getDirectorById(long id);
+    DirectorDto createDirector(CreateDirectorDto createDirectorDto);
+    DirectorDto updateDirector(long id, UpdateDirectorDto updateDirectorDto);
+    void deleteDirector(long id);
+}

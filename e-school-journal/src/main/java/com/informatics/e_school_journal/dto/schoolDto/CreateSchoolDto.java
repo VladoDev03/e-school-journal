@@ -1,4 +1,4 @@
-package com.informatics.e_school_journal.dto.schoolDtos;
+package com.informatics.e_school_journal.dto.schoolDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
