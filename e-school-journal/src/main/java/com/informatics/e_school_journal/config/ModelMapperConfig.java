@@ -11,6 +11,4 @@ public class ModelMapperConfig {
     public ModelMapper getModelMapper() {
         return new ModelMapper();
     }
-
 }
-

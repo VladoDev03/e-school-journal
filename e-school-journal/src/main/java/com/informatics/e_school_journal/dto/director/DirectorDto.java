@@ -10,6 +10,4 @@ import lombok.*;
 public class DirectorDto {
     private long id;
     private String keycloakId;
-    private long schoolId;
-
 }

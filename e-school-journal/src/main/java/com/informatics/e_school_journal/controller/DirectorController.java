@@ -46,5 +46,9 @@ public class DirectorController {
         this.directorService.deleteDirector(id);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAnyAuthority('director') or hasAnyAuthority('teacher') or hasAnyAuthority('student') or hasAnyAuthority('parent')")
+    @GetMapping("/school-id/{id}")
+    public DirectorDto getDirectorBySchoolId(@PathVariable long id) {
+        return this.directorService.getDirectorBySchoolId(id);
+    }
 }
-
