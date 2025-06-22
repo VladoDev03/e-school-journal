@@ -5,12 +5,11 @@ import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.service.QualificationService;
+import com.informatics.e_school_journal.service.StudyingService;
 import com.informatics.e_school_journal.service.TeacherService;
-import com.informatics.e_school_journal.service.TeacherStudyingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
     private final QualificationService qualificationService;
-    private final TeacherStudyingService teacherStudyingService;
+    private final StudyingService studyingService;
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
@@ -50,7 +49,7 @@ public class TeacherController {
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public void deleteTeacher(@PathVariable long id) {
-        this.teacherStudyingService.deleteTeacherWithStudyings(id);
+        this.studyingService.deleteTeacherWithStudyings(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
