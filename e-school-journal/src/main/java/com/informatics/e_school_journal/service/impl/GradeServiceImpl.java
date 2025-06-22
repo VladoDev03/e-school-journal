@@ -8,7 +8,9 @@ import com.informatics.e_school_journal.data.repo.SchoolRepository;
 import com.informatics.e_school_journal.dto.grade.CreateGradeDto;
 import com.informatics.e_school_journal.dto.grade.GradeDto;
 import com.informatics.e_school_journal.dto.grade.UpdateGradeDto;
+import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.service.GradeService;
+import com.informatics.e_school_journal.service.SchoolService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class GradeServiceImpl implements GradeService {
     private final GradeRepository gradeRepository;
     private final SchoolRepository schoolRepository;
     private final ModelMapperConfig mapperConfig;
+
+    private final SchoolService schoolService;
 
     @Override
     public GradeDto createGrade(CreateGradeDto createGradeDto) {
@@ -77,4 +81,19 @@ public class GradeServiceImpl implements GradeService {
         }
         gradeRepository.deleteById(id);
     }
+
+    @Override
+    public List<GradeDto> getGradesInSchool(Long schoolId) throws Exception {
+        SchoolDto school = schoolService.getSchoolById(schoolId);
+
+        return this.gradeRepository.findGradesBySchoolId(schoolId).stream()
+                .map(grade -> this.mapperConfig
+                        .getModelMapper()
+                        .map(grade, GradeDto.class))
+                .toList();
+
+
+    }
+
+
 }

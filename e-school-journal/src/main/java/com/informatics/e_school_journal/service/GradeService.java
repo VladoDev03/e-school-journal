@@ -12,5 +12,7 @@ public interface GradeService {
     List<GradeDto> getGrades();
     GradeDto updateGrade(long id, UpdateGradeDto updateGradeDto);
     void deleteGrade(long id);
+
+    List<GradeDto> getGradesInSchool(Long schoolId) throws Exception;
 }
 

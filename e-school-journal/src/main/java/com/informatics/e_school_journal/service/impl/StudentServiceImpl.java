@@ -18,6 +18,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final ModelMapperConfig mapperConfig;
 
+
     @Override
     public List<StudentDto> getStudents() {
         return this.studentRepository.findAll()
@@ -63,4 +64,5 @@ public class StudentServiceImpl implements StudentService {
         }
         studentRepository.deleteById(id);
     }
+
 }

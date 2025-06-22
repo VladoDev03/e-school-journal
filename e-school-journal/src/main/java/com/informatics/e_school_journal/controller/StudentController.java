@@ -1,10 +1,11 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.student.CreateStudentDto;
-import com.informatics.e_school_journal.dto.student.StudentDto;
-import com.informatics.e_school_journal.dto.student.UpdateStudentDto;
+import com.informatics.e_school_journal.dto.student.*;
+import com.informatics.e_school_journal.service.StudentGradeService;
 import com.informatics.e_school_journal.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
@@ -17,34 +18,62 @@ import java.util.List;
 @RequestMapping("/api/student")
 public class StudentController {
     private final StudentService studentService;
+    private final StudentGradeService studentGradeService;
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
     public List<StudentDto> getStudents() {
-        return studentService.getStudents();
+        return this.studentService.getStudents();
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
     public StudentDto getStudentById(@PathVariable long id) {
-        return studentService.getStudentById(id);
+        return this.studentService.getStudentById(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
     public StudentDto createStudent(@RequestBody CreateStudentDto student) {
-        return studentService.createStudent(student);
+        return this.studentService.createStudent(student);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/{id}")
-    public StudentDto updateStudent(@PathVariable long id, @RequestBody UpdateStudentDto student) {
-        return studentService.updateStudent(id, student);
-    }
+//    @PreAuthorize("hasAuthority('admin')")
+//    @PutMapping("/{id}")
+//    public StudentDto updateStudent(@PathVariable long id, @RequestBody UpdateStudentDto student) {
+//        return this.studentService.updateStudent(id, student);
+//    }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable long id) {
-        studentService.deleteStudent(id);
+        this.studentService.deleteStudent(id);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PutMapping("/{studentId}/grade-id/{gradeId}")
+    public ResponseEntity<StudentInGradeDto> enrollStudentInGrade(@PathVariable Long studentId, @PathVariable Long gradeId) {
+        try {
+            return new ResponseEntity<>(this.studentGradeService.enrollStudentInGrade(studentId, gradeId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PutMapping("/withdraw/{studentId}")
+    public ResponseEntity<StudentInGradeDto> withdrawStudentFromGrade(@PathVariable Long studentId) {
+        try {
+            StudentInGradeDto student = this.studentGradeService.withdrawStudentFromGrade(studentId);
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PutMapping("/{id}")
+    public StudentInGradeDto updateStudentInGrade(@PathVariable long id, @RequestBody UpdateStudentInGradeDto student) {
+        return this.studentGradeService.updateStudentInGrade(id, student);
     }
 }

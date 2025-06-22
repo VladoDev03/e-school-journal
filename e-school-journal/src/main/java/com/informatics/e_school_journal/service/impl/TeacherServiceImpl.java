@@ -3,9 +3,11 @@ package com.informatics.e_school_journal.service.impl;
 import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Teacher;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
+import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
+import com.informatics.e_school_journal.service.SchoolService;
 import com.informatics.e_school_journal.service.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final ModelMapperConfig mapperConfig;
+
+    private final SchoolService schoolService;
 
     @Override
     public TeacherDto createTeacher(CreateTeacherDto createTeacherDto) {
@@ -60,5 +64,17 @@ public class TeacherServiceImpl implements TeacherService {
             throw new RuntimeException("Teacher not found with id: " + id);
         }
         teacherRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TeacherDto> getTeachersInSchool(Long schoolId) {
+
+        SchoolDto schoolDto = schoolService.getSchoolById(schoolId);
+
+        return this.teacherRepository.findTeachersByStudyingsGradeSchoolId(schoolId)
+                .stream()
+                .map(teacher -> mapperConfig.getModelMapper().map(teacher, TeacherDto.class))
+                .toList();
+
     }
 }
