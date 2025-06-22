@@ -1,8 +1,10 @@
 package com.informatics.e_school_journal.controller;
 
+import com.informatics.e_school_journal.dto.qualification.CreateQualificationDto;
 import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
+import com.informatics.e_school_journal.service.QualificationService;
 import com.informatics.e_school_journal.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/teacher")
 public class TeacherController {
     private final TeacherService teacherService;
+    private final QualificationService qualificationService;
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
@@ -51,5 +54,11 @@ public class TeacherController {
     @GetMapping("/inSchool/{schoolId}")
     public List<TeacherDto> getTeachersInSchool(@PathVariable Long schoolId) {
         return this.teacherService.getTeachersInSchool(schoolId);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PostMapping("/qualification")
+    public CreateQualificationDto createTeacherQualification(@RequestBody CreateQualificationDto createQualificationDto) {
+        return qualificationService.createQualification(createQualificationDto);
     }
 }
