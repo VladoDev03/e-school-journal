@@ -6,9 +6,11 @@ import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.service.QualificationService;
 import com.informatics.e_school_journal.service.TeacherService;
+import com.informatics.e_school_journal.service.TeacherStudyingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
     private final QualificationService qualificationService;
+    private final TeacherStudyingService teacherStudyingService;
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
@@ -47,7 +50,7 @@ public class TeacherController {
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public void deleteTeacher(@PathVariable long id) {
-        this.teacherService.deleteTeacher(id);
+        this.teacherStudyingService.deleteTeacherWithStudyings(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
@@ -60,5 +63,17 @@ public class TeacherController {
     @PostMapping("/qualification")
     public CreateQualificationDto createTeacherQualification(@RequestBody CreateQualificationDto createQualificationDto) {
         return qualificationService.createQualification(createQualificationDto);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @DeleteMapping("/qualification/{teacherId}/{subjectId}")
+    public void deleteTeacherQualification(@PathVariable Long teacherId, @PathVariable Long subjectId) {
+        qualificationService.deleteQualification(teacherId, subjectId);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @DeleteMapping("/qualification/{teacherId}")
+    public void deleteTeacherQualification(@PathVariable Long teacherId) {
+        qualificationService.deleteAllTeacherQualifications(teacherId);
     }
 }
