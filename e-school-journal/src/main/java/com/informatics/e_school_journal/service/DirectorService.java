@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.service;
 
+import com.informatics.e_school_journal.data.entity.Director;
 import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
 import com.informatics.e_school_journal.dto.director.DirectorDto;
 import com.informatics.e_school_journal.dto.director.UpdateDirectorDto;
@@ -12,4 +13,5 @@ public interface DirectorService {
     DirectorDto createDirector(CreateDirectorDto createDirectorDto);
     DirectorDto updateDirector(long id, UpdateDirectorDto updateDirectorDto);
     void deleteDirector(long id);
+    DirectorDto getDirectorBySchoolId(long schoolId);
 }

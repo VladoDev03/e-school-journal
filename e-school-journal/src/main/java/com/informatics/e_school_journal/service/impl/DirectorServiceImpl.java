@@ -2,10 +2,12 @@ package com.informatics.e_school_journal.service.impl;
 
 import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Director;
+import com.informatics.e_school_journal.data.entity.School;
 import com.informatics.e_school_journal.data.repo.DirectorRepository;
 import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
 import com.informatics.e_school_journal.dto.director.DirectorDto;
 import com.informatics.e_school_journal.dto.director.UpdateDirectorDto;
+import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.service.DirectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
 public class DirectorServiceImpl implements DirectorService {
     private final DirectorRepository directorRepository;
     private final ModelMapperConfig mapperConfig;
+    private final SchoolServiceImpl schoolServiceImpl;
 
     @Override
     public List<DirectorDto> getAllDirectors() {
@@ -38,7 +41,7 @@ public class DirectorServiceImpl implements DirectorService {
     @Override
     public DirectorDto createDirector(CreateDirectorDto createDirectorDto) {
         Director director = mapperConfig.getModelMapper().map(createDirectorDto, Director.class);
-        Director savedDirector =  directorRepository.save(director);
+        Director savedDirector = directorRepository.save(director);
 
         return mapperConfig.getModelMapper().map(savedDirector, DirectorDto.class);
     }
@@ -51,7 +54,6 @@ public class DirectorServiceImpl implements DirectorService {
         Director updatedDirector = directorRepository.save(existingDirector);
 
         return mapperConfig.getModelMapper().map(updatedDirector, DirectorDto.class);
-
     }
 
     @Override
@@ -59,7 +61,15 @@ public class DirectorServiceImpl implements DirectorService {
         if (!directorRepository.existsById(id)) {
             throw new RuntimeException("Director not found with id: " + id);
         }
+
         directorRepository.deleteById(id);
     }
 
+    @Override
+    public DirectorDto getDirectorBySchoolId(long schoolId) {
+        Director existingDirector = directorRepository.findBySchoolId(schoolId)
+                .orElseThrow(() -> new RuntimeException("Director not found with id: " + schoolId));
+
+        return mapperConfig.getModelMapper().map(existingDirector, DirectorDto.class);
+    }
 }

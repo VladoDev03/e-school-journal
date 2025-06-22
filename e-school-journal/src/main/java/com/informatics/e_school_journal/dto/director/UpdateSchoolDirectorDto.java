@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DirectorDto {
-    private long id;
-    private String keycloakId;
+public class UpdateSchoolDirectorDto {
+    private long directorId;
+    private long schoolId;
 }
