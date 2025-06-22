@@ -17,6 +17,7 @@ import java.util.List;
 public class SchoolServiceImpl implements SchoolService {
     private final SchoolRepository schoolRepository;
     private final ModelMapperConfig mapperConfig;
+
     @Override
     public SchoolDto createSchool(CreateSchoolDto createSchoolDto) {
         School school = mapperConfig.getModelMapper().map(createSchoolDto, School.class);

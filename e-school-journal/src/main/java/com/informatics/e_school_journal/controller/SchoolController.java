@@ -34,7 +34,6 @@ public class SchoolController {
 
     @PostMapping
     public SchoolDto createSchool(@RequestBody CreateSchoolDto createSchoolDto) {
-        System.out.println(createSchoolDto);
         return this.schoolService.createSchool(createSchoolDto);
     }
 

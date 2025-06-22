@@ -33,4 +33,30 @@ public class QualificationServiceImpl implements QualificationService {
 
         return createQualificationDto;
     }
+
+    @Override
+    public void deleteQualification(Long teacherId, Long subjectId) {
+        Teacher teacher = teacherRepository
+                .findById(teacherId)
+                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
+
+        Subject subject = subjectRepository
+                .findById(subjectId)
+                .orElseThrow(() -> new RuntimeException("Subject not found with id " + subjectId));
+
+        Set<Subject> subjects = teacher.getSubjects();
+        subjects.remove(subject);
+        teacher.setSubjects(subjects);
+        teacherRepository.save(teacher);
+    }
+
+    @Override
+    public void deleteAllTeacherQualifications(Long teacherId) {
+        Teacher teacher = teacherRepository
+                .findById(teacherId)
+                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
+
+        teacher.setSubjects(null);
+        teacherRepository.save(teacher);
+    }
 }

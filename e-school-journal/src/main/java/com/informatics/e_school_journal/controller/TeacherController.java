@@ -5,6 +5,7 @@ import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.service.QualificationService;
+import com.informatics.e_school_journal.service.StudyingService;
 import com.informatics.e_school_journal.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +21,7 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
     private final QualificationService qualificationService;
+    private final StudyingService studyingService;
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
@@ -47,7 +49,7 @@ public class TeacherController {
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
     public void deleteTeacher(@PathVariable long id) {
-        this.teacherService.deleteTeacher(id);
+        this.studyingService.deleteTeacherWithStudyings(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
@@ -60,5 +62,17 @@ public class TeacherController {
     @PostMapping("/qualification")
     public CreateQualificationDto createTeacherQualification(@RequestBody CreateQualificationDto createQualificationDto) {
         return qualificationService.createQualification(createQualificationDto);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @DeleteMapping("/qualification/{teacherId}/{subjectId}")
+    public void deleteTeacherQualification(@PathVariable Long teacherId, @PathVariable Long subjectId) {
+        qualificationService.deleteQualification(teacherId, subjectId);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @DeleteMapping("/qualification/{teacherId}")
+    public void deleteTeacherQualification(@PathVariable Long teacherId) {
+        qualificationService.deleteAllTeacherQualifications(teacherId);
     }
 }
