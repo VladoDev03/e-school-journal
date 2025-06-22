@@ -46,4 +46,10 @@ public class TeacherController {
     public void deleteTeacher(@PathVariable long id) {
         this.teacherService.deleteTeacher(id);
     }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/inSchool/{schoolId}")
+    public List<TeacherDto> getTeachersInSchool(@PathVariable Long schoolId) {
+        return this.teacherService.getTeachersInSchool(schoolId);
+    }
 }

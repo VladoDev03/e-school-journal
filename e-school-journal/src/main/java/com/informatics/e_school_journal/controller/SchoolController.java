@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.dto.school.CreateSchoolDto;
 import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.dto.school.UpdateSchoolDto;
+import com.informatics.e_school_journal.service.SchoolService;
 import com.informatics.e_school_journal.service.impl.SchoolServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/school")
 
 public class SchoolController {
-    private final SchoolServiceImpl schoolService;
+    private final SchoolService schoolService;
 
     @GetMapping
     public List<SchoolDto> getSchools() {

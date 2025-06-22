@@ -5,6 +5,8 @@ import com.informatics.e_school_journal.dto.grade.GradeDto;
 import com.informatics.e_school_journal.dto.grade.UpdateGradeDto;
 import com.informatics.e_school_journal.service.GradeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
@@ -46,5 +48,15 @@ public class GradeController {
     @DeleteMapping("/{id}")
     public void deleteGrade(@PathVariable long id) {
         this.gradeService.deleteGrade(id);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/school-id/{schoolId}")
+    public ResponseEntity<List<GradeDto>> getGradesInSchool(@PathVariable Long schoolId) {
+        try {
+            return new ResponseEntity<>(this.gradeService.getGradesInSchool(schoolId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
