@@ -40,15 +40,7 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     public DirectorDto createDirector(CreateDirectorDto createDirectorDto) {
-        Director director = new Director();
-
-        director.setKeycloakId(createDirectorDto.getKeycloakId());
-
-        SchoolDto schoolDto = schoolServiceImpl.getSchoolById(createDirectorDto.getSchoolId());
-        School school = mapperConfig.getModelMapper().map(schoolDto, School.class);
-
-        director.setSchool(school);
-
+        Director director = mapperConfig.getModelMapper().map(createDirectorDto, Director.class);
         Director savedDirector = directorRepository.save(director);
 
         return mapperConfig.getModelMapper().map(savedDirector, DirectorDto.class);
@@ -69,6 +61,7 @@ public class DirectorServiceImpl implements DirectorService {
         if (!directorRepository.existsById(id)) {
             throw new RuntimeException("Director not found with id: " + id);
         }
+
         directorRepository.deleteById(id);
     }
 
