@@ -5,7 +5,6 @@ import com.informatics.e_school_journal.data.entity.Grade;
 import com.informatics.e_school_journal.data.entity.Student;
 import com.informatics.e_school_journal.data.repo.GradeRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
-import com.informatics.e_school_journal.dto.student.StudentDto;
 import com.informatics.e_school_journal.dto.student.StudentInGradeDto;
 import com.informatics.e_school_journal.dto.student.UpdateStudentInGradeDto;
 import com.informatics.e_school_journal.service.StudentGradeService;
