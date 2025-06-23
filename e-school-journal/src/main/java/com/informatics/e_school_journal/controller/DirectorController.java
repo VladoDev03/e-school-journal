@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/director")
-
 public class DirectorController {
     private final DirectorService directorService;
     private final SchoolDirectorService schoolDirectorService;
