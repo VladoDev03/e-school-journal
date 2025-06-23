@@ -1,6 +1,7 @@
 package com.informatics.e_school_journal.controller;
 
 import com.informatics.e_school_journal.dto.qualification.CreateQualificationDto;
+import com.informatics.e_school_journal.dto.subject.SubjectDto;
 import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
@@ -62,6 +63,12 @@ public class TeacherController {
     @PostMapping("/qualification")
     public CreateQualificationDto createTeacherQualification(@RequestBody CreateQualificationDto createQualificationDto) {
         return qualificationService.createQualification(createQualificationDto);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/qualification/{teacherId}")
+    public List<SubjectDto> getTeacherQualifications(@PathVariable Long teacherId) {
+        return qualificationService.getAllTeacherQualifications(teacherId);
     }
 
     @PreAuthorize("hasAuthority('admin')")

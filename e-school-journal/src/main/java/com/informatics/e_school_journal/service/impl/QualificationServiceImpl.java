@@ -1,15 +1,18 @@
 package com.informatics.e_school_journal.service.impl;
 
+import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Subject;
 import com.informatics.e_school_journal.data.entity.Teacher;
 import com.informatics.e_school_journal.data.repo.SubjectRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
 import com.informatics.e_school_journal.dto.qualification.CreateQualificationDto;
+import com.informatics.e_school_journal.dto.subject.SubjectDto;
 import com.informatics.e_school_journal.service.QualificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -17,6 +20,8 @@ import java.util.Set;
 public class QualificationServiceImpl implements QualificationService {
     private final TeacherRepository teacherRepository;
     private final SubjectRepository subjectRepository;
+
+    private final ModelMapperConfig mapperConfig;
 
     @Override
     public CreateQualificationDto createQualification(CreateQualificationDto createQualificationDto) {
@@ -32,6 +37,17 @@ public class QualificationServiceImpl implements QualificationService {
         teacherRepository.save(teacher);
 
         return createQualificationDto;
+    }
+
+    @Override
+    public List<SubjectDto> getAllTeacherQualifications(Long teacherId) {
+        Teacher teacher = teacherRepository
+                .findById(teacherId)
+                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
+
+        return teacher.getSubjects()
+                .stream().map(subject -> mapperConfig.getModelMapper().map(subject, SubjectDto.class))
+                .toList();
     }
 
     @Override
