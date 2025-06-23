@@ -2,12 +2,16 @@ package com.informatics.e_school_journal.data.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Entity
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Entity
 public class Absence extends BaseEntity{
     private LocalDate date;
     private boolean isExcused;
