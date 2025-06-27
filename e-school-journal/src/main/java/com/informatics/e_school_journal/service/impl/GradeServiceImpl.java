@@ -30,6 +30,7 @@ public class GradeServiceImpl implements GradeService {
         Grade grade = new Grade();
         grade.setGrade(createGradeDto.getGrade());
         grade.setStream(createGradeDto.getStream());
+        grade.setYear(createGradeDto.getYear());
 
         School school = schoolRepository.findById(createGradeDto.getSchoolId())
                 .orElseThrow(() -> new RuntimeException("School not found with id: " + createGradeDto.getSchoolId()));
@@ -91,9 +92,5 @@ public class GradeServiceImpl implements GradeService {
                         .getModelMapper()
                         .map(grade, GradeDto.class))
                 .toList();
-
-
     }
-
-
 }

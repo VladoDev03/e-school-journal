@@ -11,8 +11,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Table(name = "grade", uniqueConstraints = @UniqueConstraint(columnNames = {"grade", "year", "stream", "school_id"}))
 public class Grade extends BaseEntity{
     private int grade;
+    private int year;
     private String stream;
 
     @ManyToOne

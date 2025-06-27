@@ -10,6 +10,7 @@ import lombok.*;
 public class GradeDto {
     private Long id;
     private int grade;
+    private int year;
     private String stream;
     private Long schoolId;
 }

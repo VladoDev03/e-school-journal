@@ -5,16 +5,19 @@ import com.informatics.e_school_journal.data.entity.Mark;
 import com.informatics.e_school_journal.data.entity.Student;
 import com.informatics.e_school_journal.data.entity.Studying;
 import com.informatics.e_school_journal.data.entity.Teacher;
+import com.informatics.e_school_journal.data.enums.MarkType;
+import com.informatics.e_school_journal.data.enums.Term;
 import com.informatics.e_school_journal.data.repo.MarkRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.data.repo.StudyingRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
 import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
 import com.informatics.e_school_journal.dto.mark.MarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkWIthSubjectDto;
+import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
 import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
 import com.informatics.e_school_journal.service.MarkService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.metrics.data.RepositoryMetricsAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class MarkServiceImpl implements MarkService {
     private final TeacherRepository teacherRepository;
 
     private final ModelMapperConfig mapperConfig;
+    private final RepositoryMetricsAutoConfiguration repositoryMetricsAutoConfiguration;
 
 //    @Override
 //    public MarkDto getMarkById(Long id) {
@@ -38,6 +42,14 @@ public class MarkServiceImpl implements MarkService {
 
     @Override
     public MarkDto createMark(CreateMarkDto createMarkDto) {
+        if (isAutumnAndFinal(createMarkDto.getTerm(), createMarkDto.getMarkType())) {
+            throw new IllegalArgumentException("Final mark cannot be during autumn term.");
+        }
+
+        if (existingMarkTypeAndTerm(createMarkDto.getStudentId(), createMarkDto.getStudyingId(), createMarkDto.getMarkType(), createMarkDto.getTerm())) {
+            throw new IllegalArgumentException("Mark already exists.");
+        }
+
         Teacher teacher = this.teacherRepository.findById(createMarkDto.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + createMarkDto.getTeacherId()));
 
@@ -58,6 +70,7 @@ public class MarkServiceImpl implements MarkService {
         Mark mark = new Mark(
                 createMarkDto.getMark(),
                 createMarkDto.getMarkType(),
+                createMarkDto.getTerm(),
                 studying,
                 student
         );
@@ -68,12 +81,21 @@ public class MarkServiceImpl implements MarkService {
                 savedMark.getId(),
                 createMarkDto.getMark(),
                 createMarkDto.getMarkType(),
+                createMarkDto.getTerm(),
                 createMarkDto.getStudyingId(),
                 createMarkDto.getStudentId());
     }
 
     @Override
     public MarkDto updateMark(Long id, UpdateMarkDto updateMarkDto) {
+        if (isAutumnAndFinal(updateMarkDto.getTerm(), updateMarkDto.getMarkType())) {
+            throw new IllegalArgumentException("Final mark cannot be during autumn term.");
+        }
+
+        if (existingMarkTypeAndTerm(updateMarkDto.getStudentId(), updateMarkDto.getStudyingId(), updateMarkDto.getMarkType(), updateMarkDto.getTerm())) {
+            throw new IllegalArgumentException("Mark already exists.");
+        }
+
         Teacher teacher = this.teacherRepository.findById(updateMarkDto.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + updateMarkDto.getTeacherId()));
 
@@ -105,6 +127,7 @@ public class MarkServiceImpl implements MarkService {
                 savedMark.getId(),
                 updateMarkDto.getMark(),
                 updateMarkDto.getMarkType(),
+                updateMarkDto.getTerm(),
                 updateMarkDto.getStudyingId(),
                 updateMarkDto.getStudentId());
     }
@@ -133,14 +156,15 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public MarkWIthSubjectDto getMark(Long id) {
+    public MarkWithSubjectDto getMark(Long id) {
         Mark mark = markRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
 
-        return new MarkWIthSubjectDto(
+        return new MarkWithSubjectDto(
                 mark.getId(),
                 mark.getMark(),
                 mark.getMarkType(),
+                mark.getTerm(),
                 mark.getStudying().getId(),
                 mark.getStudent().getId(),
                 mark.getStudying().getSubject().getName()
@@ -148,7 +172,7 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public List<MarkWIthSubjectDto> getMarksByStudent(Long studentId) {
+    public List<MarkWithSubjectDto> getMarksByStudent(Long studentId) {
 //        if(studentRepository.findById(studentId) == null){
 //
 //        }
@@ -156,7 +180,7 @@ public class MarkServiceImpl implements MarkService {
 //        Mark mark = markRepository.findById(id)
 //                .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
 //
-//        return new MarkWIthSubjectDto(
+//        return new MarkWithSubjectDto(
 //                mark.getId(),
 //                mark.getMark(),
 //                mark.getMarkType(),
@@ -167,5 +191,11 @@ public class MarkServiceImpl implements MarkService {
         return null;
     }
 
+    private boolean isAutumnAndFinal(Term term, MarkType markType) {
+        return term == Term.AUTUMN && markType == MarkType.FINAL;
+    }
 
+    private boolean existingMarkTypeAndTerm(Long studentId, Long studyingId, MarkType markType, Term term) {
+        return markType != MarkType.CURRENT && markRepository.existsByStudentIdAndStudyingIdAndMarkTypeAndTerm(studentId, studyingId, markType, term);
+    }
 }

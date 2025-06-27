@@ -8,6 +8,7 @@ import lombok.*;
 @ToString
 public class CreateGradeDto {
     private int grade;
+    private int year;
     private String stream;
     private Long schoolId;
 }

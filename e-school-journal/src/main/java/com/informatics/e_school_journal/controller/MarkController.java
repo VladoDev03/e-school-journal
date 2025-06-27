@@ -1,10 +1,8 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
-import com.informatics.e_school_journal.dto.director.DirectorDto;
 import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
 import com.informatics.e_school_journal.dto.mark.MarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkWIthSubjectDto;
+import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
 import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
 import com.informatics.e_school_journal.service.MarkService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +34,7 @@ public class MarkController {
     }
 
     @GetMapping("/{id}")
-    public MarkWIthSubjectDto getMark(@PathVariable Long id) {
+    public MarkWithSubjectDto getMark(@PathVariable Long id) {
         return this.markService.getMark(id);
     }
 }
