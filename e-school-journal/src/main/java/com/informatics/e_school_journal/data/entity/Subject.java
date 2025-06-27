@@ -16,9 +16,9 @@ import java.util.Set;
 public class Subject extends BaseEntity {
     private String name;
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     private Set<Studying> studyings;
 
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(mappedBy = "subjects", fetch = FetchType.LAZY)
     private Set<Teacher> teachers;
 }

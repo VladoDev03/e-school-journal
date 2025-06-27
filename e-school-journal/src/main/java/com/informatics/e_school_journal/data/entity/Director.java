@@ -13,6 +13,6 @@ public class Director extends BaseEntity{
     @Column(name = "keycloak_id")
     private String keycloakId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private School school;
 }

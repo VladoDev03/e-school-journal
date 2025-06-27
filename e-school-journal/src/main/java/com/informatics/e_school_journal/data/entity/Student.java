@@ -15,15 +15,15 @@ public class Student extends BaseEntity {
     @Column(name = "keycloak_id")
     private String keycloakId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Grade grade;
 
-    @ManyToMany(mappedBy = "children")
+    @ManyToMany(mappedBy = "children", fetch = FetchType.LAZY)
     private Set<Parent> parents;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private Set<Mark> marks;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private Set<Absence> absences;
 }

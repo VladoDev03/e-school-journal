@@ -1,9 +1,7 @@
 package com.informatics.e_school_journal.data.entity;
 
+import jakarta.persistence.*;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToMany;
 import lombok.*;
 
 import java.util.Set;
@@ -18,6 +16,6 @@ public class Parent extends BaseEntity {
     @Column(name = "keycloak_id")
     private String keycloakId;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Student> children;
 }

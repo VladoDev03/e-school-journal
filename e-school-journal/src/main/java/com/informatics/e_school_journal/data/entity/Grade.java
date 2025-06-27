@@ -18,9 +18,9 @@ public class Grade extends BaseEntity{
     @ManyToOne
     private School school;
 
-    @OneToMany(mappedBy = "grade")
+    @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
     private Set<Studying> studyings;
 
-    @OneToMany(mappedBy = "grade")
+    @OneToMany(mappedBy = "grade", fetch = FetchType.LAZY)
     private Set<Student> students;
 }

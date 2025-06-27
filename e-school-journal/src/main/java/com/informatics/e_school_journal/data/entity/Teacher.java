@@ -15,10 +15,10 @@ public class Teacher extends BaseEntity {
     @Column(name="keycloak_id")
     private String keycloakId;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private Set<Studying> studyings;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "qualification",
             joinColumns = @JoinColumn(name = "teacher_id"),

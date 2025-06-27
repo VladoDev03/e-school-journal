@@ -15,9 +15,9 @@ public class School extends BaseEntity {
     private String name;
     private String address;
 
-    @OneToOne(mappedBy = "school")
+    @OneToOne(mappedBy = "school", fetch = FetchType.LAZY)
     private Director director;
 
-    @OneToMany(mappedBy = "school")
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
     private Set<Grade> grades;
 }

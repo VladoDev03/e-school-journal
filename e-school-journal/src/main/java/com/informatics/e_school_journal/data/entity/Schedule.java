@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.data.enums.Term;
 import com.informatics.e_school_journal.data.enums.WeekDay;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
@@ -28,6 +29,6 @@ public class Schedule extends BaseEntity {
     @Column(name = "end_time")
     private LocalTime endTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Studying studying;
 }

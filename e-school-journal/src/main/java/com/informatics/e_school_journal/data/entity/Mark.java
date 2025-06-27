@@ -18,9 +18,9 @@ public class Mark extends BaseEntity {
     private double mark;
     private MarkType markType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Studying studying;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Student student;
 }
