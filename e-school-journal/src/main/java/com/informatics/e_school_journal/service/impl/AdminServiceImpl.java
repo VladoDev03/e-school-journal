@@ -6,10 +6,15 @@ import com.informatics.e_school_journal.data.repo.AdminRepository;
 import com.informatics.e_school_journal.dto.admin.AdminDto;
 import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
 import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
+import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.AdminService;
+import com.informatics.e_school_journal.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +22,8 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final ModelMapperConfig mapperConfig;
+
+    private final UserService userService;
 
     @Override
     public List<AdminDto> getAdmins() {
@@ -37,8 +44,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public AdminDto createAdmin(CreateAdminDto createAdminDto) {
-        Admin admin = mapperConfig.getModelMapper().map(createAdminDto, Admin.class);
+        userService.registerUser(createAdminDto.getCreateUserDto());
+        UserDto userDto = userService.getUserByEmail(createAdminDto.getCreateUserDto().getEmail());
+
+        RoleDto roleDto = userService.getRoleIdByName("admin");
+        userService.setRole(userDto.getId(), roleDto);
+        //add role in keycloak
+
+        Admin admin = new Admin(userDto.getId());
         Admin savedAdmin = adminRepository.save(admin);
 
         return mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class);
