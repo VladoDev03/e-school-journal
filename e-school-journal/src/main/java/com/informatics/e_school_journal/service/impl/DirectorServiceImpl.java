@@ -31,7 +31,7 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public DirectorDto getDirectorById(long id) {
+    public DirectorDto getDirectorById(String id) {
         Director existingDirector = directorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Director not found with id: " + id));
 
@@ -47,7 +47,7 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public DirectorDto updateDirector(long id, UpdateDirectorDto updateDirectorDto) {
+    public DirectorDto updateDirector(String id, UpdateDirectorDto updateDirectorDto) {
         Director existingDirector = directorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Director not found with id: " + id));
         mapperConfig.getModelMapper().map(updateDirectorDto, existingDirector);
@@ -57,7 +57,7 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public void deleteDirector(long id) {
+    public void deleteDirector(String id) {
         if (!directorRepository.existsById(id)) {
             throw new RuntimeException("Director not found with id: " + id);
         }
@@ -66,7 +66,7 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public DirectorDto getDirectorBySchoolId(long schoolId) {
+    public DirectorDto getDirectorBySchoolId(String schoolId) {
         Director existingDirector = directorRepository.findBySchoolId(schoolId)
                 .orElseThrow(() -> new RuntimeException("Director not found with id: " + schoolId));
 

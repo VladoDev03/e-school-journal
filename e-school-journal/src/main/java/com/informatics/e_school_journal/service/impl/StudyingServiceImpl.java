@@ -55,7 +55,7 @@ public class StudyingServiceImpl implements StudyingService {
     }
 
     @Override
-    public StudyingDto updateStudying(Long id, UpdateStudyingDto updateStudyingDto) {
+    public StudyingDto updateStudying(String id, UpdateStudyingDto updateStudyingDto) {
         Teacher teacher = teacherRepository.findById(updateStudyingDto.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id " + updateStudyingDto.getTeacherId()));
 
@@ -80,7 +80,7 @@ public class StudyingServiceImpl implements StudyingService {
     }
 
     @Override
-    public void deleteTeacherWithStudyings(Long teacherId) {
+    public void deleteTeacherWithStudyings(String teacherId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + teacherId));

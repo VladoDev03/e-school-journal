@@ -8,11 +8,11 @@ import java.util.List;
 public interface SchoolService {
     SchoolDto createSchool(CreateSchoolDto createSchoolDto);
 
-    SchoolDto updateSchool(long id, UpdateSchoolDto updateSchoolDto);
+    SchoolDto updateSchool(String id, UpdateSchoolDto updateSchoolDto);
 
-    SchoolDto getSchoolById(long id);
+    SchoolDto getSchoolById(String id);
 
     List<SchoolDto> getAllSchools();
 
-    void deleteSchool(long id);
+    void deleteSchool(String id);
 }

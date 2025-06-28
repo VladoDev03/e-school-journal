@@ -10,6 +10,6 @@ import lombok.*;
 public class UpdateSchoolDto {
     private String name;
     private String address;
-    private long directorId;
+    private String directorId;
 
 }

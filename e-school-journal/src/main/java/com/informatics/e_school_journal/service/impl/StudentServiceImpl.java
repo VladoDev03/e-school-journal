@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto getStudentById(long id) {
+    public StudentDto getStudentById(String id) {
         Student student = this.studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
 
@@ -45,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto updateStudent(long id, UpdateStudentDto updateStudentDto) {
+    public StudentDto updateStudent(String id, UpdateStudentDto updateStudentDto) {
         Student existingStudent = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
 
@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(long id) {
+    public void deleteStudent(String id) {
         if (!studentRepository.existsById(id)) {
             throw new RuntimeException("Student not found with id: " + id);
         }

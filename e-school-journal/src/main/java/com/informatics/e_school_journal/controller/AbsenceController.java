@@ -25,12 +25,12 @@ public class AbsenceController {
     }
 
     @PutMapping("/{id}")
-    public AbsenceDto updateAbsence(@PathVariable long id, @RequestBody UpdateAbsenceDto absenceDto) {
+    public AbsenceDto updateAbsence(@PathVariable String id, @RequestBody UpdateAbsenceDto absenceDto) {
         return absenceService.updateAbsence(id, absenceDto);
     }
 
     @DeleteMapping("/{id}/{teacherId}")
-    public void deleteAbsence(@PathVariable long id, @PathVariable long teacherId) {
+    public void deleteAbsence(@PathVariable String id, @PathVariable String teacherId) {
         absenceService.deleteAbsence(id, teacherId);
     }
 }

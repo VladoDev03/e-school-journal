@@ -23,7 +23,7 @@ public class StudyingController {
     }
 
     @PutMapping("/{id}")
-    public StudyingDto updateStudying(@RequestBody UpdateStudyingDto updateStudyingDto, @PathVariable Long id) {
+    public StudyingDto updateStudying(@RequestBody UpdateStudyingDto updateStudyingDto, @PathVariable String id) {
         return studyingService.updateStudying(id, updateStudyingDto);
     }
 }

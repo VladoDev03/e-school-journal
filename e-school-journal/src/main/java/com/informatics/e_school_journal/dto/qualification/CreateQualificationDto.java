@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @ToString
 public class CreateQualificationDto {
-    private long teacherId;
-    private List<Long> subjectIds;
+    private String teacherId;
+    private List<String> subjectIds;
 }

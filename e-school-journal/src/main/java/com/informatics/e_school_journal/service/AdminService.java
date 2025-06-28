@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface AdminService {
     List<AdminDto> getAdmins();
-    AdminDto getAdminById(long id);
+    AdminDto getAdminById(String id);
     AdminDto createAdmin(CreateAdminDto createAdminDto);
-    AdminDto updateAdmin(long id, UpdateAdminDto updateAdminDto);
-    void deleteAdmin(long id);
+    AdminDto updateAdmin(String id, UpdateAdminDto updateAdminDto);
+    void deleteAdmin(String id);
 }

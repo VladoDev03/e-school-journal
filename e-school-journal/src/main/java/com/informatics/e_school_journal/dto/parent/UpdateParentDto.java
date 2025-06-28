@@ -13,5 +13,5 @@ public class UpdateParentDto {
     private String firstName;
     private String lastName;
     private String phone;
-    private Set<Long> childrenIds;
+    private Set<String> childrenIds;
 }

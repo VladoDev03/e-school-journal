@@ -18,7 +18,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
     private final GradeRepository gradeRepository;
     private final ModelMapperConfig mapperConfig;
     @Override
-    public StudentInGradeDto enrollStudentInGrade(Long studentId, Long gradeId){
+    public StudentInGradeDto enrollStudentInGrade(String studentId, String gradeId){
         Student existingStudent = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
 
@@ -31,7 +31,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
     }
 
     @Override
-    public StudentInGradeDto withdrawStudentFromGrade(Long studentId) {
+    public StudentInGradeDto withdrawStudentFromGrade(String studentId) {
         Student existingStudent = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
 
@@ -41,11 +41,11 @@ public class StudentGradeServiceImpl implements StudentGradeService {
     }
 
     @Override
-    public StudentInGradeDto updateStudentInGrade(Long studentId, UpdateStudentInGradeDto updateStudentInGradeDto){
+    public StudentInGradeDto updateStudentInGrade(String studentId, UpdateStudentInGradeDto updateStudentInGradeDto){
         Student existingStudent = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
 
-        Long gradeId = updateStudentInGradeDto.getGradeId();
+        String gradeId = updateStudentInGradeDto.getGradeId();
 
         if(gradeId != null) {
             Grade grade = this.gradeRepository.findById(gradeId)

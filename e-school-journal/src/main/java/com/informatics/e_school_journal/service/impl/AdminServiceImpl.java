@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminDto getAdminById(long id) {
+    public AdminDto getAdminById(String id) {
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
 
@@ -45,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminDto updateAdmin(long id, UpdateAdminDto updateAdminDto) {
+    public AdminDto updateAdmin(String id, UpdateAdminDto updateAdminDto) {
         Admin existingAdmin = adminRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
         mapperConfig.getModelMapper().map(updateAdminDto, existingAdmin);
@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAdmin(long id) {
+    public void deleteAdmin(String id) {
         if (!adminRepository.existsById(id)) {
             throw new RuntimeException("Admin not found with id: " + id);
         }

@@ -31,7 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDto getTeacherById(long id) {
+    public TeacherDto getTeacherById(String id) {
         Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + id));
 
@@ -49,7 +49,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDto updateTeacher(long id, UpdateTeacherDto updateTeacherDto) {
+    public TeacherDto updateTeacher(String id, UpdateTeacherDto updateTeacherDto) {
         Teacher existingTeacher = teacherRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + id));
         mapperConfig.getModelMapper().map(updateTeacherDto, existingTeacher);
@@ -59,7 +59,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteTeacher(long id) {
+    public void deleteTeacher(String id) {
         if (!teacherRepository.existsById(id)) {
             throw new RuntimeException("Teacher not found with id: " + id);
         }
@@ -67,7 +67,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherDto> getTeachersInSchool(Long schoolId) {
+    public List<TeacherDto> getTeachersInSchool(String schoolId) {
 
         SchoolDto schoolDto = schoolService.getSchoolById(schoolId);
 

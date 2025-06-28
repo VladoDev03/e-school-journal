@@ -8,6 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class DirectorDto {
-    private long id;
-    private String keycloakId;
+    private String id;
 }

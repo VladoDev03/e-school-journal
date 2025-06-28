@@ -10,6 +10,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CreateDirectorDto {
-    private String keycloakId;
-    private long schoolId;
+    private String id;
+    private String schoolId;
 }

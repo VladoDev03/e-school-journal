@@ -41,7 +41,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public GradeDto getGradeById(long id) {
+    public GradeDto getGradeById(String id) {
         Grade grade = gradeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade not found with id: " + id));
 
@@ -59,7 +59,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public GradeDto updateGrade(long id, UpdateGradeDto updateGradeDto) {
+    public GradeDto updateGrade(String id, UpdateGradeDto updateGradeDto) {
         Grade existingGrade = gradeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade not found with id: " + id));
         existingGrade.setGrade(updateGradeDto.getGrade());
@@ -76,7 +76,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public void deleteGrade(long id) {
+    public void deleteGrade(String id) {
         if (!gradeRepository.existsById(id)) {
             throw new RuntimeException("Grade not found with id: " + id);
         }
@@ -84,7 +84,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<GradeDto> getGradesInSchool(Long schoolId) throws Exception {
+    public List<GradeDto> getGradesInSchool(String schoolId) throws Exception {
         SchoolDto school = schoolService.getSchoolById(schoolId);
 
         return this.gradeRepository.findGradesBySchoolId(schoolId).stream()

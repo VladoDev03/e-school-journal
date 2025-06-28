@@ -26,18 +26,18 @@ public class MarkController {
     }
 
     @PutMapping("/{id}")
-    public MarkDto updateMark(@PathVariable Long id, @RequestBody UpdateMarkDto updateMarkDto) {
+    public MarkDto updateMark(@PathVariable String id, @RequestBody UpdateMarkDto updateMarkDto) {
         return this.markService.updateMark(id, updateMarkDto);
     }
 
     @DeleteMapping("/{id}/teacher-id/{teacherId}")
-    public void deleteMark(@PathVariable Long id, @PathVariable Long teacherId) {
+    public void deleteMark(@PathVariable String id, @PathVariable String teacherId) {
         this.markService.deleteMark(id, teacherId);
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('student') or hasAuthority('parent') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public MarkWithSubjectDto getMark(@PathVariable Long id) {
+    public MarkWithSubjectDto getMark(@PathVariable String id) {
         return this.markService.getMark(id);
     }
 }

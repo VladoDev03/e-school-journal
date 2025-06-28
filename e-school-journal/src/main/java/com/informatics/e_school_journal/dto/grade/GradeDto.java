@@ -8,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class GradeDto {
-    private Long id;
+    private String id;
     private int grade;
     private int year;
     private String stream;
-    private Long schoolId;
+    private String schoolId;
 }

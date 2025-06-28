@@ -7,7 +7,7 @@ import com.informatics.e_school_journal.data.enums.Term;
 
 import java.util.List;
 
-public interface MarkRepository extends JpaRepository<Mark, Long> {
-    List<Mark> findMarksByStudentId(Long studentId);
-    boolean existsByStudentIdAndStudyingIdAndMarkTypeAndTerm(Long studentId, Long studyingId, MarkType markType, Term term);
+public interface MarkRepository extends JpaRepository<Mark, String> {
+    List<Mark> findMarksByStudentId(String studentId);
+    boolean existsByStudentIdAndStudyingIdAndMarkTypeAndTerm(String studentId, String studyingId, MarkType markType, Term term);
 }

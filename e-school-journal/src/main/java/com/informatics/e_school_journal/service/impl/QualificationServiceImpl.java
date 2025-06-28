@@ -40,7 +40,7 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
-    public List<SubjectDto> getAllTeacherQualifications(Long teacherId) {
+    public List<SubjectDto> getAllTeacherQualifications(String teacherId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
@@ -51,7 +51,7 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
-    public void deleteQualification(Long teacherId, Long subjectId) {
+    public void deleteQualification(String teacherId, String subjectId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
@@ -67,7 +67,7 @@ public class QualificationServiceImpl implements QualificationService {
     }
 
     @Override
-    public void deleteAllTeacherQualifications(Long teacherId) {
+    public void deleteAllTeacherQualifications(String teacherId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
                 .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));

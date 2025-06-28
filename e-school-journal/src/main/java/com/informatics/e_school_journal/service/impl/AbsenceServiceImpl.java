@@ -63,7 +63,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public AbsenceDto updateAbsence(long id, UpdateAbsenceDto updateAbsenceDto) {
+    public AbsenceDto updateAbsence(String id, UpdateAbsenceDto updateAbsenceDto) {
         Absence absence = absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence not found with id: " + updateAbsenceDto.getStudentId()));
 
@@ -100,7 +100,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public void deleteAbsence(long id, long teacherId) {
+    public void deleteAbsence(String id, String teacherId) {
         Absence absence = absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence not found with id: " + id));
 

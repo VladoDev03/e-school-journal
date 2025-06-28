@@ -17,5 +17,5 @@ public class CreateScheduleDto {
     private WeekDay weekDay;
     private LocalTime startTime;
     private LocalTime endTime;
-    private long studyingId;
+    private String studyingId;
 }

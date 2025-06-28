@@ -28,7 +28,7 @@ public class GradeController {
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public GradeDto getGradeById(@PathVariable long id) {
+    public GradeDto getGradeById(@PathVariable String id) {
         return this.gradeService.getGradeById(id);
     }
 
@@ -40,19 +40,19 @@ public class GradeController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public GradeDto updateGrade(@PathVariable long id, @RequestBody UpdateGradeDto updateGradeDto) {
+    public GradeDto updateGrade(@PathVariable String id, @RequestBody UpdateGradeDto updateGradeDto) {
         return this.gradeService.updateGrade(id, updateGradeDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
-    public void deleteGrade(@PathVariable long id) {
+    public void deleteGrade(@PathVariable String id) {
         this.gradeService.deleteGrade(id);
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
     @GetMapping("/school-id/{schoolId}")
-    public ResponseEntity<List<GradeDto>> getGradesInSchool(@PathVariable Long schoolId) {
+    public ResponseEntity<List<GradeDto>> getGradesInSchool(@PathVariable String schoolId) {
         try {
             return new ResponseEntity<>(this.gradeService.getGradesInSchool(schoolId), HttpStatus.OK);
         } catch (Exception e) {

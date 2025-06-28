@@ -12,9 +12,6 @@ import java.util.Set;
 @ToString
 @Entity
 public class Student extends BaseEntity {
-    @Column(name = "keycloak_id")
-    private String keycloakId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Grade grade;
 

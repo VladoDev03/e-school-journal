@@ -7,5 +7,5 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class CreateTeacherDto {
-    private String keycloakId;
+    private String id;
 }

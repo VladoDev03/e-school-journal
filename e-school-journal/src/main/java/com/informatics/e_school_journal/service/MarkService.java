@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface MarkService {
     MarkDto createMark(CreateMarkDto createMarkDto);
-    MarkDto updateMark(Long id, UpdateMarkDto updateMarkDto);
-    void deleteMark(Long id, Long teacherId);
-    MarkWithSubjectDto getMark(Long id);
-    List<MarkWithSubjectDto> getMarksByStudent(Long studentId);
+    MarkDto updateMark(String id, UpdateMarkDto updateMarkDto);
+    void deleteMark(String id, String teacherId);
+    MarkWithSubjectDto getMark(String id);
+    List<MarkWithSubjectDto> getMarksByStudent(String studentId);
 
 }

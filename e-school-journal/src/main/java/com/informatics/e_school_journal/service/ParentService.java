@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface ParentService {
     ParentDto createParent(CreateParentDto createParentDto);
-    ParentDto getParentById(long id);
+    ParentDto getParentById(String id);
     List<ParentDto> getParents();
-    ParentDto updateParent(long id, UpdateParentDto updateParentDto);
-    void deleteParent(long id);
+    ParentDto updateParent(String id, UpdateParentDto updateParentDto);
+    void deleteParent(String id);
 }

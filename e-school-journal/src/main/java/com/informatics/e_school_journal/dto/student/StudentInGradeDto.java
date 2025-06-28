@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class StudentInGradeDto {
-    private long id;
-    private String keycloakId;
-    private Long gradeId;
+    private String id;
+    private String gradeId;
 }

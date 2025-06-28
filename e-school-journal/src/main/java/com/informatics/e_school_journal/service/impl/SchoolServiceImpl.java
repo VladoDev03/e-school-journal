@@ -27,7 +27,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public SchoolDto updateSchool(long id, UpdateSchoolDto updateSchoolDto) {
+    public SchoolDto updateSchool(String id, UpdateSchoolDto updateSchoolDto) {
         School existingSchool = schoolRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("School not found with id: " + id));
         mapperConfig.getModelMapper().map(updateSchoolDto, existingSchool);
@@ -38,7 +38,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public SchoolDto getSchoolById(long id) {
+    public SchoolDto getSchoolById(String id) {
         School school = schoolRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("School not found with id: " + id));
 
@@ -56,7 +56,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public void deleteSchool(long id) {
+    public void deleteSchool(String id) {
         if (!schoolRepository.existsById(id)) {
             throw new RuntimeException("Director not found with id: " + id);
         }

@@ -10,10 +10,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class MarkDto {
-    private Long id;
+    private String id;
     private double mark;
     private MarkType markType;
     private Term term;
-    private Long studyingId;
-    private Long studentId;
+    private String studyingId;
+    private String studentId;
 }

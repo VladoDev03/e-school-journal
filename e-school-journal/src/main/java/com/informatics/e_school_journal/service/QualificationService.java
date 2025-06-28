@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface QualificationService {
     CreateQualificationDto createQualification(CreateQualificationDto createQualificationDto);
-    List<SubjectDto> getAllTeacherQualifications(Long teacherId);
-    void deleteQualification(Long teacherId, Long subjectId);
-    void deleteAllTeacherQualifications(Long teacherId);
+    List<SubjectDto> getAllTeacherQualifications(String teacherId);
+    void deleteQualification(String teacherId, String subjectId);
+    void deleteAllTeacherQualifications(String teacherId);
 }

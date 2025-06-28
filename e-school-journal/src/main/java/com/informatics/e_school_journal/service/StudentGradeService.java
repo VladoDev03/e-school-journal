@@ -5,9 +5,9 @@ import com.informatics.e_school_journal.dto.student.StudentInGradeDto;
 import com.informatics.e_school_journal.dto.student.UpdateStudentInGradeDto;
 
 public interface StudentGradeService {
-    StudentInGradeDto enrollStudentInGrade(Long studentId, Long gradeId);
-    StudentInGradeDto withdrawStudentFromGrade(Long studentId);
+    StudentInGradeDto enrollStudentInGrade(String studentId, String gradeId);
+    StudentInGradeDto withdrawStudentFromGrade(String studentId);
 
-    StudentInGradeDto updateStudentInGrade(Long studentId, UpdateStudentInGradeDto updateStudentInGradeDto);
+    StudentInGradeDto updateStudentInGrade(String studentId, UpdateStudentInGradeDto updateStudentInGradeDto);
 
 }

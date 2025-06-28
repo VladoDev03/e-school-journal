@@ -8,6 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UpdateStudentInGradeDto {
-    private String keycloakId;
-    private Long gradeId;
+    private String gradeId;
 }
