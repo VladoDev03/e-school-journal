@@ -13,7 +13,7 @@ public class UpdateMarkDto {
     private double mark;
     private MarkType markType;
     private Term term;
-    private Long studyingId;
-    private Long studentId;
-    private Long teacherId;
+    private String studyingId;
+    private String studentId;
+    private String teacherId;
 }

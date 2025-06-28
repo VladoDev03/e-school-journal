@@ -34,7 +34,7 @@ public class MarkServiceImpl implements MarkService {
     private final RepositoryMetricsAutoConfiguration repositoryMetricsAutoConfiguration;
 
 //    @Override
-//    public MarkDto getMarkById(Long id) {
+//    public MarkDto getMarkById(String id) {
 //        Mark mark = this.markRepository.findById(id)
 //                .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
 //        return mapperConfig.getModelMapper().map(mark, MarkDto.class);
@@ -87,7 +87,7 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public MarkDto updateMark(Long id, UpdateMarkDto updateMarkDto) {
+    public MarkDto updateMark(String id, UpdateMarkDto updateMarkDto) {
         if (isAutumnAndFinal(updateMarkDto.getTerm(), updateMarkDto.getMarkType())) {
             throw new IllegalArgumentException("Final mark cannot be during autumn term.");
         }
@@ -133,7 +133,7 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public void deleteMark(Long id, Long teacherId) {
+    public void deleteMark(String id, String teacherId) {
         Mark mark = markRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
 
@@ -156,7 +156,7 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public MarkWithSubjectDto getMark(Long id) {
+    public MarkWithSubjectDto getMark(String id) {
         Mark mark = markRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
 
@@ -172,7 +172,7 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public List<MarkWithSubjectDto> getMarksByStudent(Long studentId) {
+    public List<MarkWithSubjectDto> getMarksByStudent(String studentId) {
 //        if(studentRepository.findById(studentId) == null){
 //
 //        }
@@ -195,7 +195,7 @@ public class MarkServiceImpl implements MarkService {
         return term == Term.AUTUMN && markType == MarkType.FINAL;
     }
 
-    private boolean existingMarkTypeAndTerm(Long studentId, Long studyingId, MarkType markType, Term term) {
+    private boolean existingMarkTypeAndTerm(String studentId, String studyingId, MarkType markType, Term term) {
         return markType != MarkType.CURRENT && markRepository.existsByStudentIdAndStudyingIdAndMarkTypeAndTerm(studentId, studyingId, markType, term);
     }
 }

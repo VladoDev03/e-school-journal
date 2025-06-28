@@ -12,11 +12,11 @@ import java.time.LocalTime;
 @Setter
 @ToString
 public class ScheduleDto {
-    private long id;
+    private String id;
     private int year;
     private Term term;
     private WeekDay weekDay;
     private LocalTime startTime;
     private LocalTime endTime;
-    private long studyingId;
+    private String studyingId;
 }

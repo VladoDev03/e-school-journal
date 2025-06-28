@@ -28,7 +28,7 @@ public class StudentController {
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public StudentDto getStudentById(@PathVariable long id) {
+    public StudentDto getStudentById(@PathVariable String id) {
         return this.studentService.getStudentById(id);
     }
 
@@ -40,19 +40,19 @@ public class StudentController {
 
 //    @PreAuthorize("hasAuthority('admin')")
 //    @PutMapping("/{id}")
-//    public StudentDto updateStudent(@PathVariable long id, @RequestBody UpdateStudentDto student) {
+//    public StudentDto updateStudent(@PathVariable String id, @RequestBody UpdateStudentDto student) {
 //        return this.studentService.updateStudent(id, student);
 //    }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable long id) {
+    public void deleteStudent(@PathVariable String id) {
         this.studentService.deleteStudent(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{studentId}/grade-id/{gradeId}")
-    public ResponseEntity<StudentInGradeDto> enrollStudentInGrade(@PathVariable Long studentId, @PathVariable Long gradeId) {
+    public ResponseEntity<StudentInGradeDto> enrollStudentInGrade(@PathVariable String studentId, @PathVariable String gradeId) {
         try {
             return new ResponseEntity<>(this.studentGradeService.enrollStudentInGrade(studentId, gradeId), HttpStatus.OK);
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class StudentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/withdraw/{studentId}")
-    public ResponseEntity<StudentInGradeDto> withdrawStudentFromGrade(@PathVariable Long studentId) {
+    public ResponseEntity<StudentInGradeDto> withdrawStudentFromGrade(@PathVariable String studentId) {
         try {
             StudentInGradeDto student = this.studentGradeService.withdrawStudentFromGrade(studentId);
             return new ResponseEntity<>(student, HttpStatus.OK);
@@ -73,7 +73,7 @@ public class StudentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public StudentInGradeDto updateStudentInGrade(@PathVariable long id, @RequestBody UpdateStudentInGradeDto student) {
+    public StudentInGradeDto updateStudentInGrade(@PathVariable String id, @RequestBody UpdateStudentInGradeDto student) {
         return this.studentGradeService.updateStudentInGrade(id, student);
     }
 }

@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UpdateStudyingDto {
-    private Long gradeId;
-    private Long teacherId;
-    private Long subjectId;
+    private String gradeId;
+    private String teacherId;
+    private String subjectId;
 }

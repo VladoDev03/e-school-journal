@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface TeacherService {
     List<TeacherDto> getTeachers();
-    TeacherDto getTeacherById(long id);
+    TeacherDto getTeacherById(String id);
     TeacherDto createTeacher(CreateTeacherDto createTeacherDto);
-    TeacherDto updateTeacher(long id, UpdateTeacherDto updateTeacherDto);
-    void deleteTeacher(long id);
-    List<TeacherDto> getTeachersInSchool(Long schoolId);
+    TeacherDto updateTeacher(String id, UpdateTeacherDto updateTeacherDto);
+    void deleteTeacher(String id);
+    List<TeacherDto> getTeachersInSchool(String schoolId);
 }

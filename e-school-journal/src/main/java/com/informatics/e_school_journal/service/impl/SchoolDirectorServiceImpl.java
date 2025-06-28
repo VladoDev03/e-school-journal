@@ -52,7 +52,7 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
     }
 
     @Override
-    public void deleteDirectorWithSchool(long directorId) {
+    public void deleteDirectorWithSchool(String directorId) {
         Director director = directorRepository.findById(directorId).orElseThrow();
         School school = director.getSchool();
 

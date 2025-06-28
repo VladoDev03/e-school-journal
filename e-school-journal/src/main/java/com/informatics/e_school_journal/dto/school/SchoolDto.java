@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class SchoolDto {
-    private long id;
+    private String id;
     private String name;
     private String address;
-    private long directorId;
+    private String directorId;
 }

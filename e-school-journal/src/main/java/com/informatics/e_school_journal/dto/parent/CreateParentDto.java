@@ -9,9 +9,9 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 public class CreateParentDto {
-    private String keycloakId;
+    private String id;
     private String firstName;
     private String lastName;
     private String phone;
-    private Set<Long> childrenIds;
+    private Set<String> childrenIds;
 }

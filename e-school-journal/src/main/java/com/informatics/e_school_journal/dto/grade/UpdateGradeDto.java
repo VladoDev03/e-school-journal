@@ -11,5 +11,5 @@ public class UpdateGradeDto {
     private int grade;
     private int year;
     private String stream;
-    private Long schoolId;
+    private String schoolId;
 }

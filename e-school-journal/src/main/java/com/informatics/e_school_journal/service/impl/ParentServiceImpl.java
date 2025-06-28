@@ -40,7 +40,7 @@ public class ParentServiceImpl implements ParentService {
 
         ParentDto parentDto = mapperConfig.getModelMapper().map(savedParent, ParentDto.class);
         if (savedParent.getChildren() != null) {
-            Set<Long> childIds = savedParent.getChildren()
+            Set<String> childIds = savedParent.getChildren()
                     .stream()
                     .map(Student::getId)
                     .collect(Collectors.toSet());
@@ -51,13 +51,13 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public ParentDto getParentById(long id) {
+    public ParentDto getParentById(String id) {
         Parent parent = parentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Parent not found with id: " + id));
 
         ParentDto parentDto = mapperConfig.getModelMapper().map(parent, ParentDto.class);
         if (parent.getChildren() != null) {
-            Set<Long> childIds = parent.getChildren()
+            Set<String> childIds = parent.getChildren()
                     .stream()
                     .map(Student::getId)
                     .collect(Collectors.toSet());
@@ -74,7 +74,7 @@ public class ParentServiceImpl implements ParentService {
                 .map(parent -> {
                     ParentDto dto = mapperConfig.getModelMapper().map(parent, ParentDto.class);
                     if (parent.getChildren() != null) {
-                        Set<Long> childIds = parent.getChildren()
+                        Set<String> childIds = parent.getChildren()
                                 .stream()
                                 .map(Student::getId)
                                 .collect(Collectors.toSet());
@@ -87,7 +87,7 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public ParentDto updateParent(long id, UpdateParentDto updateParentDto) {
+    public ParentDto updateParent(String id, UpdateParentDto updateParentDto) {
         Parent existingParent = parentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Parent not found with id: " + id));
 
@@ -102,7 +102,7 @@ public class ParentServiceImpl implements ParentService {
 
         ParentDto parentDto = mapperConfig.getModelMapper().map(updatedParent, ParentDto.class);
         if (updatedParent.getChildren() != null) {
-            Set<Long> childIds = updatedParent.getChildren()
+            Set<String> childIds = updatedParent.getChildren()
                     .stream()
                     .map(Student::getId)
                     .collect(Collectors.toSet());
@@ -113,7 +113,7 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public void deleteParent(long id) {
+    public void deleteParent(String id) {
         if (!parentRepository.existsById(id)) {
             throw new RuntimeException("Parent not found with id: " + id);
         }

@@ -28,7 +28,7 @@ public class SchoolController {
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('director') or hasAuthority('teacher') or hasAuthority('student') or hasAuthority('parent')")
     @GetMapping("/{id}")
-    public SchoolDto getSchoolById(@PathVariable long id) {
+    public SchoolDto getSchoolById(@PathVariable String id) {
         return this.schoolService.getSchoolById(id);
     }
 
@@ -38,14 +38,13 @@ public class SchoolController {
     }
 
     @PutMapping("/{id}")
-    public SchoolDto updateSchool(@PathVariable long id, @RequestBody UpdateSchoolDto updateSchoolDto) {
+    public SchoolDto updateSchool(@PathVariable String id, @RequestBody UpdateSchoolDto updateSchoolDto) {
         return this.schoolService.updateSchool(id, updateSchoolDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSchool(@PathVariable long id) {
+    public void deleteSchool(@PathVariable String id) {
         this.schoolService.deleteSchool(id);
     }
-
 }
 

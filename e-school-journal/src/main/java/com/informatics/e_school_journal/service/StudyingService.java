@@ -6,6 +6,6 @@ import com.informatics.e_school_journal.dto.studying.UpdateStudyingDto;
 
 public interface StudyingService {
     StudyingDto createStudyingDto(CreateStudyingDto createStudyingDto);
-    StudyingDto updateStudying(Long id, UpdateStudyingDto updateStudyingDto);
-    void deleteTeacherWithStudyings(Long teacherId);
+    StudyingDto updateStudying(String id, UpdateStudyingDto updateStudyingDto);
+    void deleteTeacherWithStudyings(String teacherId);
 }

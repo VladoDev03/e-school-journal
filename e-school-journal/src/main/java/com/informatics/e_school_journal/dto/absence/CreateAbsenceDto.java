@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class CreateAbsenceDto {
     private LocalDateTime date;
     private boolean isExcused;
-    private long studentId;
-    private long teacherId;
-    private long studyingId;
+    private String studentId;
+    private String teacherId;
+    private String studyingId;
 }

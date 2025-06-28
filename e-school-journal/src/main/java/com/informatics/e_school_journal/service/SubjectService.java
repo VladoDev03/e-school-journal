@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface SubjectService {
     List<SubjectDto> getSubjects();
-    SubjectDto getSubjectById(long id);
+    SubjectDto getSubjectById(String id);
     SubjectDto createSubject(CreateSubjectDto createSubjectDto);
-    SubjectDto updateSubject(long id, UpdateSubjectDto updateSubjectDto);
-    void deleteSubject(long id);
+    SubjectDto updateSubject(String id, UpdateSubjectDto updateSubjectDto);
+    void deleteSubject(String id);
 }

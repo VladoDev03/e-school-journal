@@ -10,9 +10,6 @@ import lombok.*;
 @ToString
 @Entity
 public class Director extends BaseEntity{
-    @Column(name = "keycloak_id")
-    private String keycloakId;
-
     @OneToOne(fetch = FetchType.LAZY)
     private School school;
 }

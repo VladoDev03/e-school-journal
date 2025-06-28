@@ -7,12 +7,11 @@ import com.informatics.e_school_journal.dto.grade.UpdateGradeDto;
 import java.util.List;
 
 public interface GradeService {
-    GradeDto getGradeById(long id);
+    GradeDto getGradeById(String id);
     GradeDto createGrade(CreateGradeDto createGradeDto);
     List<GradeDto> getGrades();
-    GradeDto updateGrade(long id, UpdateGradeDto updateGradeDto);
-    void deleteGrade(long id);
-
-    List<GradeDto> getGradesInSchool(Long schoolId) throws Exception;
+    GradeDto updateGrade(String id, UpdateGradeDto updateGradeDto);
+    void deleteGrade(String id);
+    List<GradeDto> getGradesInSchool(String schoolId) throws Exception;
 }
 

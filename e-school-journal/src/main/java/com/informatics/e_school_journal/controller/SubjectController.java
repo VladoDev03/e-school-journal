@@ -26,7 +26,7 @@ public class SubjectController {
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public SubjectDto getSubjectById(@PathVariable long id){
+    public SubjectDto getSubjectById(@PathVariable String id){
         return this.subjectService.getSubjectById(id);
     }
 
@@ -38,13 +38,13 @@ public class SubjectController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public SubjectDto updateSubject(@PathVariable long id, @RequestBody UpdateSubjectDto updateSubjectDto) {
+    public SubjectDto updateSubject(@PathVariable String id, @RequestBody UpdateSubjectDto updateSubjectDto) {
         return this.subjectService.updateSubject(id, updateSubjectDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
-    public void deleteSubject(@PathVariable long id) {
+    public void deleteSubject(@PathVariable String id) {
         this.subjectService.deleteSubject(id);
     }
 

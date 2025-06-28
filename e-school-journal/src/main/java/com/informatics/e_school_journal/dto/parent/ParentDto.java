@@ -10,10 +10,9 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 public class ParentDto {
-    private long id;
-    private String keycloakId;
+    private String id;
     private String firstName;
     private String lastName;
     private String phone;
-    private Set<Long> childrenIds;
+    private Set<String> childrenIds;
 }

@@ -26,7 +26,7 @@ public class ParentController {
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public ParentDto getParentById(@PathVariable long id) {
+    public ParentDto getParentById(@PathVariable String id) {
         return this.parentService.getParentById(id);
     }
 
@@ -38,13 +38,13 @@ public class ParentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public ParentDto updateParent(@PathVariable long id, @RequestBody UpdateParentDto updateParentDto) {
+    public ParentDto updateParent(@PathVariable String id, @RequestBody UpdateParentDto updateParentDto) {
         return this.parentService.updateParent(id, updateParentDto);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/{id}")
-    public void deleteParent(@PathVariable long id) {
+    public void deleteParent(@PathVariable String id) {
         this.parentService.deleteParent(id);
     }
 }

@@ -12,9 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 public class Teacher extends BaseEntity {
-    @Column(name="keycloak_id")
-    private String keycloakId;
-
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private Set<Studying> studyings;
 

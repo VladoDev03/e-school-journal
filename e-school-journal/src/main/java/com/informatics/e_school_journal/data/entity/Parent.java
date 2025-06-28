@@ -13,9 +13,6 @@ import java.util.Set;
 @ToString
 @Entity
 public class Parent extends BaseEntity {
-    @Column(name = "keycloak_id")
-    private String keycloakId;
-
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Student> children;
 }

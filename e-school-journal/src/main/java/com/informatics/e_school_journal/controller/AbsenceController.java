@@ -10,12 +10,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 
 @EnableMethodSecurity(prePostEnabled = true)
-@PreAuthorize("hasAuthority('admin')")
+@PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/absence")
 public class AbsenceController {
     private final AbsenceService absenceService;
+
+    // Get -> all auth
 
     @PostMapping
     public AbsenceDto createAbsence(@RequestBody CreateAbsenceDto absenceDto) {
@@ -23,12 +25,12 @@ public class AbsenceController {
     }
 
     @PutMapping("/{id}")
-    public AbsenceDto updateAbsence(@PathVariable long id, @RequestBody UpdateAbsenceDto absenceDto) {
+    public AbsenceDto updateAbsence(@PathVariable String id, @RequestBody UpdateAbsenceDto absenceDto) {
         return absenceService.updateAbsence(id, absenceDto);
     }
 
     @DeleteMapping("/{id}/{teacherId}")
-    public void deleteAbsence(@PathVariable long id, @PathVariable long teacherId) {
+    public void deleteAbsence(@PathVariable String id, @PathVariable String teacherId) {
         absenceService.deleteAbsence(id, teacherId);
     }
 }

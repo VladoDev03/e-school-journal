@@ -25,7 +25,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public AdminDto getAdminById(@PathVariable long id) {
+    public AdminDto getAdminById(@PathVariable String id) {
         return adminService.getAdminById(id);
     }
 
@@ -35,12 +35,12 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
-    public AdminDto updateAdmin(@PathVariable long id, @RequestBody UpdateAdminDto updateAdminDto) {
+    public AdminDto updateAdmin(@PathVariable String id, @RequestBody UpdateAdminDto updateAdminDto) {
         return adminService.updateAdmin(id, updateAdminDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAdmin(@PathVariable long id) {
+    public void deleteAdmin(@PathVariable String id) {
         adminService.deleteAdmin(id);
     }
 }

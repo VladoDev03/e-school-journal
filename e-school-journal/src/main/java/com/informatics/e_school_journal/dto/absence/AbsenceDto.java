@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class AbsenceDto {
-    private long id;
+    private String id;
     private LocalDateTime date;
     private boolean isExcused;
-    private long studentId;
-    private long teacherId;
-    private long studyingId;
+    private String studentId;
+    private String teacherId;
+    private String studyingId;
 }

@@ -27,7 +27,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDto getSubjectById(long id) {
+    public SubjectDto getSubjectById(String id) {
         Subject subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));
 
@@ -45,7 +45,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDto updateSubject(long id, UpdateSubjectDto updateSubjectDto) {
+    public SubjectDto updateSubject(String id, UpdateSubjectDto updateSubjectDto) {
         Subject existingSubject = subjectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));
         mapperConfig.getModelMapper().map(updateSubjectDto, existingSubject);
@@ -55,7 +55,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void deleteSubject(long id) {
+    public void deleteSubject(String id) {
         if (!subjectRepository.existsById(id)) {
             throw new RuntimeException("Subject not found with id: " + id);
         }

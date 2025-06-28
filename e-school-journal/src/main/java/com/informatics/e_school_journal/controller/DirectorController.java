@@ -29,7 +29,7 @@ public class DirectorController {
 
     @PreAuthorize("hasAuthority('admin') or hasAnyAuthority('director') or hasAnyAuthority('teacher') or hasAnyAuthority('student') or hasAnyAuthority('parent')")
     @GetMapping("/{id}")
-    public DirectorDto getDirectorById(@PathVariable long id) {
+    public DirectorDto getDirectorById(@PathVariable String id) {
         return this.directorService.getDirectorById(id);
     }
 
@@ -39,18 +39,18 @@ public class DirectorController {
     }
 
     @PutMapping("/{id}")
-    public DirectorDto updateDirector(@PathVariable long id, @RequestBody UpdateDirectorDto updateDirectorDto) {
+    public DirectorDto updateDirector(@PathVariable String id, @RequestBody UpdateDirectorDto updateDirectorDto) {
         return this.directorService.updateDirector(id, updateDirectorDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDirector(@PathVariable long id) {
+    public void deleteDirector(@PathVariable String id) {
         this.schoolDirectorService.deleteDirectorWithSchool(id);
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAnyAuthority('director') or hasAnyAuthority('teacher') or hasAnyAuthority('student') or hasAnyAuthority('parent')")
     @GetMapping("/school-id/{id}")
-    public DirectorDto getDirectorBySchoolId(@PathVariable long id) {
+    public DirectorDto getDirectorBySchoolId(@PathVariable String id) {
         return this.directorService.getDirectorBySchoolId(id);
     }
 

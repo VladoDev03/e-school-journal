@@ -8,5 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UpdateAdminDto {
-    private String keycloakId;
+    private String id;
 }
