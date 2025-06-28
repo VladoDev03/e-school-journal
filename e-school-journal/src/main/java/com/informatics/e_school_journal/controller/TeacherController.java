@@ -42,6 +42,7 @@ public class TeacherController {
         return this.teacherService.getTeachers();
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
     public TeacherDto updateTeacher(@PathVariable Long id, @RequestBody UpdateTeacherDto updateTeacherDto) {
         return this.teacherService.updateTeacher(id, updateTeacherDto);
@@ -53,7 +54,7 @@ public class TeacherController {
         this.studyingService.deleteTeacherWithStudyings(id);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
     @GetMapping("/inSchool/{schoolId}")
     public List<TeacherDto> getTeachersInSchool(@PathVariable Long schoolId) {
         return this.teacherService.getTeachersInSchool(schoolId);
@@ -65,7 +66,7 @@ public class TeacherController {
         return qualificationService.createQualification(createQualificationDto);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
     @GetMapping("/qualification/{teacherId}")
     public List<SubjectDto> getTeacherQualifications(@PathVariable Long teacherId) {
         return qualificationService.getAllTeacherQualifications(teacherId);
@@ -79,7 +80,7 @@ public class TeacherController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/qualification/{teacherId}")
-    public void deleteTeacherQualification(@PathVariable Long teacherId) {
+    public void deleteTeacherQualifications(@PathVariable Long teacherId) {
         qualificationService.deleteAllTeacherQualifications(teacherId);
     }
 }

@@ -50,7 +50,7 @@ public class GradeController {
         this.gradeService.deleteGrade(id);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
     @GetMapping("/school-id/{schoolId}")
     public ResponseEntity<List<GradeDto>> getGradesInSchool(@PathVariable Long schoolId) {
         try {

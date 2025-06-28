@@ -11,12 +11,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 
 @EnableMethodSecurity(prePostEnabled = true)
-@PreAuthorize("hasAuthority('admin')")
+@PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mark")
 public class MarkController {
     private final MarkService markService;
+
+    // Get -> all auth
 
     @PostMapping
     public MarkDto createMark(@RequestBody CreateMarkDto createMarkDto) {
@@ -33,6 +35,7 @@ public class MarkController {
         this.markService.deleteMark(id, teacherId);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('student') or hasAuthority('parent') or hasAuthority('director')")
     @GetMapping("/{id}")
     public MarkWithSubjectDto getMark(@PathVariable Long id) {
         return this.markService.getMark(id);

@@ -10,12 +10,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 
 @EnableMethodSecurity(prePostEnabled = true)
-@PreAuthorize("hasAuthority('admin')")
+@PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/absence")
 public class AbsenceController {
     private final AbsenceService absenceService;
+
+    // Get -> all auth
 
     @PostMapping
     public AbsenceDto createAbsence(@RequestBody CreateAbsenceDto absenceDto) {
