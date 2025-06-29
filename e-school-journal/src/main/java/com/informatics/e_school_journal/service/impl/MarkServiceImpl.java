@@ -18,6 +18,8 @@ import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
 import com.informatics.e_school_journal.service.MarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.metrics.data.RepositoryMetricsAutoConfiguration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,14 +52,11 @@ public class MarkServiceImpl implements MarkService {
             throw new IllegalArgumentException("Mark already exists.");
         }
 
-        Teacher teacher = this.teacherRepository.findById(createMarkDto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + createMarkDto.getTeacherId()));
-
         Studying studying = this.studyingRepository.findById(createMarkDto.getStudyingId())
                 .orElseThrow(() -> new RuntimeException("Studying not found with id: " + createMarkDto.getStudyingId()));
 
-        if (teacher != studying.getTeacher()) {
-            throw new RuntimeException("Teacher not authorized for this action.");
+        if (!this.isUserAuthorized(studying)) {
+            throw new RuntimeException("User not authorized for this action.");
         }
 
         Student student = this.studentRepository.findById(createMarkDto.getStudentId())
@@ -96,14 +95,11 @@ public class MarkServiceImpl implements MarkService {
             throw new IllegalArgumentException("Mark already exists.");
         }
 
-        Teacher teacher = this.teacherRepository.findById(updateMarkDto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + updateMarkDto.getTeacherId()));
-
         Studying studying = this.studyingRepository.findById(updateMarkDto.getStudyingId())
                 .orElseThrow(() -> new RuntimeException("Studying not found with id: " + updateMarkDto.getStudyingId()));
 
-        if (teacher != studying.getTeacher()) {
-            throw new RuntimeException("Teacher not authorized for this action.");
+        if (!this.isUserAuthorized(studying)) {
+            throw new RuntimeException("User not authorized for this action.");
         }
 
         Student student = this.studentRepository.findById(updateMarkDto.getStudentId())
@@ -133,17 +129,14 @@ public class MarkServiceImpl implements MarkService {
     }
 
     @Override
-    public void deleteMark(String id, String teacherId) {
+    public void deleteMark(String id) {
         Mark mark = markRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
 
-        Teacher teacher = this.teacherRepository.findById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + teacherId));
-
         Studying studying = mark.getStudying();
 
-        if (teacher != studying.getTeacher()) {
-            throw new RuntimeException("Teacher not authorized for this action.");
+        if (!this.isUserAuthorized(studying)) {
+            throw new RuntimeException("User not authorized for this action.");
         }
 
         Student student = mark.getStudent();
@@ -197,5 +190,22 @@ public class MarkServiceImpl implements MarkService {
 
     private boolean existingMarkTypeAndTerm(String studentId, String studyingId, MarkType markType, Term term) {
         return markType != MarkType.CURRENT && markRepository.existsByStudentIdAndStudyingIdAndMarkTypeAndTerm(studentId, studyingId, markType, term);
+    }
+
+    private boolean isUserAuthorized(Studying studying) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(x -> x.getAuthority().equals("admin"));
+
+        if(!isAdmin) {
+            Teacher teacher = this.teacherRepository.findById(authentication.getName())
+                    .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + authentication.getName()));
+            if (teacher != studying.getTeacher())
+                return false;
+        }
+
+        return true;
     }
 }

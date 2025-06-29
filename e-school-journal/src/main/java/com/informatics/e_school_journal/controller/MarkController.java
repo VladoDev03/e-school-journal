@@ -30,9 +30,9 @@ public class MarkController {
         return this.markService.updateMark(id, updateMarkDto);
     }
 
-    @DeleteMapping("/{id}/teacher-id/{teacherId}")
-    public void deleteMark(@PathVariable String id, @PathVariable String teacherId) {
-        this.markService.deleteMark(id, teacherId);
+    @DeleteMapping("/{id}")
+    public void deleteMark(@PathVariable String id) {
+        this.markService.deleteMark(id);
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('student') or hasAuthority('parent') or hasAuthority('director')")

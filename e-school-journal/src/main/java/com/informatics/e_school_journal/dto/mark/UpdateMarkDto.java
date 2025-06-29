@@ -15,5 +15,4 @@ public class UpdateMarkDto {
     private Term term;
     private String studyingId;
     private String studentId;
-    private String teacherId;
 }

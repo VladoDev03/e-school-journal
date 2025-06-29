@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class StudyingDto {
+    private String id;
     private String gradeId;
     private String teacherId;
     private String subjectId;

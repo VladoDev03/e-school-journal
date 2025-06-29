@@ -15,5 +15,4 @@ public class CreateMarkDto {
     private Term term;
     private String studyingId;
     private String studentId;
-    private String teacherId;
 }
