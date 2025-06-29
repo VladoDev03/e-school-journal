@@ -82,7 +82,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto createTeacherRole(String userId) {
-        if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("admin"))) {
+        if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("teacher"))) {
             throw new IllegalArgumentException("User cannot be assigned this role.");
         }
 

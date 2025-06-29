@@ -44,7 +44,7 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
 
     @Override
     public DirectorDto createDirectorRole(String userId, DirectorSchoolRoleDto director) {
-        if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("admin"))) {
+        if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("director"))) {
             throw new IllegalArgumentException("User cannot be assigned this role.");
         }
 
