@@ -23,4 +23,8 @@ public class Student extends BaseEntity {
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private Set<Absence> absences;
+
+    public Student(String id) {
+        super(id);
+    }
 }

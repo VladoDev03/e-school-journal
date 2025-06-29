@@ -6,10 +6,14 @@ import com.informatics.e_school_journal.data.entity.Student;
 import com.informatics.e_school_journal.data.repo.ParentRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.dto.parent.CreateParentDto;
+import com.informatics.e_school_journal.dto.parent.CreateParentRoleDto;
 import com.informatics.e_school_journal.dto.parent.ParentDto;
 import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
+import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.ParentService;
-import com.informatics.e_school_journal.service.StudentService;
+import com.informatics.e_school_journal.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +28,56 @@ public class ParentServiceImpl implements ParentService {
     private final ParentRepository parentRepository;
     private final StudentRepository studentRepository;
     private final ModelMapperConfig mapperConfig;
+
+    private final UserService userService;
     
     @Override
+    @Transactional
     public ParentDto createParent(CreateParentDto createParentDto) {
-        Parent parent = mapperConfig.getModelMapper().map(createParentDto, Parent.class);
+        userService.registerUser(createParentDto.getCreateUserDto());
+        UserDto userDto = userService.getUserByEmail(createParentDto.getCreateUserDto().getEmail());
+
+        RoleDto roleDto = userService.getRoleByName("parent");
+        userService.setRole(userDto.getId(), roleDto);
+
+        Parent parent = new Parent(userDto.getId());
 
         if (createParentDto.getChildrenIds() != null && !createParentDto.getChildrenIds().isEmpty()) {
             Set<Student> children = new HashSet<>(
                     studentRepository.findAllById(createParentDto.getChildrenIds())
+            );
+            parent.setChildren(children);
+        }
+
+        Parent savedParent = parentRepository.save(parent);
+
+        ParentDto parentDto = mapperConfig.getModelMapper().map(savedParent, ParentDto.class);
+        if (savedParent.getChildren() != null) {
+            Set<String> childIds = savedParent.getChildren()
+                    .stream()
+                    .map(Student::getId)
+                    .collect(Collectors.toSet());
+            parentDto.setChildrenIds(childIds);
+        }
+
+        return parentDto;
+    }
+
+    @Override
+    @Transactional
+    public ParentDto createParentRole(String id, CreateParentRoleDto createParentRoleDto) {
+        if (userService.getUserPossibleRoles(id).stream().noneMatch(role -> role.getName().equals("parent"))) {
+            throw new IllegalArgumentException("User cannot be assigned this role.");
+        }
+
+        RoleDto roleDto = userService.getRoleByName("parent");
+        userService.setRole(id, roleDto);
+
+        Parent parent = new Parent(id);
+
+        if (createParentRoleDto.getChildrenIds() != null && !createParentRoleDto.getChildrenIds().isEmpty()) {
+            Set<Student> children = new HashSet<>(
+                    studentRepository.findAllById(createParentRoleDto.getChildrenIds())
             );
             parent.setChildren(children);
         }

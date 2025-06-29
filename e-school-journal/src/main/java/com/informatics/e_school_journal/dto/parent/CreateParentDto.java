@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.parent;
 
+import com.informatics.e_school_journal.dto.user.CreateUserDto;
 import lombok.*;
 
 import java.util.Set;
@@ -9,9 +10,6 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 public class CreateParentDto {
-    private String id;
-    private String firstName;
-    private String lastName;
-    private String phone;
+    private CreateUserDto createUserDto;
     private Set<String> childrenIds;
 }

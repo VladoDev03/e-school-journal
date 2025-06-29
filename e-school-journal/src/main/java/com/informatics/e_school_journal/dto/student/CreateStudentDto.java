@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.student;
 
+import com.informatics.e_school_journal.dto.user.CreateUserDto;
 import lombok.*;
 
 @Getter
@@ -7,5 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class CreateStudentDto {
-    private String id;
+    private CreateUserDto createUserDto;
 }

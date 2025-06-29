@@ -15,4 +15,8 @@ import java.util.Set;
 public class Parent extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Student> children;
+
+    public Parent(String id) {
+        super(id);
+    }
 }
