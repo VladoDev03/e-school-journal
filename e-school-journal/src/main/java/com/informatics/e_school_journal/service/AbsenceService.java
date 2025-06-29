@@ -7,5 +7,5 @@ import com.informatics.e_school_journal.dto.absence.UpdateAbsenceDto;
 public interface AbsenceService {
     AbsenceDto createAbsence(CreateAbsenceDto createAbsenceDto);
     AbsenceDto updateAbsence(String id, UpdateAbsenceDto updateAbsenceDto);
-    void deleteAbsence(String id, String teacherId);
+    void deleteAbsence(String id);
 }

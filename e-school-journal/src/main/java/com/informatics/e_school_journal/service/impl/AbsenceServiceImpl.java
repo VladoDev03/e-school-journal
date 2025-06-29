@@ -14,6 +14,8 @@ import com.informatics.e_school_journal.dto.absence.CreateAbsenceDto;
 import com.informatics.e_school_journal.dto.absence.UpdateAbsenceDto;
 import com.informatics.e_school_journal.service.AbsenceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,11 +38,8 @@ public class AbsenceServiceImpl implements AbsenceService {
         Studying studying = studyingRepository.findById(createAbsenceDto.getStudyingId())
                 .orElseThrow(() -> new RuntimeException("Studying not found with id: " + createAbsenceDto.getStudyingId()));
 
-        Teacher teacher = teacherRepository.findById(createAbsenceDto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + createAbsenceDto.getTeacherId()));
-
-        if (teacher != studying.getTeacher()) {
-            throw new RuntimeException("Teacher is not authorized for this action.");
+        if (!this.isUserAuthorized(studying)) {
+            throw new RuntimeException("User not authorized for this action.");
         }
 
         if (student.getGrade() != studying.getGrade()) {
@@ -57,8 +56,7 @@ public class AbsenceServiceImpl implements AbsenceService {
                 createAbsenceDto.getDate(),
                 createAbsenceDto.isExcused(),
                 createAbsenceDto.getStudentId(),
-                createAbsenceDto.getStudyingId(),
-                createAbsenceDto.getTeacherId()
+                createAbsenceDto.getStudyingId()
         );
     }
 
@@ -73,11 +71,8 @@ public class AbsenceServiceImpl implements AbsenceService {
         Studying studying = studyingRepository.findById(updateAbsenceDto.getStudyingId())
                 .orElseThrow(() -> new RuntimeException("Studying not found with id: " + updateAbsenceDto.getStudyingId()));
 
-        Teacher teacher = teacherRepository.findById(updateAbsenceDto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + updateAbsenceDto.getTeacherId()));
-
-        if (teacher != studying.getTeacher()) {
-            throw new RuntimeException("Teacher is not authorized for this action.");
+        if (!this.isUserAuthorized(studying)) {
+            throw new RuntimeException("User not authorized for this action.");
         }
 
         if (student.getGrade() != studying.getGrade()) {
@@ -94,26 +89,39 @@ public class AbsenceServiceImpl implements AbsenceService {
                 updateAbsenceDto.getDate(),
                 updateAbsenceDto.isExcused(),
                 updateAbsenceDto.getStudentId(),
-                updateAbsenceDto.getStudyingId(),
-                updateAbsenceDto.getTeacherId()
+                updateAbsenceDto.getStudyingId()
         );
     }
 
     @Override
-    public void deleteAbsence(String id, String teacherId) {
+    public void deleteAbsence(String id) {
         Absence absence = absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence not found with id: " + id));
-
-        Teacher teacher = teacherRepository.findById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + teacherId));
 
         Studying studying = studyingRepository.findById(absence.getStudying().getId())
                 .orElseThrow(() -> new RuntimeException("Studying not found with id: " + absence.getStudying().getId()));
 
-        if (teacher != studying.getTeacher()) {
-            throw new RuntimeException("Teacher is not authorized for this action.");
+        if (!this.isUserAuthorized(studying)) {
+            throw new RuntimeException("User not authorized for this action.");
         }
 
         absenceRepository.delete(absence);
+    }
+
+    private boolean isUserAuthorized(Studying studying) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(x -> x.getAuthority().equals("admin"));
+
+        if(!isAdmin) {
+            Teacher teacher = this.teacherRepository.findById(authentication.getName())
+                    .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + authentication.getName()));
+            if (teacher != studying.getTeacher())
+                return false;
+        }
+
+        return true;
     }
 }

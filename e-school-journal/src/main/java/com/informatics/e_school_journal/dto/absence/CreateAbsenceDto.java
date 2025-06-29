@@ -13,6 +13,5 @@ public class CreateAbsenceDto {
     private LocalDateTime date;
     private boolean isExcused;
     private String studentId;
-    private String teacherId;
     private String studyingId;
 }

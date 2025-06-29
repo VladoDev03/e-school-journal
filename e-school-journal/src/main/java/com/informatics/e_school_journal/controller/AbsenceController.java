@@ -29,8 +29,8 @@ public class AbsenceController {
         return absenceService.updateAbsence(id, absenceDto);
     }
 
-    @DeleteMapping("/{id}/{teacherId}")
-    public void deleteAbsence(@PathVariable String id, @PathVariable String teacherId) {
-        absenceService.deleteAbsence(id, teacherId);
+    @DeleteMapping("/{id}")
+    public void deleteAbsence(@PathVariable String id) {
+        absenceService.deleteAbsence(id);
     }
 }
