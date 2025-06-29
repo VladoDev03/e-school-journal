@@ -10,8 +10,5 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 public class UpdateParentDto {
-    private String firstName;
-    private String lastName;
-    private String phone;
     private Set<String> childrenIds;
 }

@@ -9,7 +9,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ParentDto {
-    private String id;
+public class CreateParentRoleDto {
     private Set<String> childrenIds;
 }

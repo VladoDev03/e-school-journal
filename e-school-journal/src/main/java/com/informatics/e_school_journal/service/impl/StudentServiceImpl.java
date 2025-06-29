@@ -6,7 +6,11 @@ import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.dto.student.CreateStudentDto;
 import com.informatics.e_school_journal.dto.student.StudentDto;
 import com.informatics.e_school_journal.dto.student.UpdateStudentDto;
+import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.StudentService;
+import com.informatics.e_school_journal.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,8 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final ModelMapperConfig mapperConfig;
+
+    private final UserService userService;
 
     @Override
     public List<StudentDto> getStudents() {
@@ -37,8 +43,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public StudentDto createStudent(CreateStudentDto createStudentDto) {
-        Student student = mapperConfig.getModelMapper().map(createStudentDto, Student.class);
+        userService.registerUser(createStudentDto.getCreateUserDto());
+        UserDto userDto = userService.getUserByEmail(createStudentDto.getCreateUserDto().getEmail());
+
+        RoleDto roleDto = userService.getRoleByName("student");
+        userService.setRole(userDto.getId(), roleDto);
+
+        Student student = new Student(userDto.getId());
         Student savedStudent = this.studentRepository.save(student);
 
         return mapperConfig.getModelMapper().map(savedStudent, StudentDto.class);
