@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.service;
 import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
 import com.informatics.e_school_journal.dto.director.DirectorDto;
 import com.informatics.e_school_journal.dto.director.UpdateDirectorDto;
+import com.informatics.e_school_journal.dto.teacher.TeacherDto;
 
 import java.util.List;
 

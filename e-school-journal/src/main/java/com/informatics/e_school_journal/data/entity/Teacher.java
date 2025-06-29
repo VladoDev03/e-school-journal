@@ -22,4 +22,8 @@ public class Teacher extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     private Set<Subject> subjects;
+
+    public Teacher(String id) {
+        super(id);
+    }
 }
