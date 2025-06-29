@@ -1,14 +1,12 @@
 package com.informatics.e_school_journal.controller;
 
 import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UpdateUserDto;
 import com.informatics.e_school_journal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +21,11 @@ public class UserController {
     @GetMapping("/possible-roles/{userId}")
     public List<RoleDto> getUnassignedUserRoles(@PathVariable String userId) {
         return this.userService.getUserPossibleRoles(userId);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PutMapping("/{userId}")
+    public void updateUser(@PathVariable String userId, @RequestBody UpdateUserDto updateUserDto) {
+        this.userService.updateUser(userId, updateUserDto);
     }
 }

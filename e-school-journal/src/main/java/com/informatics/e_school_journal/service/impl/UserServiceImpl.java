@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.service.impl;
 import com.informatics.e_school_journal.config.RestClientConfig;
 import com.informatics.e_school_journal.dto.user.CreateUserDto;
 import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UpdateUserDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,20 @@ public class UserServiceImpl implements UserService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token)
                 .body(createUserDto)
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateUser(String userId, UpdateUserDto updateUserDto) {
+        String token = this.getAuthToken();
+
+        return restClientConfig.getRestClient()
+                .put()
+                .uri("http://localhost:8080/admin/realms/e-school-journal/users/{userId}", userId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .body(updateUserDto)
                 .retrieve()
                 .toBodilessEntity();
     }
