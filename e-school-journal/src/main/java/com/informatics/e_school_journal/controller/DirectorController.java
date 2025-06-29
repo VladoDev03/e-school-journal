@@ -3,10 +3,9 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.dto.director.*;
 import com.informatics.e_school_journal.service.DirectorService;
 import com.informatics.e_school_journal.service.SchoolDirectorService;
-import com.informatics.e_school_journal.service.SchoolService;
-import com.informatics.e_school_journal.service.impl.DirectorServiceImpl;
-import com.informatics.e_school_journal.service.impl.SchoolServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +56,15 @@ public class DirectorController {
     @PostMapping("/school-id")
     public DirectorWithSchoolDto createDirectorWithSchool(@RequestBody CreateDirectorDto createDirectorDto) {
         return this.schoolDirectorService.saveDirectorWithSchool(createDirectorDto);
+    }
+
+    @PostMapping("/add-role/{userId}")
+    public ResponseEntity<DirectorDto> createDirectorRole(@PathVariable String userId, @RequestBody DirectorSchoolRoleDto createDirectorDto) {
+        try {
+            return new ResponseEntity<>(schoolDirectorService.createDirectorRole(userId, createDirectorDto), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/school-id")

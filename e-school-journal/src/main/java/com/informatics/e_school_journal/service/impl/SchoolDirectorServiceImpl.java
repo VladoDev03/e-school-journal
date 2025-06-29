@@ -5,10 +5,11 @@ import com.informatics.e_school_journal.data.entity.Director;
 import com.informatics.e_school_journal.data.entity.School;
 import com.informatics.e_school_journal.data.repo.DirectorRepository;
 import com.informatics.e_school_journal.data.repo.SchoolRepository;
-import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
-import com.informatics.e_school_journal.dto.director.DirectorWithSchoolDto;
-import com.informatics.e_school_journal.dto.director.UpdateSchoolDirectorDto;
+import com.informatics.e_school_journal.dto.director.*;
+import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.SchoolDirectorService;
+import com.informatics.e_school_journal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,16 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
     private final ModelMapperConfig mapperConfig;
     private final DirectorRepository directorRepository;
     private final SchoolRepository schoolRepository;
+    private final UserService userService;
 
     @Override
     public DirectorWithSchoolDto saveDirectorWithSchool(CreateDirectorDto director) {
+        userService.registerUser(director.getCreateUserDto());
+        UserDto userDto = userService.getUserByEmail(director.getCreateUserDto().getEmail());
+
+        RoleDto roleDto = userService.getRoleByName("teacher");
+        userService.setRole(userDto.getId(), roleDto);
+
         Director newDirector = mapperConfig.getModelMapper().map(director, Director.class);
 
         School school = schoolRepository
@@ -32,6 +40,28 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
         newDirector = directorRepository.save(newDirector);
 
         return mapperConfig.getModelMapper().map(newDirector, DirectorWithSchoolDto.class);
+    }
+
+    @Override
+    public DirectorDto createDirectorRole(String userId, DirectorSchoolRoleDto director) {
+        if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("director"))) {
+            throw new IllegalArgumentException("User cannot be assigned this role.");
+        }
+
+        RoleDto roleDto = userService.getRoleByName("director");
+        userService.setRole(userId, roleDto);
+
+        Director newDirector = new Director(userId);
+
+        School school = schoolRepository
+                .findById(director.getSchoolId())
+                .orElseThrow(() -> new RuntimeException("School not found with id: " + director.getSchoolId()));
+
+        newDirector.setSchool(school);
+
+        newDirector = directorRepository.save(newDirector);
+
+        return mapperConfig.getModelMapper().map(newDirector, DirectorDto.class);
     }
 
     @Override

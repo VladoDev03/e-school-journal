@@ -2,13 +2,14 @@ package com.informatics.e_school_journal.service.impl;
 
 import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Director;
-import com.informatics.e_school_journal.data.entity.School;
 import com.informatics.e_school_journal.data.repo.DirectorRepository;
 import com.informatics.e_school_journal.dto.director.CreateDirectorDto;
 import com.informatics.e_school_journal.dto.director.DirectorDto;
 import com.informatics.e_school_journal.dto.director.UpdateDirectorDto;
-import com.informatics.e_school_journal.dto.school.SchoolDto;
+import com.informatics.e_school_journal.dto.user.RoleDto;
+import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.DirectorService;
+import com.informatics.e_school_journal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class DirectorServiceImpl implements DirectorService {
     private final DirectorRepository directorRepository;
     private final ModelMapperConfig mapperConfig;
-    private final SchoolServiceImpl schoolServiceImpl;
+    private final UserService userService;
 
     @Override
     public List<DirectorDto> getAllDirectors() {
@@ -40,6 +41,12 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     public DirectorDto createDirector(CreateDirectorDto createDirectorDto) {
+        userService.registerUser(createDirectorDto.getCreateUserDto());
+        UserDto userDto = userService.getUserByEmail(createDirectorDto.getCreateUserDto().getEmail());
+
+        RoleDto roleDto = userService.getRoleByName("teacher");
+        userService.setRole(userDto.getId(), roleDto);
+
         Director director = mapperConfig.getModelMapper().map(createDirectorDto, Director.class);
         Director savedDirector = directorRepository.save(director);
 

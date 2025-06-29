@@ -9,6 +9,8 @@ import com.informatics.e_school_journal.service.QualificationService;
 import com.informatics.e_school_journal.service.StudyingService;
 import com.informatics.e_school_journal.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,16 @@ public class TeacherController {
     @PostMapping
     public TeacherDto createTeacher(@RequestBody CreateTeacherDto createTeacherDto) {
         return this.teacherService.createTeacher(createTeacherDto);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PostMapping("/add-role/{userId}")
+    public ResponseEntity<TeacherDto> createTeacherRole(@PathVariable String userId) {
+        try {
+            return new ResponseEntity<>(teacherService.createTeacherRole(userId), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")

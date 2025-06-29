@@ -12,4 +12,8 @@ import lombok.*;
 public class Director extends BaseEntity{
     @OneToOne(fetch = FetchType.LAZY)
     private School school;
+
+    public Director(String id) {
+        super(id);
+    }
 }
