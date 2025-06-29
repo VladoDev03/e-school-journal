@@ -12,4 +12,5 @@ public interface AdminService {
     AdminDto createAdmin(CreateAdminDto createAdminDto);
     AdminDto updateAdmin(String id, UpdateAdminDto updateAdminDto);
     void deleteAdmin(String id);
+    AdminDto createAdminRole(String userId);
 }

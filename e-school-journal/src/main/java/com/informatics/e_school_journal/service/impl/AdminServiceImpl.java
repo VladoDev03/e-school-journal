@@ -49,11 +49,26 @@ public class AdminServiceImpl implements AdminService {
         userService.registerUser(createAdminDto.getCreateUserDto());
         UserDto userDto = userService.getUserByEmail(createAdminDto.getCreateUserDto().getEmail());
 
-        RoleDto roleDto = userService.getRoleIdByName("admin");
+        RoleDto roleDto = userService.getRoleByName("admin");
         userService.setRole(userDto.getId(), roleDto);
-        //add role in keycloak
 
         Admin admin = new Admin(userDto.getId());
+        Admin savedAdmin = adminRepository.save(admin);
+
+        return mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class);
+    }
+
+    @Override
+    @Transactional
+    public AdminDto createAdminRole(String userId) {
+        if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("admin"))) {
+            throw new IllegalArgumentException("User cannot be assigned this role.");
+        }
+
+        RoleDto roleDto = userService.getRoleByName("admin");
+        userService.setRole(userId, roleDto);
+
+        Admin admin = new Admin(userId);
         Admin savedAdmin = adminRepository.save(admin);
 
         return mapperConfig.getModelMapper().map(savedAdmin, AdminDto.class);

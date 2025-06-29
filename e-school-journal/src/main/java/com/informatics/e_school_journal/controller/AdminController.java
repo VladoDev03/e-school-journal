@@ -5,6 +5,8 @@ import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
 import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import com.informatics.e_school_journal.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,15 @@ public class AdminController {
     @PostMapping
     public AdminDto createAdmin(@RequestBody CreateAdminDto createAdminDto) {
         return adminService.createAdmin(createAdminDto);
+    }
+
+    @PostMapping("/add-role/{userId}")
+    public ResponseEntity<AdminDto> createAdminRole(@PathVariable String userId) {
+        try {
+            return new ResponseEntity<>(adminService.createAdminRole(userId), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")

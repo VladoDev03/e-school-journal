@@ -5,9 +5,14 @@ import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface UserService {
     ResponseEntity<Void> registerUser(CreateUserDto createUserDto);
     UserDto getUserByEmail(String email);
-    RoleDto getRoleIdByName(String roleName);
+    RoleDto getRoleByName(String roleName);
+    List<RoleDto> getAllRoles();
+    List<RoleDto> getUserRoles(String userId);
+    List<RoleDto> getUserPossibleRoles(String userId);
     ResponseEntity<Void> setRole(String userId, RoleDto roleDto);
 }

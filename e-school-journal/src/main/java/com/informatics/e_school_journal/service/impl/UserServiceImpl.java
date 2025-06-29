@@ -14,13 +14,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     private final RestClientConfig restClientConfig;
+
     @Override
     public ResponseEntity<Void> registerUser(CreateUserDto createUserDto) {
         String token = this.getAuthToken();
@@ -48,7 +48,8 @@ public class UserServiceImpl implements UserService {
                 .getFirst();
     }
 
-    public RoleDto getRoleIdByName(String roleName) {
+    @Override
+    public RoleDto getRoleByName(String roleName) {
         String token = this.getAuthToken();
 
         return restClientConfig.getRestClient()
@@ -57,6 +58,55 @@ public class UserServiceImpl implements UserService {
                 .header("Authorization", "Bearer " + token)
                 .retrieve()
                 .body(RoleDto.class);
+    }
+
+    @Override
+    public List<RoleDto> getAllRoles() {
+        String token = this.getAuthToken();
+
+        return restClientConfig.getRestClient()
+                .get()
+                .uri("http://localhost:8080/admin/realms/e-school-journal/roles")
+                .header("Authorization", "Bearer " + token)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<RoleDto>>() {});
+    }
+
+    @Override
+    public List<RoleDto> getUserRoles(String userId) {
+        String token = this.getAuthToken();
+
+        return restClientConfig.getRestClient()
+                .get()
+                .uri("http://localhost:8080/admin/realms/e-school-journal/users/{userId}/role-mappings/realm", userId)
+                .header("Authorization", "Bearer " + token)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<RoleDto>>() {});
+    }
+
+    @Override
+    public List<RoleDto> getUserPossibleRoles(String userId) {
+        List<RoleDto> assignedRoles = getUserRoles(userId);
+
+        if (assignedRoles.stream().anyMatch(role -> Objects.equals(role.getName(), "student"))) {
+            return List.of();
+        }
+
+        List<RoleDto> allRoles = getAllRoles();
+        List<RoleDto> possibleRoles = new ArrayList<>(allRoles);
+
+        possibleRoles.removeAll(assignedRoles);
+
+        possibleRoles = possibleRoles
+                .stream()
+                .filter(role ->
+                        !Objects.equals(role.getName(), "uma_authorization")
+                                && !Objects.equals(role.getName(), "offline_access")
+                                && !Objects.equals(role.getName(), "student")
+                )
+                .toList();
+
+        return possibleRoles.stream().toList();
     }
 
     @Override

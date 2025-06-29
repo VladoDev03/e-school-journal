@@ -10,7 +10,6 @@ import java.util.UUID;
 @Getter
 public class BaseEntity {
     @Id
-    @org.springframework.data.annotation.Id
     private String id;
 
     public BaseEntity() {
