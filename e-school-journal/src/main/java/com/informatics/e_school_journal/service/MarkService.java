@@ -1,9 +1,6 @@
 package com.informatics.e_school_journal.service;
 
-import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
-import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
+import com.informatics.e_school_journal.dto.mark.*;
 import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
 import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
@@ -19,5 +16,8 @@ public interface MarkService {
     List<TeacherAvgMarkDto> getAvgMarksByTeacherByDirector();
     List<SubjectAvgMarkDto> getAvgMarksBySubjectByDirector();
     SchoolAvgMarkDto getAvgMarkBySchoolByDirector();
+    List<SubjectAvgMarkDto> getAvgMarksBySubject();
+    List<SchoolAvgMarkDto> getAvgMarkBySchool();
+    List<SchoolSubjectAvgMarkDto> getAvgMarkBySchoolAndSubject();
 
 }

@@ -1,9 +1,6 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
-import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
+import com.informatics.e_school_journal.dto.mark.*;
 import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
 import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
@@ -69,4 +66,23 @@ public class MarkController {
     public SchoolAvgMarkDto getMarksStatsByDirector() {
         return this.markService.getAvgMarkBySchoolByDirector();
     }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/stats-by-subject")
+    public List<SubjectAvgMarkDto> getMarksStatsBySubject() {
+        return this.markService.getAvgMarksBySubject();
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/stats-by-school")
+    public List<SchoolAvgMarkDto> getMarksStatsBySchool() {
+        return this.markService.getAvgMarkBySchool();
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/stats-by-school-and-subject")
+    public List<SchoolSubjectAvgMarkDto> getMarksStatsBySchoolAndSubject() {
+        return this.markService.getAvgMarkBySchoolAndSubject();
+    }
+
 }

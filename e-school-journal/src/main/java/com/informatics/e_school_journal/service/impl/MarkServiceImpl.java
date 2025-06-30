@@ -11,10 +11,7 @@ import com.informatics.e_school_journal.data.repo.MarkRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.data.repo.StudyingRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
-import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkDto;
-import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
-import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
+import com.informatics.e_school_journal.dto.mark.*;
 import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
 import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
@@ -222,6 +219,43 @@ public class MarkServiceImpl implements MarkService {
                         row[1] != null ? Math.round(((Number) row[1]).doubleValue() * 100.0) / 100.0 : 0.0
                 ))
                 .toList().getFirst();
+    }
+
+    @Override
+    public List<SubjectAvgMarkDto> getAvgMarksBySubject() {
+        List<Object[]> rawResults = markRepository.getAvgMarksBySubject();
+
+        return rawResults.stream()
+                .map(row -> new SubjectAvgMarkDto(
+                        (String) row[0],
+                        row[1] != null ? Math.round(((Number) row[1]).doubleValue() * 100.0) / 100.0 : 0.0
+                ))
+                .toList();
+    }
+
+    @Override
+    public List<SchoolAvgMarkDto> getAvgMarkBySchool() {
+        List<Object[]> rawResults = markRepository.getAvgMarksBySchool();
+
+        return rawResults.stream()
+                .map(row -> new SchoolAvgMarkDto(
+                        (String) row[0],
+                        row[1] != null ? Math.round(((Number) row[1]).doubleValue() * 100.0) / 100.0 : 0.0
+                ))
+                .toList();
+    }
+
+    @Override
+    public List<SchoolSubjectAvgMarkDto> getAvgMarkBySchoolAndSubject() {
+        List<Object[]> rawResults = markRepository.getAvgMarksBySchoolAndSubject();
+
+        return rawResults.stream()
+                .map(row -> new SchoolSubjectAvgMarkDto(
+                        (String) row[0],
+                        (String) row[1],
+                        row[2] != null ? Math.round(((Number) row[2]).doubleValue() * 100.0) / 100.0 : 0.0
+                ))
+                .toList();
     }
 
 

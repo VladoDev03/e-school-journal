@@ -62,8 +62,32 @@ public interface MarkRepository extends JpaRepository<Mark, String> {
     JOIN s.subject sb
     JOIN s.grade g
     JOIN g.school sc
-    WHERE sc.id = :schoolId
+    GROUP BY sc.name
+    """)
+    List<Object[]> getAvgMarksBySchool();
+
+    @Query("""
+    SELECT sb.name,
+    AVG (m.mark)
+    FROM Mark m
+    JOIN m.studying s
+    JOIN s.subject sb
+    JOIN s.grade g
+    JOIN g.school sc
     GROUP BY sb.name
     """)
-    List<Object[]> getAvgMarksBySchool(@Param("schoolId") String schoolId);
+    List<Object[]> getAvgMarksBySubject();
+
+    @Query("""
+    SELECT sc.name,
+    sb.name,
+    AVG (m.mark)
+    FROM Mark m
+    JOIN m.studying s
+    JOIN s.subject sb
+    JOIN s.grade g
+    JOIN g.school sc
+    GROUP BY sb.name, sc.name
+    """)
+    List<Object[]> getAvgMarksBySchoolAndSubject();
 }
