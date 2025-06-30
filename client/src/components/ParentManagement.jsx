@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import '../parent.css';
 import {
   getAllParents,
   createParent,
   updateParent,
   deleteParentById,
 } from '../services/parentService';
+import '../parent.css';
 
 const ParentManagement = () => {
   const [parents, setParents] = useState([]);
@@ -19,19 +19,13 @@ const ParentManagement = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    phone: '',
-    keycloakId: '',
-    childrenIds: [],
+    email: '',
+    username: '',
+    password: '',
+    studentEmail: ''
   });
 
   useEffect(() => {
-    setStudents([
-      { id: 1, name: 'Иван Петров' },
-      { id: 2, name: 'Мария Георгиева' },
-      { id: 3, name: 'Георги Димитров' },
-      { id: 4, name: 'Анна Стоянова' },
-      { id: 5, name: 'Петър Николов' }
-    ]);
     loadParents();
   }, []);
 
@@ -52,9 +46,10 @@ const ParentManagement = () => {
     setFormData({
       firstName: '',
       lastName: '',
-      phone: '',
-      keycloakId: '',
-      childrenIds: [],
+      email: '',
+      username: '',
+      password: '',
+      studentEmail: ''
     });
     setEditingParent(null);
     setShowForm(false);
@@ -69,28 +64,34 @@ const ParentManagement = () => {
     }));
   };
 
-  const handleChildrenChange = (studentId) => {
-    setFormData((prev) => ({
-      ...prev,
-      childrenIds: prev.childrenIds.includes(studentId)
-        ? prev.childrenIds.filter((id) => id !== studentId)
-        : [...prev.childrenIds, studentId],
-    }));
+  const buildRequestBody = () => {
+    return {
+      createUserDto: {
+        credentials: { type: 'password', value: formData.password },
+        username: formData.username,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email
+      },
+      studentEmail: formData.studentEmail
+    };
   };
 
   const handleSubmit = async () => {
-    if (!formData.firstName || !formData.lastName || !formData.phone || !formData.keycloakId ) {
-      setErrorMessage('Please fill in all required fields and select at least one student!');
+    if (!formData.firstName || !formData.lastName || !formData.studentEmail || !formData.username || !formData.email || !formData.password) {
+      setErrorMessage('Please fill in all required fields!');
       return;
     }
 
     setSubmitting(true);
     setErrorMessage('');
+
     try {
+      const body = buildRequestBody();
       if (editingParent) {
-        await updateParent(editingParent.id, formData);
+        await updateParent(editingParent.id, body);
       } else {
-        await createParent(formData);
+        await createParent(body);
       }
       await loadParents();
       resetForm();
@@ -106,9 +107,10 @@ const ParentManagement = () => {
     setFormData({
       firstName: parent.firstName,
       lastName: parent.lastName,
-      phone: parent.phone,
-      keycloakId: parent.keycloakId,
-      childrenIds: parent.childrenIds || [],
+      email: parent.email,
+      username: parent.username,
+      password: '',
+      studentEmail: parent.studentEmail || ''
     });
     setEditingParent(parent);
     setShowForm(true);
@@ -149,7 +151,7 @@ const ParentManagement = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h2 className="modal-title">
-                   {editingParent ? 'Edit Parent' : 'Add Parent'}
+                  {editingParent ? 'Edit Parent' : 'Add Parent'}
                 </h2>
                 <button onClick={resetForm} className="close-btn" aria-label="Close form">
                   &#x2715;
@@ -186,45 +188,55 @@ const ParentManagement = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Phone number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    placeholder="Phone number"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Keycloak ID</label>
+                  <label className="form-label">Username</label>
                   <input
                     type="text"
-                    name="keycloakId"
-                    value={formData.keycloakId}
+                    name="username"
+                    value={formData.username}
                     onChange={handleInputChange}
                     className="form-input"
-                    placeholder="keycloak username"
+                    placeholder="Username"
                     required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Student</label>
-                  <div className="checkbox-container">
-                    {students.map((student) => (
-                      <label key={student.id} className="checkbox-item">
-                        <input
-                          type="checkbox"
-                          checked={formData.childrenIds.includes(student.id)}
-                          onChange={() => handleChildrenChange(student.id)}
-                        />
-                        {student.name}
-                      </label>
-                    ))}
-                  </div>
+                  <label className="form-label">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Password"
+                    required={!editingParent}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Student Email</label>
+                  <input
+                    type="email"
+                    name="studentEmail"
+                    value={formData.studentEmail}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Student Email"
+                    required
+                  />
                 </div>
 
                 <div className="form-actions">
@@ -233,7 +245,7 @@ const ParentManagement = () => {
                     className="save-btn"
                     disabled={submitting}
                   >
-                    {submitting ? 'Saving...' : editingParent ? ' Save changes' : ' Add parent'}
+                    {submitting ? 'Saving...' : editingParent ? 'Save changes' : 'Add parent'}
                   </button>
                   <button onClick={resetForm} className="cancel-btn">
                     &#x2715; Cancel
@@ -254,33 +266,33 @@ const ParentManagement = () => {
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Phone</th>
-                  <th>Students</th>
-                  <th>Action</th>
+                  <th>Email</th>
+                  {/* <th>Students</th> */}
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
                 {parents.map((parent) => (
                   <tr key={parent.id}>
                     <td>{parent.firstName} {parent.lastName}</td>
-                    <td>{parent.phone}</td>
-                    <td>{getStudentNames(parent.childrenIds)}</td>
-                    <td>
+                    <td>{parent.email}</td>
+                    {/* <td>{getStudentNames(parent.childrenIds)}</td> */}
+                    {/* <td>
                       <button
                         onClick={() => handleEdit(parent)}
                         className="edit-btn"
-                        title="Редактирай"
+                        title="Edit"
                       >
                         ✎
                       </button>
                       <button
                         onClick={() => handleDelete(parent.id)}
                         className="delete-btn"
-                        title="Изтрий"
+                        title="Delete"
                       >
                         🗑
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

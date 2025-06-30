@@ -8,7 +8,12 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import NewUserForm from './components/NewUserForm';
 import ParentManagement from './components/ParentManagement';
+import SchoolManagement from './components/SchoolManagement';
+import DirectorManagement from './components/DirectorManagement';
+import RoleManagement from './components/RoleManagement';
+import AssignQualification from './components/AssignQualification';
 import './parent.css';
+import UserUpdateForm from './components/UserUpdateForm';
 
 function App() {
   return (
@@ -29,6 +34,31 @@ function App() {
         <Route path="/parent" element={
           <ProtectedRoute roles={['admin']}>
             <ParentManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/update-user" element={
+          <ProtectedRoute roles={['admin']}>
+            <UserUpdateForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/director" element={
+          <ProtectedRoute roles={['admin']}>
+            <DirectorManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/school" element={
+          <ProtectedRoute roles={['admin']}>
+            <SchoolManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/roles" element={
+          <ProtectedRoute roles={['admin']}>
+            <RoleManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/assign-qualification/:userId" element={
+          <ProtectedRoute roles={['admin']}>
+            <AssignQualification />
           </ProtectedRoute>
         } />
         <Route path="/unauthorized" element={<Unauthorized />} />

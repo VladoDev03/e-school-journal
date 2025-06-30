@@ -2,6 +2,7 @@ package com.informatics.e_school_journal.controller;
 
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UpdateUserDto;
+import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,12 @@ public class UserController {
     @GetMapping("/possible-roles/{userId}")
     public List<RoleDto> getUnassignedUserRoles(@PathVariable String userId) {
         return this.userService.getUserPossibleRoles(userId);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/{email}")
+    public UserDto getUserByEmail(@PathVariable String email) {
+        return this.userService.getUserByEmail(email);
     }
 
     @PreAuthorize("hasAuthority('admin')")

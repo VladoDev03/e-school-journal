@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SchoolDirectorServiceImpl implements SchoolDirectorService {
@@ -65,6 +67,45 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
         newDirector = directorRepository.save(newDirector);
 
         return mapperConfig.getModelMapper().map(newDirector, DirectorDto.class);
+    }
+
+    @Override
+    public List<DirectorFullInfoDto> getDirectorsWithSchools() {
+//        List<DirectorFullInfoDto> directors = directorRepository
+//                .findAll()
+//                .stream()
+//                .map(director -> {
+//                    UserDto user = userService.getUserById(director.getId());
+//
+//                    School school =
+//                })
+
+        List<DirectorFullInfoDto> schools = schoolRepository
+                .findAll()
+                .stream()
+                .filter(school -> directorRepository.findBySchoolId(school.getId()).isPresent())
+                .map(school -> {
+                    Director director = directorRepository
+                            .findBySchoolId(school.getId())
+                            .orElseThrow(() -> new RuntimeException("Director not found with school id: " + school.getId()));
+
+                    UserDto user = userService.getUserById(director.getId());
+
+                    DirectorFullInfoDto directorWithSchoolDto = new DirectorFullInfoDto(
+                            user.getId(),
+                            user.getFirstName(),
+                            user.getLastName(),
+                            user.getEmail(),
+                            user.getUsername(),
+                            school.getId(),
+                            school.getName()
+                    );
+
+                    return directorWithSchoolDto;
+                })
+                .toList();
+
+        return schools;
     }
 
     @Override

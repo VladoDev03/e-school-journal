@@ -11,5 +11,5 @@ import java.util.Set;
 @ToString
 public class CreateParentDto {
     private CreateUserDto createUserDto;
-    private Set<String> childrenIds;
+    private String studentEmail;
 }

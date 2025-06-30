@@ -30,7 +30,6 @@ export const getAllParents = async () => {
   }
 };
 
-// Fixed: Updated to match the component's usage
 export const updateParent = async (id, parentData) => {
   try {
     const response = await axiosInstance.put(`/parent/${id}`, parentData);

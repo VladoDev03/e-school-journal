@@ -1,10 +1,7 @@
 package com.informatics.e_school_journal.controller;
 
 import com.informatics.e_school_journal.dto.admin.AdminDto;
-import com.informatics.e_school_journal.dto.parent.CreateParentDto;
-import com.informatics.e_school_journal.dto.parent.CreateParentRoleDto;
-import com.informatics.e_school_journal.dto.parent.ParentDto;
-import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
+import com.informatics.e_school_journal.dto.parent.*;
 import com.informatics.e_school_journal.service.ParentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,16 +37,15 @@ public class ParentController {
         }
     }
 
-
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('parent') or hasAuthority('student') or hasAuthority('director')")
     @GetMapping("/{id}")
-    public ParentDto getParentById(@PathVariable String id) {
+    public ParentPersonalInfoDto getParentById(@PathVariable String id) {
         return this.parentService.getParentById(id);
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping
-    public List<ParentDto> getParents() {
+    public List<ParentPersonalInfoDto> getParents() {
         return this.parentService.getParents();
     }
 
