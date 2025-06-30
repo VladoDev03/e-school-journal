@@ -13,6 +13,7 @@ import DirectorManagement from './components/DirectorManagement';
 import RoleManagement from './components/RoleManagement';
 import AssignQualification from './components/AssignQualification';
 import './parent.css';
+import UserUpdateForm from './components/UserUpdateForm';
 
 function App() {
   return (
@@ -33,6 +34,11 @@ function App() {
         <Route path="/parent" element={
           <ProtectedRoute roles={['admin']}>
             <ParentManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/update-user" element={
+          <ProtectedRoute roles={['admin']}>
+            <UserUpdateForm />
           </ProtectedRoute>
         } />
         <Route path="/director" element={

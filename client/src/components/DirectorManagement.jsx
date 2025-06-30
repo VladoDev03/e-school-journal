@@ -240,7 +240,7 @@ const DirectorManagement = () => {
                   <th>Email</th>
                   <th>Username</th>
                   <th>School</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -250,7 +250,7 @@ const DirectorManagement = () => {
                     <td>{director.email}</td>
                     <td>{director.username}</td>
                     <td>{getSchoolName(director.schoolId)}</td>
-                    <td>
+                    {/* <td>
                       <button
                         onClick={() => handleEdit(director)}
                         className="edit-btn"
@@ -265,7 +265,7 @@ const DirectorManagement = () => {
                       >
                         🗑
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

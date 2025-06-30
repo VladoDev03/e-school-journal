@@ -5,7 +5,7 @@ export const createDirector = async (directorData) => {
     const response = await axiosInstance.post("/director/school-id", directorData);
     return response.data;
   } catch (error) {
-    console.error("School creation error:", error);
+    console.error("Director creation error:", error);
     throw error;
   }
 };

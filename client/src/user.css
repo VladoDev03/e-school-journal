@@ -1,0 +1,67 @@
+.user-update-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.user-update-form h2,
+.user-update-form h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.user-update-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.user-update-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.user-update-form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.user-update-form button {
+  padding: 0.6rem 1.2rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.user-update-form button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.user-update-form .error-message {
+  color: red;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.user-update-form .success-message {
+  color: green;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.user-update-form .form-container {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}

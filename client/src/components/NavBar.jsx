@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/KeycloakContext';
+import '../navbar.css';
 
 export default function NavBar() {
     const { keycloak } = useAuth();
@@ -8,24 +9,20 @@ export default function NavBar() {
     const isLoggedIn = keycloak.authenticated;
 
     return (
-        <nav style={{ padding: 10, borderBottom: '1px solid gray' }}>
-            {roles.includes('admin') && (
-                <>
-                    <Link to="/admin">Admin</Link>
-                    {" "}
-                    <Link to="/register-user">Register User</Link>
-                    {" "}
-                    <Link to="/parent">Parent Management</Link>
-                    {" "}
-                    <Link to="/director">Director Management</Link>
-                    {" "}
-                    <Link to="/roles">Roles Management</Link>
-                    {" "}
-                    <Link to="/school">School Management</Link>
-                </>
-            )}{" "}
+        <nav className="navbar">
+            <div className="navbar-links">
+                {roles.includes('admin') && (
+                    <>
+                        <Link to="/parent">Parent Management</Link>
+                        <Link to="/director">Director Management</Link>
+                        <Link to="/roles">Roles Management</Link>
+                        <Link to="/update-user">Update User</Link>
+                        <Link to="/school">School Management</Link>
+                    </>
+                )}
+            </div>
             {isLoggedIn && (
-                <button onClick={() => keycloak.logout()} style={{ marginLeft: 10 }}>
+                <button onClick={() => keycloak.logout()}>
                     Logout
                 </button>
             )}

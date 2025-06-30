@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import '../parent.css';
 import {
   getAllParents,
   createParent,
   updateParent,
   deleteParentById,
 } from '../services/parentService';
+import '../parent.css';
 
 const ParentManagement = () => {
   const [parents, setParents] = useState([]);
@@ -267,8 +267,8 @@ const ParentManagement = () => {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Students</th>
-                  <th>Action</th>
+                  {/* <th>Students</th> */}
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -276,8 +276,8 @@ const ParentManagement = () => {
                   <tr key={parent.id}>
                     <td>{parent.firstName} {parent.lastName}</td>
                     <td>{parent.email}</td>
-                    <td>{getStudentNames(parent.childrenIds)}</td>
-                    <td>
+                    {/* <td>{getStudentNames(parent.childrenIds)}</td> */}
+                    {/* <td>
                       <button
                         onClick={() => handleEdit(parent)}
                         className="edit-btn"
@@ -292,7 +292,7 @@ const ParentManagement = () => {
                       >
                         🗑
                       </button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
