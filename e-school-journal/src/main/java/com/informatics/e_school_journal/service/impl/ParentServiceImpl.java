@@ -5,10 +5,7 @@ import com.informatics.e_school_journal.data.entity.Parent;
 import com.informatics.e_school_journal.data.entity.Student;
 import com.informatics.e_school_journal.data.repo.ParentRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
-import com.informatics.e_school_journal.dto.parent.CreateParentDto;
-import com.informatics.e_school_journal.dto.parent.CreateParentRoleDto;
-import com.informatics.e_school_journal.dto.parent.ParentDto;
-import com.informatics.e_school_journal.dto.parent.UpdateParentDto;
+import com.informatics.e_school_journal.dto.parent.*;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.ParentService;
@@ -42,10 +39,17 @@ public class ParentServiceImpl implements ParentService {
 
         Parent parent = new Parent(userDto.getId());
 
-        if (createParentDto.getChildrenIds() != null && !createParentDto.getChildrenIds().isEmpty()) {
-            Set<Student> children = new HashSet<>(
-                    studentRepository.findAllById(createParentDto.getChildrenIds())
-            );
+        if (createParentDto.getStudentEmail() != null && !createParentDto.getStudentEmail().isEmpty()) {
+            Set<Student> children = new HashSet<>();
+
+            String studentId = userService.getUserByEmail(createParentDto.getStudentEmail()).getId();
+
+            Student student = studentRepository
+                    .findById(studentId)
+                    .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+
+            children.add(student);
+
             parent.setChildren(children);
         }
 
@@ -97,28 +101,39 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public ParentDto getParentById(String id) {
+    public ParentPersonalInfoDto getParentById(String id) {
         Parent parent = parentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Parent not found with id: " + id));
 
-        ParentDto parentDto = mapperConfig.getModelMapper().map(parent, ParentDto.class);
+        ParentPersonalInfoDto parentDto = mapperConfig.getModelMapper().map(parent, ParentPersonalInfoDto.class);
+
         if (parent.getChildren() != null) {
             Set<String> childIds = parent.getChildren()
                     .stream()
                     .map(Student::getId)
                     .collect(Collectors.toSet());
+
             parentDto.setChildrenIds(childIds);
         }
+
+        UserDto user = userService.getUserById(id);
+
+        parentDto.setId(user.getId());
+        parentDto.setEmail(user.getEmail());
+        parentDto.setFirstName(user.getFirstName());
+        parentDto.setLastName(user.getLastName());
+        parentDto.setUsername(user.getUsername());
 
         return parentDto;
     }
 
     @Override
-    public List<ParentDto> getParents() {
+    public List<ParentPersonalInfoDto> getParents() {
         return this.parentRepository.findAll()
                 .stream()
                 .map(parent -> {
-                    ParentDto dto = mapperConfig.getModelMapper().map(parent, ParentDto.class);
+                    ParentPersonalInfoDto dto = mapperConfig.getModelMapper().map(parent, ParentPersonalInfoDto.class);
+
                     if (parent.getChildren() != null) {
                         Set<String> childIds = parent.getChildren()
                                 .stream()
@@ -126,10 +141,18 @@ public class ParentServiceImpl implements ParentService {
                                 .collect(Collectors.toSet());
                         dto.setChildrenIds(childIds);
                     }
+
+                    UserDto user = userService.getUserById(parent.getId());
+
+                    dto.setId(user.getId());
+                    dto.setEmail(user.getEmail());
+                    dto.setFirstName(user.getFirstName());
+                    dto.setLastName(user.getLastName());
+                    dto.setUsername(user.getUsername());
+
                     return dto;
                 })
                 .toList();
-
     }
 
     @Override

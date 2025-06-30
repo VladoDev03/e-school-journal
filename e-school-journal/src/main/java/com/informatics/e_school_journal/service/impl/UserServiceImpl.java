@@ -51,6 +51,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserById(String id) {
+        String token = this.getAuthToken();
+
+        return restClientConfig.getRestClient()
+                .get()
+                .uri("http://localhost:8080/admin/realms/e-school-journal/users/{id}", id)
+                .header("Authorization", "Bearer " + token)
+                .retrieve()
+                .body(new ParameterizedTypeReference<UserDto>() {});
+    }
+
+    @Override
     public UserDto getUserByEmail(String email) {
         String token = this.getAuthToken();
 
