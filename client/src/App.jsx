@@ -8,8 +8,9 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import NotFoundPage from './pages/NotFoundPage';
 import NewUserForm from './components/NewUserForm';
 import ParentManagement from './components/ParentManagement';
-import './parent.css';
 import SchoolManagement from './components/SchoolManagement';
+import DirectorManagement from './components/DirectorManagement';
+import './parent.css';
 
 function App() {
   return (
@@ -30,6 +31,11 @@ function App() {
         <Route path="/parent" element={
           <ProtectedRoute roles={['admin']}>
             <ParentManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/director" element={
+          <ProtectedRoute roles={['admin']}>
+            <DirectorManagement />
           </ProtectedRoute>
         } />
         <Route path="/school" element={

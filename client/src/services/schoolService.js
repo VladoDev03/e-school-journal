@@ -9,3 +9,13 @@ export const createSchool = async (schoolData) => {
     throw error;
   }
 };
+
+export const getAllSchools = async () => {
+  try {
+    const response = await axiosInstance.get("/school");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all schools:", error);
+    throw error;
+  }
+};

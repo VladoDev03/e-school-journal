@@ -71,4 +71,9 @@ public class DirectorController {
     public DirectorWithSchoolDto updateDirectorWithSchool(@RequestBody UpdateSchoolDirectorDto updateDirectorDto) {
         return this.schoolDirectorService.updateDirectorWithSchool(updateDirectorDto);
     }
+
+    @GetMapping("/with-schools")
+    public List<DirectorFullInfoDto> getWithSchools() {
+        return schoolDirectorService.getDirectorsWithSchools();
+    }
 }
