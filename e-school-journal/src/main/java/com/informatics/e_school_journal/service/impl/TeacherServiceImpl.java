@@ -81,12 +81,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional
     public TeacherDto createTeacherRole(String userId) {
         if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("teacher"))) {
             throw new IllegalArgumentException("User cannot be assigned this role.");
         }
 
-        RoleDto roleDto = userService.getRoleByName("admin");
+        RoleDto roleDto = userService.getRoleByName("teacher");
         userService.setRole(userId, roleDto);
 
         Teacher teacher = new Teacher(userId);

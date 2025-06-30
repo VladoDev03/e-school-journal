@@ -10,6 +10,8 @@ import NewUserForm from './components/NewUserForm';
 import ParentManagement from './components/ParentManagement';
 import SchoolManagement from './components/SchoolManagement';
 import DirectorManagement from './components/DirectorManagement';
+import RoleManagement from './components/RoleManagement';
+import AssignQualification from './components/AssignQualification';
 import './parent.css';
 
 function App() {
@@ -41,6 +43,16 @@ function App() {
         <Route path="/school" element={
           <ProtectedRoute roles={['admin']}>
             <SchoolManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/roles" element={
+          <ProtectedRoute roles={['admin']}>
+            <RoleManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/assign-qualification/:userId" element={
+          <ProtectedRoute roles={['admin']}>
+            <AssignQualification />
           </ProtectedRoute>
         } />
         <Route path="/unauthorized" element={<Unauthorized />} />

@@ -13,15 +13,13 @@ export default function NavBar() {
                 <>
                     <Link to="/admin">Admin</Link>
                     {" "}
-                    {" "}
                     <Link to="/register-user">Register User</Link>
-                    {" "}
                     {" "}
                     <Link to="/parent">Parent Management</Link>
                     {" "}
-                    {" "}
                     <Link to="/director">Director Management</Link>
                     {" "}
+                    <Link to="/roles">Roles Management</Link>
                     {" "}
                     <Link to="/school">School Management</Link>
                 </>
