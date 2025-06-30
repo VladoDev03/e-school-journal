@@ -29,9 +29,9 @@ public class StudyingController {
         return studyingService.updateStudying(id, updateStudyingDto);
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
-    @GetMapping
-    public List<StudyingDto> getStudying(){
+    @PreAuthorize("hasAuthority('director')")
+    @GetMapping("/director")
+    public List<StudyingDto> getStudyingsByDirector(){
         return this.studyingService.getStudyingsByDirectorId();
     }
 }

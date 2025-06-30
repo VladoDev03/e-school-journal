@@ -4,6 +4,9 @@ import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
 import com.informatics.e_school_journal.dto.mark.MarkDto;
 import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
 import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
+import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
+import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
+import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
 import com.informatics.e_school_journal.service.MarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,5 +50,23 @@ public class MarkController {
     @GetMapping("/student/{studentId}")
     public List<MarkWithSubjectDto> getMarksByStudent(@PathVariable String studentId) {
         return this.markService.getMarksByStudent(studentId);
+    }
+
+    @PreAuthorize("hasAuthority('director')")
+    @GetMapping("/director/stats-by-teacher")
+    public List<TeacherAvgMarkDto> getMarksStatsByTeacherByDirector() {
+        return this.markService.getAvgMarksByTeacherByDirector();
+    }
+
+    @PreAuthorize("hasAuthority('director')")
+    @GetMapping("/director/stats-by-subject")
+    public List<SubjectAvgMarkDto> getMarksStatsBySubjectByDirector() {
+        return this.markService.getAvgMarksBySubjectByDirector();
+    }
+
+    @PreAuthorize("hasAuthority('director')")
+    @GetMapping("/director/stats-by-school")
+    public SchoolAvgMarkDto getMarksStatsByDirector() {
+        return this.markService.getAvgMarkBySchoolByDirector();
     }
 }

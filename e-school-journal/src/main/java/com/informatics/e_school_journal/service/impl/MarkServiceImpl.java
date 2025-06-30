@@ -15,6 +15,9 @@ import com.informatics.e_school_journal.dto.mark.CreateMarkDto;
 import com.informatics.e_school_journal.dto.mark.MarkDto;
 import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
 import com.informatics.e_school_journal.dto.mark.UpdateMarkDto;
+import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
+import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
+import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
 import com.informatics.e_school_journal.service.MarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.metrics.data.RepositoryMetricsAutoConfiguration;
@@ -23,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -180,6 +184,46 @@ public class MarkServiceImpl implements MarkService {
                 mark.getStudying().getSubject().getName()
         )).toList();
     }
+
+    @Override
+    public List<TeacherAvgMarkDto> getAvgMarksByTeacherByDirector() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<Object[]> rawResults = markRepository.getAvgMarksByTeacherByDirector(authentication.getName());
+
+        return rawResults.stream()
+                .map(row -> new TeacherAvgMarkDto(
+                        (String) row[0],
+                        row[1] != null ? Math.round(((Number) row[1]).doubleValue() * 100.0) / 100.0 : 0.0
+                ))
+                .toList();
+    }
+
+    @Override
+    public List<SubjectAvgMarkDto> getAvgMarksBySubjectByDirector() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<Object[]> rawResults = markRepository.getAvgMarksBySubjectByDirector(authentication.getName());
+
+        return rawResults.stream()
+                .map(row -> new SubjectAvgMarkDto(
+                        (String) row[0],
+                        row[1] != null ? Math.round(((Number) row[1]).doubleValue() * 100.0) / 100.0 : 0.0
+                ))
+                .toList();
+    }
+
+    @Override
+    public SchoolAvgMarkDto getAvgMarkBySchoolByDirector() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<Object[]> rawResults = markRepository.getAvgMarksByDirector(authentication.getName());
+
+        return rawResults.stream()
+                .map(row -> new SchoolAvgMarkDto(
+                        (String) row[0],
+                        row[1] != null ? Math.round(((Number) row[1]).doubleValue() * 100.0) / 100.0 : 0.0
+                ))
+                .toList().getFirst();
+    }
+
 
     private boolean isAutumnAndFinal(Term term, MarkType markType) {
         return term == Term.AUTUMN && markType == MarkType.FINAL;

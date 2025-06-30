@@ -99,14 +99,6 @@ public class StudyingServiceImpl implements StudyingService {
     @Override
     public List<StudyingDto> getStudyingsByDirectorId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isDirector = authentication
-                .getAuthorities()
-                .stream()
-                .anyMatch(x -> x.getAuthority().equals("director"));
-
-        if(!isDirector) {
-            throw new RuntimeException("User not authorized for this action");
-        }
 
         return this.studyingRepository.findStudyingsByGrade_School_Director_Id(authentication.getName())
                 .stream().map(studying -> this.mapperConfig.getModelMapper().map(studying, StudyingDto.class))

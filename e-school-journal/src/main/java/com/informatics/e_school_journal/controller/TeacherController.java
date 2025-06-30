@@ -55,7 +55,7 @@ public class TeacherController {
         return this.teacherService.getTeachers();
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
+    @PreAuthorize("hasAuthority('director')")
     @GetMapping("/director")
     public List<TeacherPersonalInfoDto> getTeachersByDirector() {
         return this.teacherService.getTeachersByDirector();

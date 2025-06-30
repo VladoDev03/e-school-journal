@@ -116,14 +116,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentPersonalInfoDto> getStudentsByDirectorId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isDirector = authentication
-                .getAuthorities()
-                .stream()
-                .anyMatch(x -> x.getAuthority().equals("director"));
-
-        if(!isDirector) {
-            throw new RuntimeException("User not authorized for this action");
-        }
 
         return this.studentRepository.findStudentsByGradeSchoolDirectorId(authentication.getName())
                 .stream()
