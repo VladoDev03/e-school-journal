@@ -166,22 +166,19 @@ public class MarkServiceImpl implements MarkService {
 
     @Override
     public List<MarkWithSubjectDto> getMarksByStudent(String studentId) {
-//        if(studentRepository.findById(studentId) == null){
-//
-//        }
-//        List<Ma>
-//        Mark mark = markRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
-//
-//        return new MarkWithSubjectDto(
-//                mark.getId(),
-//                mark.getMark(),
-//                mark.getMarkType(),
-//                mark.getStudying().getId(),
-//                mark.getStudent().getId(),
-//                mark.getStudying().getSubject().getName()
-//        );
-        return null;
+        Student student = this.studentRepository.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+
+        List<Mark> marks = this.markRepository.findMarksByStudentId(studentId);
+        return marks.stream().map(mark -> new MarkWithSubjectDto(
+                mark.getId(),
+                mark.getMark(),
+                mark.getMarkType(),
+                mark.getTerm(),
+                mark.getStudying().getId(),
+                mark.getStudent().getId(),
+                mark.getStudying().getSubject().getName()
+        )).toList();
     }
 
     private boolean isAutumnAndFinal(Term term, MarkType markType) {

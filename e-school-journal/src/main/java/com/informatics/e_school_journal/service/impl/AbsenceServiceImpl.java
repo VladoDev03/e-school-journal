@@ -1,22 +1,23 @@
 package com.informatics.e_school_journal.service.impl;
 
 import com.informatics.e_school_journal.config.ModelMapperConfig;
-import com.informatics.e_school_journal.data.entity.Absence;
-import com.informatics.e_school_journal.data.entity.Student;
-import com.informatics.e_school_journal.data.entity.Studying;
-import com.informatics.e_school_journal.data.entity.Teacher;
+import com.informatics.e_school_journal.data.entity.*;
 import com.informatics.e_school_journal.data.repo.AbsenceRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.data.repo.StudyingRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
 import com.informatics.e_school_journal.dto.absence.AbsenceDto;
+import com.informatics.e_school_journal.dto.absence.AbsenceWithSubjectDto;
 import com.informatics.e_school_journal.dto.absence.CreateAbsenceDto;
 import com.informatics.e_school_journal.dto.absence.UpdateAbsenceDto;
+import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
 import com.informatics.e_school_journal.service.AbsenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -106,6 +107,22 @@ public class AbsenceServiceImpl implements AbsenceService {
         }
 
         absenceRepository.delete(absence);
+    }
+
+    @Override
+    public List<AbsenceWithSubjectDto> getAbsencesByStudent(String studentId) {
+        Student student = this.studentRepository.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+
+        List<Absence> absences = this.absenceRepository.findAbsencesByStudentId(studentId);
+        return absences.stream().map(absence -> new AbsenceWithSubjectDto(
+                absence.getId(),
+                absence.getDate(),
+                absence.isExcused(),
+                absence.getStudent().getId(),
+                absence.getStudying().getId(),
+                absence.getStudying().getSubject().getName()
+        )).toList();
     }
 
     private boolean isUserAuthorized(Studying studying) {

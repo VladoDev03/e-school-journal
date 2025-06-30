@@ -1,10 +1,14 @@
 package com.informatics.e_school_journal.service.impl;
 
 import com.informatics.e_school_journal.config.ModelMapperConfig;
+import com.informatics.e_school_journal.data.entity.Parent;
 import com.informatics.e_school_journal.data.entity.Student;
+import com.informatics.e_school_journal.data.entity.Teacher;
+import com.informatics.e_school_journal.data.repo.ParentRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.dto.student.CreateStudentDto;
 import com.informatics.e_school_journal.dto.student.StudentDto;
+import com.informatics.e_school_journal.dto.student.StudentPersonalInfoDto;
 import com.informatics.e_school_journal.dto.student.UpdateStudentDto;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
@@ -12,6 +16,8 @@ import com.informatics.e_school_journal.service.StudentService;
 import com.informatics.e_school_journal.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
+    private final ParentRepository parentRepository;
+
     private final ModelMapperConfig mapperConfig;
 
     private final UserService userService;
@@ -77,4 +85,32 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
+    @Override
+    public List<StudentPersonalInfoDto> getStudentsByParentId(String parentId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(x -> x.getAuthority().equals("admin"));
+
+        if(authentication.getName() != parentId && !isAdmin) {
+            throw new RuntimeException("User not authorized for this action.");
+        }
+
+        Parent parent = this.parentRepository.findById(parentId)
+                .orElseThrow(() -> new RuntimeException("Parent not found with id: " + parentId));
+
+        List<Student> students = this.studentRepository.findStudentsByParentsId(parentId);
+        return students
+                .stream()
+                .map(student -> {
+                    UserDto userDto = userService.getUserById(student.getId());
+                    return new StudentPersonalInfoDto(
+                            userDto.getId(),
+                            userDto.getFirstName(),
+                            userDto.getLastName()
+                    );
+                })
+                .toList();
+    }
 }

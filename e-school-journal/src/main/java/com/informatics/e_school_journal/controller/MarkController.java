@@ -10,6 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @EnableMethodSecurity(prePostEnabled = true)
 @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
 @RestController
@@ -39,5 +41,11 @@ public class MarkController {
     @GetMapping("/{id}")
     public MarkWithSubjectDto getMark(@PathVariable String id) {
         return this.markService.getMark(id);
+    }
+
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('student') or hasAuthority('parent') or hasAuthority('director')")
+    @GetMapping("/student/{studentId}")
+    public List<MarkWithSubjectDto> getMarksByStudent(@PathVariable String studentId) {
+        return this.markService.getMarksByStudent(studentId);
     }
 }

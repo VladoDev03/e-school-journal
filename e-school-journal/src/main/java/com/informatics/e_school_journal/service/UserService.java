@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserService {
     ResponseEntity<Void> registerUser(CreateUserDto createUserDto);
     ResponseEntity<Void> updateUser (String userId, UpdateUserDto updateUserDto);
+    UserDto getUserById(String id);
     UserDto getUserByEmail(String email);
     RoleDto getRoleByName(String roleName);
     List<RoleDto> getAllRoles();
