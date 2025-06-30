@@ -15,6 +15,7 @@ export default function NavBar() {
                     {" "}
                     <Link to="/register-user">Register User</Link>
                     <Link to="/parent">Parent Management</Link>
+                    <Link to="/school">School Management</Link>
                 </>
             )}{" "}
             {isLoggedIn && (

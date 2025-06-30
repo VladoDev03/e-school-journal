@@ -9,6 +9,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import NewUserForm from './components/NewUserForm';
 import ParentManagement from './components/ParentManagement';
 import './parent.css';
+import SchoolManagement from './components/SchoolManagement';
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
         <Route path="/parent" element={
           <ProtectedRoute roles={['admin']}>
             <ParentManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/school" element={
+          <ProtectedRoute roles={['admin']}>
+            <SchoolManagement />
           </ProtectedRoute>
         } />
         <Route path="/unauthorized" element={<Unauthorized />} />

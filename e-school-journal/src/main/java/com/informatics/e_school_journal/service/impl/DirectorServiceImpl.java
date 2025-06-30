@@ -44,7 +44,7 @@ public class DirectorServiceImpl implements DirectorService {
         userService.registerUser(createDirectorDto.getCreateUserDto());
         UserDto userDto = userService.getUserByEmail(createDirectorDto.getCreateUserDto().getEmail());
 
-        RoleDto roleDto = userService.getRoleByName("teacher");
+        RoleDto roleDto = userService.getRoleByName("director");
         userService.setRole(userDto.getId(), roleDto);
 
         Director director = mapperConfig.getModelMapper().map(createDirectorDto, Director.class);
