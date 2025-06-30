@@ -16,4 +16,5 @@ public interface StudentService {
 
     List<StudentPersonalInfoDto> getStudentsByParentId(String parentId);
 
+    List<StudentPersonalInfoDto> getStudentsByDirectorId();
 }

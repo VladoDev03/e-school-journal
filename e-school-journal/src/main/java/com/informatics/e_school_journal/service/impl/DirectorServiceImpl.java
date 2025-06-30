@@ -10,6 +10,7 @@ import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.DirectorService;
 import com.informatics.e_school_journal.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,12 +40,13 @@ public class DirectorServiceImpl implements DirectorService {
         return mapperConfig.getModelMapper().map(existingDirector, DirectorDto.class);
     }
 
+    @Transactional
     @Override
     public DirectorDto createDirector(CreateDirectorDto createDirectorDto) {
         userService.registerUser(createDirectorDto.getCreateUserDto());
         UserDto userDto = userService.getUserByEmail(createDirectorDto.getCreateUserDto().getEmail());
 
-        RoleDto roleDto = userService.getRoleByName("teacher");
+        RoleDto roleDto = userService.getRoleByName("director");
         userService.setRole(userDto.getId(), roleDto);
 
         Director director = mapperConfig.getModelMapper().map(createDirectorDto, Director.class);

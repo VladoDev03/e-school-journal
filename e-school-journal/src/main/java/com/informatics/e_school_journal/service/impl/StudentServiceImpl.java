@@ -3,7 +3,6 @@ package com.informatics.e_school_journal.service.impl;
 import com.informatics.e_school_journal.config.ModelMapperConfig;
 import com.informatics.e_school_journal.data.entity.Parent;
 import com.informatics.e_school_journal.data.entity.Student;
-import com.informatics.e_school_journal.data.entity.Teacher;
 import com.informatics.e_school_journal.data.repo.ParentRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.dto.student.CreateStudentDto;
@@ -102,6 +101,31 @@ public class StudentServiceImpl implements StudentService {
 
         List<Student> students = this.studentRepository.findStudentsByParentsId(parentId);
         return students
+                .stream()
+                .map(student -> {
+                    UserDto userDto = userService.getUserById(student.getId());
+                    return new StudentPersonalInfoDto(
+                            userDto.getId(),
+                            userDto.getFirstName(),
+                            userDto.getLastName()
+                    );
+                })
+                .toList();
+    }
+
+    @Override
+    public List<StudentPersonalInfoDto> getStudentsByDirectorId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isDirector = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(x -> x.getAuthority().equals("director"));
+
+        if(!isDirector) {
+            throw new RuntimeException("User not authorized for this action");
+        }
+
+        return this.studentRepository.findStudentsByGradeSchoolDirectorId(authentication.getName())
                 .stream()
                 .map(student -> {
                     UserDto userDto = userService.getUserById(student.getId());

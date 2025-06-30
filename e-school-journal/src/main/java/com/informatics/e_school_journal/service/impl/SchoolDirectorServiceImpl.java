@@ -10,6 +10,7 @@ import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.SchoolDirectorService;
 import com.informatics.e_school_journal.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +22,16 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
     private final SchoolRepository schoolRepository;
     private final UserService userService;
 
+    @Transactional
     @Override
     public DirectorWithSchoolDto saveDirectorWithSchool(CreateDirectorDto director) {
         userService.registerUser(director.getCreateUserDto());
         UserDto userDto = userService.getUserByEmail(director.getCreateUserDto().getEmail());
 
-        RoleDto roleDto = userService.getRoleByName("teacher");
+        RoleDto roleDto = userService.getRoleByName("director");
         userService.setRole(userDto.getId(), roleDto);
 
-        Director newDirector = mapperConfig.getModelMapper().map(director, Director.class);
+        Director newDirector =  new Director(userDto.getId());
 
         School school = schoolRepository
                 .findById(director.getSchoolId())
@@ -42,6 +44,7 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
         return mapperConfig.getModelMapper().map(newDirector, DirectorWithSchoolDto.class);
     }
 
+    @Transactional
     @Override
     public DirectorDto createDirectorRole(String userId, DirectorSchoolRoleDto director) {
         if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("director"))) {

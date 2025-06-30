@@ -15,6 +15,8 @@ import com.informatics.e_school_journal.dto.studying.UpdateStudyingDto;
 import com.informatics.e_school_journal.service.GradeService;
 import com.informatics.e_school_journal.service.StudyingService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -92,5 +94,22 @@ public class StudyingServiceImpl implements StudyingService {
 
         teacherRepository.save(teacher);
         teacherRepository.deleteById(teacherId);
+    }
+
+    @Override
+    public List<StudyingDto> getStudyingsByDirectorId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isDirector = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(x -> x.getAuthority().equals("director"));
+
+        if(!isDirector) {
+            throw new RuntimeException("User not authorized for this action");
+        }
+
+        return this.studyingRepository.findStudyingsByGrade_School_Director_Id(authentication.getName())
+                .stream().map(studying -> this.mapperConfig.getModelMapper().map(studying, StudyingDto.class))
+                .toList();
     }
 }

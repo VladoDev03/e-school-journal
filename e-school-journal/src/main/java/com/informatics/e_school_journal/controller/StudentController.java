@@ -38,6 +38,12 @@ public class StudentController {
         return this.studentService.getStudentsByParentId(parentId);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
+    @GetMapping("/director")
+    public List<StudentPersonalInfoDto> getStudentsByDirector() {
+        return this.studentService.getStudentsByDirectorId();
+    }
+
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
     public StudentDto createStudent(@RequestBody CreateStudentDto student) {

@@ -6,6 +6,7 @@ import com.informatics.e_school_journal.data.repo.TeacherRepository;
 import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
+import com.informatics.e_school_journal.dto.teacher.TeacherPersonalInfoDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
@@ -14,6 +15,8 @@ import com.informatics.e_school_journal.service.TeacherService;
 import com.informatics.e_school_journal.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,13 +83,14 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public TeacherDto createTeacherRole(String userId) {
         if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("teacher"))) {
             throw new IllegalArgumentException("User cannot be assigned this role.");
         }
 
-        RoleDto roleDto = userService.getRoleByName("admin");
+        RoleDto roleDto = userService.getRoleByName("teacher");
         userService.setRole(userId, roleDto);
 
         Teacher teacher = new Teacher(userId);
@@ -104,4 +108,36 @@ public class TeacherServiceImpl implements TeacherService {
                 .map(teacher -> mapperConfig.getModelMapper().map(teacher, TeacherDto.class))
                 .toList();
     }
+
+    @Override
+    public List<TeacherPersonalInfoDto> getTeachersByDirector() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isDirector = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(x -> x.getAuthority().equals("director"));
+
+        if(!isDirector) {
+            throw new RuntimeException("User not authorized for this action");
+        }
+
+        return this.teacherRepository.findTeachersByStudyingsGradeSchoolDirectorId(authentication.getName())
+                .stream().map(teacher ->
+                        {
+                            UserDto userDto = userService.getUserById(teacher.getId());
+                            return new TeacherPersonalInfoDto(
+                                    userDto.getId(),
+                                    userDto.getFirstName(),
+                                    userDto.getLastName());
+                        })
+                .toList();
+    }
+
+    /*
+    UserDto userDto = userService.getUserById(student.getId());
+                    return new StudentPersonalInfoDto(
+                            userDto.getId(),
+                            userDto.getFirstName(),
+                            userDto.getLastName()
+                            */
 }

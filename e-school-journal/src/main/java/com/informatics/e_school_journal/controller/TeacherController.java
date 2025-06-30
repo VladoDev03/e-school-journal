@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.qualification.CreateQualificationDto
 import com.informatics.e_school_journal.dto.subject.SubjectDto;
 import com.informatics.e_school_journal.dto.teacher.CreateTeacherDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherDto;
+import com.informatics.e_school_journal.dto.teacher.TeacherPersonalInfoDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.service.QualificationService;
 import com.informatics.e_school_journal.service.StudyingService;
@@ -52,6 +53,12 @@ public class TeacherController {
     @GetMapping
     public List<TeacherDto> getTeachers() {
         return this.teacherService.getTeachers();
+    }
+
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
+    @GetMapping("/director")
+    public List<TeacherPersonalInfoDto> getTeachersByDirector() {
+        return this.teacherService.getTeachersByDirector();
     }
 
     @PreAuthorize("hasAuthority('admin')")

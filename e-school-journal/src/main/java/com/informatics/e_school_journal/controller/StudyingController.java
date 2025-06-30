@@ -9,6 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @EnableMethodSecurity(prePostEnabled = true)
 @PreAuthorize("hasAuthority('admin')")
 @RestController
@@ -25,5 +27,11 @@ public class StudyingController {
     @PutMapping("/{id}")
     public StudyingDto updateStudying(@RequestBody UpdateStudyingDto updateStudyingDto, @PathVariable String id) {
         return studyingService.updateStudying(id, updateStudyingDto);
+    }
+
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('director')")
+    @GetMapping
+    public List<StudyingDto> getStudying(){
+        return this.studyingService.getStudyingsByDirectorId();
     }
 }
