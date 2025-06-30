@@ -1,10 +1,8 @@
 package com.informatics.e_school_journal.controller;
 
-import com.informatics.e_school_journal.dto.absence.AbsenceDto;
-import com.informatics.e_school_journal.dto.absence.AbsenceWithSubjectDto;
-import com.informatics.e_school_journal.dto.absence.CreateAbsenceDto;
-import com.informatics.e_school_journal.dto.absence.UpdateAbsenceDto;
+import com.informatics.e_school_journal.dto.absence.*;
 import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
+import com.informatics.e_school_journal.dto.mark.SchoolSubjectAvgMarkDto;
 import com.informatics.e_school_journal.service.AbsenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,5 +40,11 @@ public class AbsenceController {
     @GetMapping("/student/{studentId}")
     public List<AbsenceWithSubjectDto> getAbsencesByStudent(@PathVariable String studentId) {
         return this.absenceService.getAbsencesByStudent(studentId);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/stats-by-school-and-subject")
+    public List<SchoolSubjectCountAbsenceDto> getMarksStatsBySchoolAndSubject() {
+        return this.absenceService.getCountAbsenceBySchoolAndSubject();
     }
 }

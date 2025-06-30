@@ -6,11 +6,9 @@ import com.informatics.e_school_journal.data.repo.AbsenceRepository;
 import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.data.repo.StudyingRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
-import com.informatics.e_school_journal.dto.absence.AbsenceDto;
-import com.informatics.e_school_journal.dto.absence.AbsenceWithSubjectDto;
-import com.informatics.e_school_journal.dto.absence.CreateAbsenceDto;
-import com.informatics.e_school_journal.dto.absence.UpdateAbsenceDto;
+import com.informatics.e_school_journal.dto.absence.*;
 import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
+import com.informatics.e_school_journal.dto.mark.SchoolSubjectAvgMarkDto;
 import com.informatics.e_school_journal.service.AbsenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -123,6 +121,19 @@ public class AbsenceServiceImpl implements AbsenceService {
                 absence.getStudying().getId(),
                 absence.getStudying().getSubject().getName()
         )).toList();
+    }
+
+    @Override
+    public List<SchoolSubjectCountAbsenceDto> getCountAbsenceBySchoolAndSubject() {
+        List<Object[]> rawResults = absenceRepository.getCountAbsencesBySchoolAndSubject();
+
+        return rawResults.stream()
+                .map(row -> new SchoolSubjectCountAbsenceDto(
+                        (String) row[0],
+                        (String) row[1],
+                        row[2] != null ? ((Number) row[2]).intValue() : 0)
+                )
+                .toList();
     }
 
     private boolean isUserAuthorized(Studying studying) {
