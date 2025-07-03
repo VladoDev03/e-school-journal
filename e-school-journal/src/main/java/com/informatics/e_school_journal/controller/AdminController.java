@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.admin.AdminDto;
 import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
 import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import com.informatics.e_school_journal.service.AdminService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class AdminController {
     }
 
     @PostMapping
-    public AdminDto createAdmin(@RequestBody CreateAdminDto createAdminDto) {
+    public AdminDto createAdmin(@RequestBody @Valid CreateAdminDto createAdminDto) {
         return adminService.createAdmin(createAdminDto);
     }
 
@@ -46,7 +47,7 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
-    public AdminDto updateAdmin(@PathVariable String id, @RequestBody UpdateAdminDto updateAdminDto) {
+    public AdminDto updateAdmin(@PathVariable String id, @RequestBody @Valid UpdateAdminDto updateAdminDto) {
         return adminService.updateAdmin(id, updateAdminDto);
     }
 

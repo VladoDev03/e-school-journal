@@ -9,6 +9,7 @@ import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.service.QualificationService;
 import com.informatics.e_school_journal.service.StudyingService;
 import com.informatics.e_school_journal.service.TeacherService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class TeacherController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public TeacherDto createTeacher(@RequestBody CreateTeacherDto createTeacherDto) {
+    public TeacherDto createTeacher(@RequestBody @Valid CreateTeacherDto createTeacherDto) {
         return this.teacherService.createTeacher(createTeacherDto);
     }
 
@@ -63,7 +64,7 @@ public class TeacherController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public TeacherDto updateTeacher(@PathVariable String id, @RequestBody UpdateTeacherDto updateTeacherDto) {
+    public TeacherDto updateTeacher(@PathVariable String id, @RequestBody @Valid UpdateTeacherDto updateTeacherDto) {
         return this.teacherService.updateTeacher(id, updateTeacherDto);
     }
 
@@ -81,7 +82,7 @@ public class TeacherController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/qualification")
-    public CreateQualificationDto createTeacherQualification(@RequestBody CreateQualificationDto createQualificationDto) {
+    public CreateQualificationDto createTeacherQualification(@RequestBody @Valid CreateQualificationDto createQualificationDto) {
         return qualificationService.createQualification(createQualificationDto);
     }
 

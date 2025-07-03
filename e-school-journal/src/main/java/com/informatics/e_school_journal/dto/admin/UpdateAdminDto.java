@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.admin;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -8,5 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UpdateAdminDto {
+    @NotNull
     private String id;
 }

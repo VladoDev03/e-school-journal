@@ -2,6 +2,7 @@ package com.informatics.e_school_journal.data.entity;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
 @ToString
 @Entity
 public class Parent extends BaseEntity {
+    @NotEmpty
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Student> children;
 

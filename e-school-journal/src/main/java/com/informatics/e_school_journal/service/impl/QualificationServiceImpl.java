@@ -7,6 +7,7 @@ import com.informatics.e_school_journal.data.repo.SubjectRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
 import com.informatics.e_school_journal.dto.qualification.CreateQualificationDto;
 import com.informatics.e_school_journal.dto.subject.SubjectDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.QualificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class QualificationServiceImpl implements QualificationService {
     public CreateQualificationDto createQualification(CreateQualificationDto createQualificationDto) {
         Teacher teacher = teacherRepository
                 .findById(createQualificationDto.getTeacherId())
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + createQualificationDto.getTeacherId()));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id " + createQualificationDto.getTeacherId()));
 
         if (createQualificationDto.getSubjectIds() != null) {
             Set<Subject> subjects = new HashSet<>(subjectRepository.findAllById(createQualificationDto.getSubjectIds()));
@@ -43,7 +44,7 @@ public class QualificationServiceImpl implements QualificationService {
     public List<SubjectDto> getAllTeacherQualifications(String teacherId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id " + teacherId));
 
         return teacher.getSubjects()
                 .stream().map(subject -> mapperConfig.getModelMapper().map(subject, SubjectDto.class))
@@ -54,11 +55,11 @@ public class QualificationServiceImpl implements QualificationService {
     public void deleteQualification(String teacherId, String subjectId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id " + teacherId));
 
         Subject subject = subjectRepository
                 .findById(subjectId)
-                .orElseThrow(() -> new RuntimeException("Subject not found with id " + subjectId));
+                .orElseThrow(() -> new EntityNotFoundException("Subject not found with id " + subjectId));
 
         Set<Subject> subjects = teacher.getSubjects();
         subjects.remove(subject);
@@ -70,7 +71,7 @@ public class QualificationServiceImpl implements QualificationService {
     public void deleteAllTeacherQualifications(String teacherId) {
         Teacher teacher = teacherRepository
                 .findById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id " + teacherId));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id " + teacherId));
 
         teacher.setSubjects(null);
         teacherRepository.save(teacher);

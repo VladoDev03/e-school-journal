@@ -8,6 +8,7 @@ import com.informatics.e_school_journal.dto.admin.CreateAdminDto;
 import com.informatics.e_school_journal.dto.admin.UpdateAdminDto;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.AdminService;
 import com.informatics.e_school_journal.service.UserService;
 import jakarta.transaction.Transactional;
@@ -37,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminDto getAdminById(String id) {
         Admin admin = adminRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Admin not found with id: " + id));
 
         return mapperConfig.getModelMapper().map(admin, AdminDto.class);
     }
@@ -76,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminDto updateAdmin(String id, UpdateAdminDto updateAdminDto) {
         Admin existingAdmin = adminRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Admin not found with id: " + id));
         mapperConfig.getModelMapper().map(updateAdminDto, existingAdmin);
         Admin updatedAdmin = adminRepository.save(existingAdmin);
 
@@ -86,7 +87,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteAdmin(String id) {
         if (!adminRepository.existsById(id)) {
-            throw new RuntimeException("Admin not found with id: " + id);
+            throw new EntityNotFoundException("Admin not found with id: " + id);
         }
         adminRepository.deleteById(id);
     }

@@ -11,6 +11,8 @@ import com.informatics.e_school_journal.dto.student.StudentPersonalInfoDto;
 import com.informatics.e_school_journal.dto.student.UpdateStudentDto;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
+import com.informatics.e_school_journal.exception.UserNotAuthorizedException;
 import com.informatics.e_school_journal.service.StudentService;
 import com.informatics.e_school_journal.service.UserService;
 import jakarta.transaction.Transactional;
@@ -44,7 +46,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto getStudentById(String id) {
         Student student = this.studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + id));
 
         return this.mapperConfig.getModelMapper().map(student, StudentDto.class);
     }
@@ -67,7 +69,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto updateStudent(String id, UpdateStudentDto updateStudentDto) {
         Student existingStudent = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + id));
 
         mapperConfig.getModelMapper().map(updateStudentDto, existingStudent);
 
@@ -79,7 +81,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(String id) {
         if (!studentRepository.existsById(id)) {
-            throw new RuntimeException("Student not found with id: " + id);
+            throw new EntityNotFoundException("Student not found with id: " + id);
         }
         studentRepository.deleteById(id);
     }
@@ -93,11 +95,11 @@ public class StudentServiceImpl implements StudentService {
                 .anyMatch(x -> x.getAuthority().equals("admin"));
 
         if(authentication.getName() != parentId && !isAdmin) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         Parent parent = this.parentRepository.findById(parentId)
-                .orElseThrow(() -> new RuntimeException("Parent not found with id: " + parentId));
+                .orElseThrow(() -> new EntityNotFoundException("Parent not found with id: " + parentId));
 
         List<Student> students = this.studentRepository.findStudentsByParentsId(parentId);
         return students

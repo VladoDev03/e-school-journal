@@ -8,6 +8,7 @@ import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.dto.parent.*;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.ParentService;
 import com.informatics.e_school_journal.service.UserService;
 import jakarta.transaction.Transactional;
@@ -46,7 +47,7 @@ public class ParentServiceImpl implements ParentService {
 
             Student student = studentRepository
                     .findById(studentId)
-                    .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+                    .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + studentId));
 
             children.add(student);
 
@@ -103,7 +104,7 @@ public class ParentServiceImpl implements ParentService {
     @Override
     public ParentPersonalInfoDto getParentById(String id) {
         Parent parent = parentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parent not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Parent not found with id: " + id));
 
         ParentPersonalInfoDto parentDto = mapperConfig.getModelMapper().map(parent, ParentPersonalInfoDto.class);
 
@@ -158,7 +159,7 @@ public class ParentServiceImpl implements ParentService {
     @Override
     public ParentDto updateParent(String id, UpdateParentDto updateParentDto) {
         Parent existingParent = parentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parent not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Parent not found with id: " + id));
 
         mapperConfig.getModelMapper().map(updateParentDto, existingParent);
 
@@ -184,7 +185,7 @@ public class ParentServiceImpl implements ParentService {
     @Override
     public void deleteParent(String id) {
         if (!parentRepository.existsById(id)) {
-            throw new RuntimeException("Parent not found with id: " + id);
+            throw new EntityNotFoundException("Parent not found with id: " + id);
         }
         parentRepository.deleteById(id);
     }

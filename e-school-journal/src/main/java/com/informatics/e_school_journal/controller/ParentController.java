@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.dto.admin.AdminDto;
 import com.informatics.e_school_journal.dto.parent.*;
 import com.informatics.e_school_journal.service.ParentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +24,12 @@ public class ParentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public ParentDto createParent(@RequestBody CreateParentDto createParentDto) {
+    public ParentDto createParent(@RequestBody @Valid CreateParentDto createParentDto) {
         return this.parentService.createParent(createParentDto);
     }
 
     @PostMapping("/add-role/{userId}")
-    public ResponseEntity<?> createParentRole(@PathVariable String userId, @RequestBody CreateParentRoleDto createParentRoleDto) {
+    public ResponseEntity<?> createParentRole(@PathVariable String userId, @RequestBody @Valid CreateParentRoleDto createParentRoleDto) {
         try {
             ParentDto result = parentService.createParentRole(userId, createParentRoleDto);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -51,7 +52,7 @@ public class ParentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public ParentDto updateParent(@PathVariable String id, @RequestBody UpdateParentDto updateParentDto) {
+    public ParentDto updateParent(@PathVariable String id, @RequestBody @Valid UpdateParentDto updateParentDto) {
         return this.parentService.updateParent(id, updateParentDto);
     }
 

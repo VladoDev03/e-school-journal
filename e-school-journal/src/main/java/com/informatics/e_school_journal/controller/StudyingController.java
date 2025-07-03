@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.studying.CreateStudyingDto;
 import com.informatics.e_school_journal.dto.studying.StudyingDto;
 import com.informatics.e_school_journal.dto.studying.UpdateStudyingDto;
 import com.informatics.e_school_journal.service.StudyingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -20,12 +21,12 @@ public class StudyingController {
     private final StudyingService studyingService;
 
     @PostMapping
-    public StudyingDto createStudying(@RequestBody CreateStudyingDto createStudyingDto) {
+    public StudyingDto createStudying(@RequestBody @Valid CreateStudyingDto createStudyingDto) {
         return studyingService.createStudyingDto(createStudyingDto);
     }
 
     @PutMapping("/{id}")
-    public StudyingDto updateStudying(@RequestBody UpdateStudyingDto updateStudyingDto, @PathVariable String id) {
+    public StudyingDto updateStudying(@RequestBody @Valid UpdateStudyingDto updateStudyingDto, @PathVariable String id) {
         return studyingService.updateStudying(id, updateStudyingDto);
     }
 

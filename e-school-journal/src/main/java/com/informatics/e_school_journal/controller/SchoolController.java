@@ -5,6 +5,7 @@ import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.dto.school.UpdateSchoolDto;
 import com.informatics.e_school_journal.service.SchoolService;
 import com.informatics.e_school_journal.service.impl.SchoolServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -33,12 +34,12 @@ public class SchoolController {
     }
 
     @PostMapping
-    public SchoolDto createSchool(@RequestBody CreateSchoolDto createSchoolDto) {
+    public SchoolDto createSchool(@RequestBody @Valid CreateSchoolDto createSchoolDto) {
         return this.schoolService.createSchool(createSchoolDto);
     }
 
     @PutMapping("/{id}")
-    public SchoolDto updateSchool(@PathVariable String id, @RequestBody UpdateSchoolDto updateSchoolDto) {
+    public SchoolDto updateSchool(@PathVariable String id, @RequestBody @Valid UpdateSchoolDto updateSchoolDto) {
         return this.schoolService.updateSchool(id, updateSchoolDto);
     }
 

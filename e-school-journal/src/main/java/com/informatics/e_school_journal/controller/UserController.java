@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UpdateUserDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
 import com.informatics.e_school_journal.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -32,7 +33,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{userId}")
-    public void updateUser(@PathVariable String userId, @RequestBody UpdateUserDto updateUserDto) {
+    public void updateUser(@PathVariable String userId, @RequestBody @Valid UpdateUserDto updateUserDto) {
         this.userService.updateUser(userId, updateUserDto);
     }
 }

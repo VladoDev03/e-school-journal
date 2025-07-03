@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.dto.student.*;
 import com.informatics.e_school_journal.service.StudentGradeService;
 import com.informatics.e_school_journal.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class StudentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public StudentDto createStudent(@RequestBody CreateStudentDto student) {
+    public StudentDto createStudent(@RequestBody @Valid CreateStudentDto student) {
         return this.studentService.createStudent(student);
     }
 
@@ -85,7 +86,7 @@ public class StudentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public StudentInGradeDto updateStudentInGrade(@PathVariable String id, @RequestBody UpdateStudentInGradeDto student) {
+    public StudentInGradeDto updateStudentInGrade(@PathVariable String id, @RequestBody @Valid UpdateStudentInGradeDto student) {
         return this.studentGradeService.updateStudentInGrade(id, student);
     }
 }

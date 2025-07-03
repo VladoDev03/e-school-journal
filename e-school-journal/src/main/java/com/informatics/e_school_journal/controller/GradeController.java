@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.grade.CreateGradeDto;
 import com.informatics.e_school_journal.dto.grade.GradeDto;
 import com.informatics.e_school_journal.dto.grade.UpdateGradeDto;
 import com.informatics.e_school_journal.service.GradeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class GradeController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public GradeDto createGrade(@RequestBody CreateGradeDto createGradeDto) {
+    public GradeDto createGrade(@RequestBody @Valid CreateGradeDto createGradeDto) {
         return this.gradeService.createGrade(createGradeDto);
     }
 
@@ -40,7 +41,7 @@ public class GradeController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public GradeDto updateGrade(@PathVariable String id, @RequestBody UpdateGradeDto updateGradeDto) {
+    public GradeDto updateGrade(@PathVariable String id, @RequestBody @Valid UpdateGradeDto updateGradeDto) {
         return this.gradeService.updateGrade(id, updateGradeDto);
     }
 

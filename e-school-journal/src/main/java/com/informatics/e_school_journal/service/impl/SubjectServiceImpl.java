@@ -6,6 +6,7 @@ import com.informatics.e_school_journal.data.repo.SubjectRepository;
 import com.informatics.e_school_journal.dto.subject.CreateSubjectDto;
 import com.informatics.e_school_journal.dto.subject.SubjectDto;
 import com.informatics.e_school_journal.dto.subject.UpdateSubjectDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.SubjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public SubjectDto getSubjectById(String id) {
         Subject subject = subjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Subject not found with id: " + id));
 
         return mapperConfig.getModelMapper().map(subject, SubjectDto.class);
     }
@@ -47,7 +48,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public SubjectDto updateSubject(String id, UpdateSubjectDto updateSubjectDto) {
         Subject existingSubject = subjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Subject not found with id: " + id));
         mapperConfig.getModelMapper().map(updateSubjectDto, existingSubject);
         Subject updatedSubject = subjectRepository.save(existingSubject);
 
@@ -57,7 +58,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public void deleteSubject(String id) {
         if (!subjectRepository.existsById(id)) {
-            throw new RuntimeException("Subject not found with id: " + id);
+            throw new EntityNotFoundException("Subject not found with id: " + id);
         }
         subjectRepository.deleteById(id);
     }

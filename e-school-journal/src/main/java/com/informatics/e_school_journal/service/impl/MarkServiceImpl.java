@@ -15,6 +15,9 @@ import com.informatics.e_school_journal.dto.mark.*;
 import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
 import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
+import com.informatics.e_school_journal.exception.StudentEnrollmentException;
+import com.informatics.e_school_journal.exception.UserNotAuthorizedException;
 import com.informatics.e_school_journal.service.MarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.metrics.data.RepositoryMetricsAutoConfiguration;
@@ -54,17 +57,17 @@ public class MarkServiceImpl implements MarkService {
         }
 
         Studying studying = this.studyingRepository.findById(createMarkDto.getStudyingId())
-                .orElseThrow(() -> new RuntimeException("Studying not found with id: " + createMarkDto.getStudyingId()));
+                .orElseThrow(() -> new EntityNotFoundException("Studying not found with id: " + createMarkDto.getStudyingId()));
 
         if (!this.isUserAuthorized(studying)) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         Student student = this.studentRepository.findById(createMarkDto.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + createMarkDto.getStudentId()));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + createMarkDto.getStudentId()));
 
         if (student.getGrade() != studying.getGrade()) {
-            throw new RuntimeException("Student not in this grade.");
+            throw new StudentEnrollmentException("Student not in this grade.");
         }
 
         Mark mark = new Mark(
@@ -97,21 +100,21 @@ public class MarkServiceImpl implements MarkService {
         }
 
         Studying studying = this.studyingRepository.findById(updateMarkDto.getStudyingId())
-                .orElseThrow(() -> new RuntimeException("Studying not found with id: " + updateMarkDto.getStudyingId()));
+                .orElseThrow(() -> new EntityNotFoundException("Studying not found with id: " + updateMarkDto.getStudyingId()));
 
         if (!this.isUserAuthorized(studying)) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         Student student = this.studentRepository.findById(updateMarkDto.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + updateMarkDto.getStudentId()));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + updateMarkDto.getStudentId()));
 
         if (student.getGrade() != studying.getGrade()) {
-            throw new RuntimeException("Student not in this grade.");
+            throw new StudentEnrollmentException("Student not in this grade.");
         }
 
         Mark mark = markRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Mark not found with id: " + id));
         mark.setMark(updateMarkDto.getMark());
         mark.setMarkType(updateMarkDto.getMarkType());
         mark.setStudying(studying);
@@ -132,18 +135,18 @@ public class MarkServiceImpl implements MarkService {
     @Override
     public void deleteMark(String id) {
         Mark mark = markRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Mark not found with id: " + id));
 
         Studying studying = mark.getStudying();
 
         if (!this.isUserAuthorized(studying)) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         Student student = mark.getStudent();
 
         if (student.getGrade() != studying.getGrade()) {
-            throw new RuntimeException("Student not in this grade.");
+            throw new StudentEnrollmentException("Student not in this grade.");
         }
 
         this.markRepository.deleteById(id);
@@ -152,7 +155,7 @@ public class MarkServiceImpl implements MarkService {
     @Override
     public MarkWithSubjectDto getMark(String id) {
         Mark mark = markRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mark not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Mark not found with id: " + id));
 
         return new MarkWithSubjectDto(
                 mark.getId(),
@@ -168,7 +171,7 @@ public class MarkServiceImpl implements MarkService {
     @Override
     public List<MarkWithSubjectDto> getMarksByStudent(String studentId) {
         Student student = this.studentRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + studentId));
 
         List<Mark> marks = this.markRepository.findMarksByStudentId(studentId);
         return marks.stream().map(mark -> new MarkWithSubjectDto(
@@ -276,7 +279,7 @@ public class MarkServiceImpl implements MarkService {
 
         if(!isAdmin) {
             Teacher teacher = this.teacherRepository.findById(authentication.getName())
-                    .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + authentication.getName()));
+                    .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id: " + authentication.getName()));
             if (teacher != studying.getTeacher())
                 return false;
         }

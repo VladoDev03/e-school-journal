@@ -5,6 +5,7 @@ import com.informatics.e_school_journal.dto.school.SchoolAvgMarkDto;
 import com.informatics.e_school_journal.dto.subject.SubjectAvgMarkDto;
 import com.informatics.e_school_journal.dto.teacher.TeacherAvgMarkDto;
 import com.informatics.e_school_journal.service.MarkService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,12 +24,12 @@ public class MarkController {
     // Get -> all auth
 
     @PostMapping
-    public MarkDto createMark(@RequestBody CreateMarkDto createMarkDto) {
+    public MarkDto createMark(@RequestBody @Valid CreateMarkDto createMarkDto) {
         return this.markService.createMark(createMarkDto);
     }
 
     @PutMapping("/{id}")
-    public MarkDto updateMark(@PathVariable String id, @RequestBody UpdateMarkDto updateMarkDto) {
+    public MarkDto updateMark(@PathVariable String id, @RequestBody @Valid UpdateMarkDto updateMarkDto) {
         return this.markService.updateMark(id, updateMarkDto);
     }
 

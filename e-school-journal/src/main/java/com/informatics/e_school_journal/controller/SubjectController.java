@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.subject.CreateSubjectDto;
 import com.informatics.e_school_journal.dto.subject.SubjectDto;
 import com.informatics.e_school_journal.dto.subject.UpdateSubjectDto;
 import com.informatics.e_school_journal.service.SubjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -20,7 +21,7 @@ public class SubjectController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping
-    public SubjectDto createSubject(@RequestBody CreateSubjectDto createSubjectDto) {
+    public SubjectDto createSubject(@RequestBody @Valid CreateSubjectDto createSubjectDto) {
         return this.subjectService.createSubject(createSubjectDto);
     }
 
@@ -38,7 +39,7 @@ public class SubjectController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    public SubjectDto updateSubject(@PathVariable String id, @RequestBody UpdateSubjectDto updateSubjectDto) {
+    public SubjectDto updateSubject(@PathVariable String id, @RequestBody @Valid UpdateSubjectDto updateSubjectDto) {
         return this.subjectService.updateSubject(id, updateSubjectDto);
     }
 

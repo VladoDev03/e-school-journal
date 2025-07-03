@@ -1,6 +1,7 @@
 package com.informatics.e_school_journal.data.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.util.Set;

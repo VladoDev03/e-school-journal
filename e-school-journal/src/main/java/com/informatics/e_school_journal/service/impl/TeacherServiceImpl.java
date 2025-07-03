@@ -10,6 +10,7 @@ import com.informatics.e_school_journal.dto.teacher.TeacherPersonalInfoDto;
 import com.informatics.e_school_journal.dto.teacher.UpdateTeacherDto;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.SchoolService;
 import com.informatics.e_school_journal.service.TeacherService;
 import com.informatics.e_school_journal.service.UserService;
@@ -48,7 +49,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherDto getTeacherById(String id) {
         Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id: " + id));
 
         return mapperConfig.getModelMapper().map(teacher, TeacherDto.class);
     }
@@ -66,7 +67,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherDto updateTeacher(String id, UpdateTeacherDto updateTeacherDto) {
         Teacher existingTeacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id: " + id));
 
         mapperConfig.getModelMapper().map(updateTeacherDto, existingTeacher);
         Teacher updatedTeacher = teacherRepository.save(existingTeacher);
@@ -77,7 +78,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void deleteTeacher(String id) {
         if (!teacherRepository.existsById(id)) {
-            throw new RuntimeException("Teacher not found with id: " + id);
+            throw new EntityNotFoundException("Teacher not found with id: " + id);
         }
 
         teacherRepository.deleteById(id);
@@ -85,7 +86,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Transactional
     @Override
-    @Transactional
     public TeacherDto createTeacherRole(String userId) {
         if (userService.getUserPossibleRoles(userId).stream().noneMatch(role -> role.getName().equals("teacher"))) {
             throw new IllegalArgumentException("User cannot be assigned this role.");

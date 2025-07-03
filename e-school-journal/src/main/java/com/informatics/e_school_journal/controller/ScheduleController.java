@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.dto.schedule.CreateScheduleDto;
 import com.informatics.e_school_journal.dto.schedule.ScheduleDto;
 import com.informatics.e_school_journal.service.ScheduleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -20,7 +21,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public ScheduleDto createSchedule(@RequestBody CreateScheduleDto scheduleDto) {
+    public ScheduleDto createSchedule(@RequestBody @Valid CreateScheduleDto scheduleDto) {
         return this.scheduleService.createSchedule(scheduleDto);
     }
 }

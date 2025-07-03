@@ -8,6 +8,7 @@ import com.informatics.e_school_journal.data.repo.SchoolRepository;
 import com.informatics.e_school_journal.dto.director.*;
 import com.informatics.e_school_journal.dto.user.RoleDto;
 import com.informatics.e_school_journal.dto.user.UserDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.SchoolDirectorService;
 import com.informatics.e_school_journal.service.UserService;
 import jakarta.transaction.Transactional;
@@ -37,7 +38,7 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
 
         School school = schoolRepository
                 .findById(director.getSchoolId())
-                .orElseThrow(() -> new RuntimeException("School not found with id: " + director.getSchoolId()));
+                .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + director.getSchoolId()));
 
         newDirector.setSchool(school);
 
@@ -60,7 +61,7 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
 
         School school = schoolRepository
                 .findById(director.getSchoolId())
-                .orElseThrow(() -> new RuntimeException("School not found with id: " + director.getSchoolId()));
+                .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + director.getSchoolId()));
 
         newDirector.setSchool(school);
 
@@ -87,7 +88,7 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
                 .map(school -> {
                     Director director = directorRepository
                             .findBySchoolId(school.getId())
-                            .orElseThrow(() -> new RuntimeException("Director not found with school id: " + school.getId()));
+                            .orElseThrow(() -> new EntityNotFoundException("Director not found with school id: " + school.getId()));
 
                     UserDto user = userService.getUserById(director.getId());
 
@@ -112,11 +113,11 @@ public class SchoolDirectorServiceImpl implements SchoolDirectorService {
     public DirectorWithSchoolDto updateDirectorWithSchool(UpdateSchoolDirectorDto director) {
         Director existingDirector = directorRepository
                 .findById(director.getDirectorId())
-                .orElseThrow(() -> new RuntimeException("Director not found with id: " + director.getDirectorId()));
+                .orElseThrow(() -> new EntityNotFoundException("Director not found with id: " + director.getDirectorId()));
 
         School school = schoolRepository
                 .findById(director.getSchoolId())
-                .orElseThrow(() -> new RuntimeException("School not found with id: " + director.getSchoolId()));
+                .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + director.getSchoolId()));
 
         existingDirector.setSchool(school);
 

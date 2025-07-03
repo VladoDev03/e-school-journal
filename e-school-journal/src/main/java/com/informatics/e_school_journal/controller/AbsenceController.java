@@ -4,6 +4,7 @@ import com.informatics.e_school_journal.dto.absence.*;
 import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
 import com.informatics.e_school_journal.dto.mark.SchoolSubjectAvgMarkDto;
 import com.informatics.e_school_journal.service.AbsenceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,12 +23,12 @@ public class AbsenceController {
     // Get -> all auth
 
     @PostMapping
-    public AbsenceDto createAbsence(@RequestBody CreateAbsenceDto absenceDto) {
+    public AbsenceDto createAbsence(@RequestBody @Valid CreateAbsenceDto absenceDto) {
         return absenceService.createAbsence(absenceDto);
     }
 
     @PutMapping("/{id}")
-    public AbsenceDto updateAbsence(@PathVariable String id, @RequestBody UpdateAbsenceDto absenceDto) {
+    public AbsenceDto updateAbsence(@PathVariable String id, @RequestBody @Valid UpdateAbsenceDto absenceDto) {
         return absenceService.updateAbsence(id, absenceDto);
     }
 

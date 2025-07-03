@@ -6,6 +6,7 @@ import com.informatics.e_school_journal.data.repo.ScheduleRepository;
 import com.informatics.e_school_journal.data.repo.StudyingRepository;
 import com.informatics.e_school_journal.dto.schedule.CreateScheduleDto;
 import com.informatics.e_school_journal.dto.schedule.ScheduleDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,7 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         Studying studying = studyingRepository
                 .findById(createScheduleDto.getStudyingId())
-                .orElseThrow(() -> new RuntimeException("Studying not found with id " + createScheduleDto.getStudyingId()));
+                .orElseThrow(() -> new EntityNotFoundException("Studying not found with id " + createScheduleDto.getStudyingId()));
 
         schedule.setStudying(studying);
 

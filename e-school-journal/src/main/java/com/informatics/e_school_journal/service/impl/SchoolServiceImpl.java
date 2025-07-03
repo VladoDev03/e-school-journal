@@ -6,6 +6,7 @@ import com.informatics.e_school_journal.data.repo.SchoolRepository;
 import com.informatics.e_school_journal.dto.school.CreateSchoolDto;
 import com.informatics.e_school_journal.dto.school.SchoolDto;
 import com.informatics.e_school_journal.dto.school.UpdateSchoolDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     public SchoolDto updateSchool(String id, UpdateSchoolDto updateSchoolDto) {
         School existingSchool = schoolRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("School not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + id));
         mapperConfig.getModelMapper().map(updateSchoolDto, existingSchool);
         School updatedSchool = schoolRepository.save(existingSchool);
 
@@ -40,7 +41,7 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     public SchoolDto getSchoolById(String id) {
         School school = schoolRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("School not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + id));
 
         return mapperConfig.getModelMapper().map(school, SchoolDto.class);
     }
@@ -58,7 +59,7 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     public void deleteSchool(String id) {
         if (!schoolRepository.existsById(id)) {
-            throw new RuntimeException("Director not found with id: " + id);
+            throw new EntityNotFoundException("Director not found with id: " + id);
         }
         schoolRepository.deleteById(id);
     }

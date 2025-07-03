@@ -3,6 +3,7 @@ package com.informatics.e_school_journal.controller;
 import com.informatics.e_school_journal.dto.director.*;
 import com.informatics.e_school_journal.service.DirectorService;
 import com.informatics.e_school_journal.service.SchoolDirectorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +34,12 @@ public class DirectorController {
     }
 
     @PostMapping
-    public DirectorDto createDirector(@RequestBody CreateDirectorDto createDirectorDto) {
+    public DirectorDto createDirector(@RequestBody @Valid CreateDirectorDto createDirectorDto) {
         return this.directorService.createDirector(createDirectorDto);
     }
 
     @PutMapping("/{id}")
-    public DirectorDto updateDirector(@PathVariable String id, @RequestBody UpdateDirectorDto updateDirectorDto) {
+    public DirectorDto updateDirector(@PathVariable String id, @RequestBody @Valid UpdateDirectorDto updateDirectorDto) {
         return this.directorService.updateDirector(id, updateDirectorDto);
     }
 
@@ -54,12 +55,12 @@ public class DirectorController {
     }
 
     @PostMapping("/school-id")
-    public DirectorWithSchoolDto createDirectorWithSchool(@RequestBody CreateDirectorDto createDirectorDto) {
+    public DirectorWithSchoolDto createDirectorWithSchool(@RequestBody @Valid CreateDirectorDto createDirectorDto) {
         return this.schoolDirectorService.saveDirectorWithSchool(createDirectorDto);
     }
 
     @PostMapping("/add-role/{userId}")
-    public ResponseEntity<DirectorDto> createDirectorRole(@PathVariable String userId, @RequestBody DirectorSchoolRoleDto createDirectorDto) {
+    public ResponseEntity<DirectorDto> createDirectorRole(@PathVariable String userId, @RequestBody @Valid DirectorSchoolRoleDto createDirectorDto) {
         try {
             return new ResponseEntity<>(schoolDirectorService.createDirectorRole(userId, createDirectorDto), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
@@ -68,7 +69,7 @@ public class DirectorController {
     }
 
     @PutMapping("/school-id")
-    public DirectorWithSchoolDto updateDirectorWithSchool(@RequestBody UpdateSchoolDirectorDto updateDirectorDto) {
+    public DirectorWithSchoolDto updateDirectorWithSchool(@RequestBody @Valid UpdateSchoolDirectorDto updateDirectorDto) {
         return this.schoolDirectorService.updateDirectorWithSchool(updateDirectorDto);
     }
 

@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.studying;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -8,7 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UpdateStudyingDto {
+    @NotNull
     private String gradeId;
+    @NotNull
     private String teacherId;
+    @NotNull
     private String subjectId;
 }

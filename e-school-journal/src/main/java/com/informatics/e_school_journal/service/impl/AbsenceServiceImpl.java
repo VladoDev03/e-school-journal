@@ -7,8 +7,9 @@ import com.informatics.e_school_journal.data.repo.StudentRepository;
 import com.informatics.e_school_journal.data.repo.StudyingRepository;
 import com.informatics.e_school_journal.data.repo.TeacherRepository;
 import com.informatics.e_school_journal.dto.absence.*;
-import com.informatics.e_school_journal.dto.mark.MarkWithSubjectDto;
-import com.informatics.e_school_journal.dto.mark.SchoolSubjectAvgMarkDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
+import com.informatics.e_school_journal.exception.StudentEnrollmentException;
+import com.informatics.e_school_journal.exception.UserNotAuthorizedException;
 import com.informatics.e_school_journal.service.AbsenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -32,17 +33,17 @@ public class AbsenceServiceImpl implements AbsenceService {
         Absence absence = mapperConfig.getModelMapper().map(createAbsenceDto, Absence.class);
 
         Student student = studentRepository.findById(createAbsenceDto.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + createAbsenceDto.getStudentId()));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + createAbsenceDto.getStudentId()));
 
         Studying studying = studyingRepository.findById(createAbsenceDto.getStudyingId())
-                .orElseThrow(() -> new RuntimeException("Studying not found with id: " + createAbsenceDto.getStudyingId()));
+                .orElseThrow(() -> new EntityNotFoundException("Studying not found with id: " + createAbsenceDto.getStudyingId()));
 
         if (!this.isUserAuthorized(studying)) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         if (student.getGrade() != studying.getGrade()) {
-            throw new RuntimeException("Student is not enrolled in this grade.");
+            throw new StudentEnrollmentException("Student is not enrolled in this grade.");
         }
 
         absence.setStudent(student);
@@ -62,20 +63,20 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public AbsenceDto updateAbsence(String id, UpdateAbsenceDto updateAbsenceDto) {
         Absence absence = absenceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Absence not found with id: " + updateAbsenceDto.getStudentId()));
+                .orElseThrow(() -> new EntityNotFoundException("Absence not found with id: " + updateAbsenceDto.getStudentId()));
 
         Student student = studentRepository.findById(updateAbsenceDto.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + updateAbsenceDto.getStudentId()));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + updateAbsenceDto.getStudentId()));
 
         Studying studying = studyingRepository.findById(updateAbsenceDto.getStudyingId())
-                .orElseThrow(() -> new RuntimeException("Studying not found with id: " + updateAbsenceDto.getStudyingId()));
+                .orElseThrow(() -> new EntityNotFoundException("Studying not found with id: " + updateAbsenceDto.getStudyingId()));
 
         if (!this.isUserAuthorized(studying)) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         if (student.getGrade() != studying.getGrade()) {
-            throw new RuntimeException("Student is not enrolled in this grade.");
+            throw new StudentEnrollmentException("Student is not enrolled in this grade.");
         }
 
         absence.setStudent(student);
@@ -95,13 +96,13 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public void deleteAbsence(String id) {
         Absence absence = absenceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Absence not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Absence not found with id: " + id));
 
         Studying studying = studyingRepository.findById(absence.getStudying().getId())
-                .orElseThrow(() -> new RuntimeException("Studying not found with id: " + absence.getStudying().getId()));
+                .orElseThrow(() -> new EntityNotFoundException("Studying not found with id: " + absence.getStudying().getId()));
 
         if (!this.isUserAuthorized(studying)) {
-            throw new RuntimeException("User not authorized for this action.");
+            throw new UserNotAuthorizedException("User not authorized for this action.");
         }
 
         absenceRepository.delete(absence);
@@ -110,7 +111,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public List<AbsenceWithSubjectDto> getAbsencesByStudent(String studentId) {
         Student student = this.studentRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + studentId));
 
         List<Absence> absences = this.absenceRepository.findAbsencesByStudentId(studentId);
         return absences.stream().map(absence -> new AbsenceWithSubjectDto(
@@ -145,7 +146,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 
         if(!isAdmin) {
             Teacher teacher = this.teacherRepository.findById(authentication.getName())
-                    .orElseThrow(() -> new RuntimeException("Teacher not found with id: " + authentication.getName()));
+                    .orElseThrow(() -> new EntityNotFoundException("Teacher not found with id: " + authentication.getName()));
             if (teacher != studying.getTeacher())
                 return false;
         }

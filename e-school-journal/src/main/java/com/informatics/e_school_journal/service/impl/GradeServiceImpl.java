@@ -9,6 +9,7 @@ import com.informatics.e_school_journal.dto.grade.CreateGradeDto;
 import com.informatics.e_school_journal.dto.grade.GradeDto;
 import com.informatics.e_school_journal.dto.grade.UpdateGradeDto;
 import com.informatics.e_school_journal.dto.school.SchoolDto;
+import com.informatics.e_school_journal.exception.EntityNotFoundException;
 import com.informatics.e_school_journal.service.GradeService;
 import com.informatics.e_school_journal.service.SchoolService;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ public class GradeServiceImpl implements GradeService {
         grade.setYear(createGradeDto.getYear());
 
         School school = schoolRepository.findById(createGradeDto.getSchoolId())
-                .orElseThrow(() -> new RuntimeException("School not found with id: " + createGradeDto.getSchoolId()));
+                .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + createGradeDto.getSchoolId()));
         grade.setSchool(school);
 
         Grade savedGrade = gradeRepository.save(grade);
@@ -43,7 +44,7 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public GradeDto getGradeById(String id) {
         Grade grade = gradeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grade not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Grade not found with id: " + id));
 
         return mapperConfig.getModelMapper().map(grade, GradeDto.class);
     }
@@ -61,13 +62,13 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public GradeDto updateGrade(String id, UpdateGradeDto updateGradeDto) {
         Grade existingGrade = gradeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grade not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Grade not found with id: " + id));
         existingGrade.setGrade(updateGradeDto.getGrade());
         existingGrade.setStream(updateGradeDto.getStream());
 
         if (updateGradeDto.getSchoolId() != null) {
             School school = schoolRepository.findById(updateGradeDto.getSchoolId())
-                    .orElseThrow(() -> new RuntimeException("School not found with id: " + updateGradeDto.getSchoolId()));
+                    .orElseThrow(() -> new EntityNotFoundException("School not found with id: " + updateGradeDto.getSchoolId()));
             existingGrade.setSchool(school);
         }
 
@@ -78,7 +79,7 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public void deleteGrade(String id) {
         if (!gradeRepository.existsById(id)) {
-            throw new RuntimeException("Grade not found with id: " + id);
+            throw new EntityNotFoundException("Grade not found with id: " + id);
         }
         gradeRepository.deleteById(id);
     }

@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.user;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,14 +10,19 @@ import java.util.List;
 @Getter
 public class CreateUserDto {
     @Setter
+    @NotNull
     private List<CredentialsDto> credentials;
     @Setter
+    @NotNull
     private String username;
     @Setter
+    @NotNull
     private String firstName;
     @Setter
+    @NotNull
     private String lastName;
     @Setter
+    @NotNull
     private String email;
     private final boolean emailVerified;
     private final boolean enabled;

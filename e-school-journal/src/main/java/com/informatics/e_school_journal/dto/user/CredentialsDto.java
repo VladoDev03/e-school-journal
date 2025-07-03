@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.user;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ public class CredentialsDto {
     private final boolean temporary;
     private final String type;
     @Setter
+    @NotNull
     private String value;
 
     public CredentialsDto(String value) {
