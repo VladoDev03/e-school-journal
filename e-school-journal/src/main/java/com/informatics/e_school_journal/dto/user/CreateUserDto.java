@@ -1,5 +1,6 @@
 package com.informatics.e_school_journal.dto.user;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class CreateUserDto {
     private String lastName;
     @Setter
     @NotNull
+    @Email
     private String email;
     private final boolean emailVerified;
     private final boolean enabled;
